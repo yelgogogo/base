@@ -1,0 +1,20 @@
+<div class="login jumbotron center-block">
+  <h1>{{page.login_h1}}</h1>
+  <form role="form" (submit)="login($event, employee.value)">
+  <div class="form-group">
+  <label for="employee"><i class="glyphicon glyphicon-user"></i></label>
+    <md-input-container>
+    <!--input md-input placeholder="Favorite food" value="Sushi"-->
+    
+    
+    <input md-input type="text" #employee class="form-control" id="employee" placeholder={{page.login_placeholder1}}>
+    </md-input-container>
+  </div>
+  <!--div class="form-group">
+    <label for="email"><i class="glyphicon glyphicon-globe"></i></label>
+    <input type="email" #email class="form-control" id="email" placeholder={{page.login_placeholder2}}>
+  </div-->
+  <button md-raised-button type="submit" class="btn btn-default">{{page.login_button}}</button>
+    <a [routerLink]="['/signup']">{{page.login_a}}</a>
+</form>
+</div>

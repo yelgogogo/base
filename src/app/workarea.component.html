@@ -1,0 +1,24 @@
+<h2> {{page.heroes_h1}} {{latestid}} </h2>
+<h2> {{page.heroes_h2}} </h2>
+<button (click)="addWorkspace()"> {{page.heroes_button}} </button>
+<div *ngIf="addingWorkspace">
+  <my-workspace (close)="close($event)"></my-workspace>
+</div>
+<div class="error" *ngIf="error">{{error}}</div>
+<div *ngIf="selectedWorkspace">
+  <h2>
+    {{selectedWorkspace.name | uppercase}} is my workspace
+  </h2>
+  <button (click)="gotoWorkspace()">View Details</button>
+</div>
+<div class="grid grid-pad">
+  <div *ngFor="let workspace of workspaces" (click)="onSelect(workspace)" [class.selected]="workspace === selectedWorkspace">
+    <div class="module workspace">
+      <h4 class="badge">{{workspace.id}}<br>{{workspace.status}}</h4> {{workspace.employee}} - {{workspace.name}}
+    </div>
+    <button class="delete-button" (click)="deleteWorkspace(workspace, $event)">Cancel</button>
+  </div>
+</div>
+
+
+
