@@ -20,7 +20,7 @@ export class WorkspaceComponent implements OnInit {
   error: any;
   navigated = false; // true if navigated here
 
-  public uploader:FileUploader = new FileUploader({url:NODEUPLOAD+'upload'});
+  public uploader:FileUploader = new FileUploader({url:NODEUPLOAD+'upload/'});
   nodeupload=NODEUPLOAD;
 
   constructor(
@@ -30,6 +30,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.route.params);
     this.route.params.forEach((params: Params) => {
       if(localStorage.getItem('rapper_language') ){
       let languageid=localStorage.getItem('rapper_language');
@@ -53,19 +54,27 @@ export class WorkspaceComponent implements OnInit {
     this.uploader.onCompleteItem = (item, response, status, header) => {
         console.log(this.workspace);
         if (status === 200) {
-          console.log(response);
-          let j:number;
+          
+          // let j:number;
           // for (j=0; j < response.length; ++j) {
-            let element:any;
-            element=JSON.parse(response);
-            element.id=this.workspace.files.length + j;
+            let element= new File();
+            console.log(element);
+            let resobj = JSON.parse(response);
+            element.enable=true;
+            element.filename=resobj.filename;
+            element.path=resobj.path;
+            element.createTime=resobj.createTime;
+            // element.id=this.workspace.files.length + 1;
             element.convFlag=false;
-            element.convPath=element.path.replace(/uploads/,this.workspace.name);
+            let tmp=element.path.replace(/uploads/,this.workspace.name);
+            tmp=tmp.replace(/\-[0-9]*/,'');
+            element.convPath=tmp
+
             if(this.workspace.files[0]){
-              this.workspace.files.push(JSON.parse(response));
+              this.workspace.files.push(element);
             }
             else{
-              this.workspace.files=[JSON.parse(response)];
+              this.workspace.files=[element];
             }
           // }
           
@@ -79,8 +88,7 @@ export class WorkspaceComponent implements OnInit {
 
   save(): void {
     let today= new  Date();
-    this.heroService
-        .save(this.workspace)
+    this.heroService.save(this.workspace)
         .then(workspace => {
           this.workspace = workspace; // saved workspace, w/ id if new
           this.goBack(workspace);
@@ -94,10 +102,11 @@ export class WorkspaceComponent implements OnInit {
       // console.log(this.workspace.files);
   }
 
-  convFile(reg:File,event:any): void{
-      // console.log(this.workspace.files);
-      // this.workspace.regs.splice(this.workspace.regs.indexOf(reg), 1);
-      // console.log(this.workspace.files);
+  convFile(file:File,event:any): void{
+    console.log(file);
+    let f = this.workspace.files.findIndex(element => element == file);
+    this.heroService.getConv(file,this.workspace.regs)
+          .then(res => this.workspace.files[f] = res);
   }
 
   delReg(reg:File,event:any): void{

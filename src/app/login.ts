@@ -28,6 +28,16 @@ export class Login implements OnInit{
 
   login(event: any, user:string) {
     event.preventDefault();
+    // let regs = [
+    //   {id:1,owner:'Michael',description:'aaa->ReplaceA',enable:true,regScope : 'atest.',regScopeAttr : 'g',regFind : 'aaa',regFindAttr : 'i',regReplace : 'ReplaceA'},
+    //   {id:2,owner:'Michael',description:'bbb->ReplaceB',enable:true,regScope : 'btest..',regScopeAttr : 'g',regFind : 'bbb',regFindAttr : 'i',regReplace : 'ReplaceBB'},
+    //   {id:3,owner:'Michael',description:'ccc->ReplaceC',enable:true,regScope : 'ctest...',regScopeAttr : 'g',regFind : 'ccc',regFindAttr : 'i',regReplace : 'ReplaceCCC'}
+    // ];
+    // let file = 
+    //   {id: 1, enable:true, filename:'ASQERA1.rx', path:'uploads\\ASQERA1.rx', convFlag:true,convPath:'test\\ASQERA1.rx',createTime:'',updateTime:''};
+    //     this.heroService.getConv(file,regs)
+    //       .then(res => console.log(res));
+
     this.heroService.getUserByName(user)
       .then(user => 
         {

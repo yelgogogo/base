@@ -7,8 +7,8 @@ export class InMemoryDataService {
       {id:3,owner:'Michael',description:'ccc->ReplaceC',enable:true,regScope : 'ctest...',regScopeAttr : 'g',regFind : 'ccc',regFindAttr : 'i',regReplace : 'ReplaceCCC'}
     ];
     let files = [
-      {id: 1, enable:true, filename:'ASQERA1.rx', path:'uploads\\ASQERA1.rx', convFlag:true,convPath:'test\\ASQERA1.rx',createTime:'',updateTime:''},
-      {id: 2, enable:true, filename:'ASQERA2.rx', path:'uploads\\ASQERA2.rx', convFlag:false,convPath:'',createTime:'test\\ASQERA1.rx',updateTime:''}
+      {id: 1, enable:true, filename:'ASQERA1.rx', path:'uploads\ASQERA1.rx', convFlag:true,convPath:'test\ASQERA1.rx',createTime:'',updateTime:''},
+      {id: 2, enable:true, filename:'ASQERA2.rx', path:'uploads\ASQERA2.rx', convFlag:false,convPath:'test\ASQERA2.rx',createTime:'test\\ASQERA1.rx',updateTime:''}
     ];
     let workspaces = [
       {id: 1,name:'test',owner:'Michael',createTime:'2017-01-01 00:00:00',description:'',files:files,regs:regs},

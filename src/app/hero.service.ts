@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response,URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Workspace,Engineer,Survey,User } from './Hero';
+import { Workspace,Engineer,Survey,User,File,Regarray } from './Hero';
 // import { ENGINEERS } from './mock-data';
 
 @Injectable()
 export class HeroService {
-  private WorkspacesUrl = 'app/workspaces';  // URL to web api Workspaces
-  private engineersUrl = 'app/engineers'; // URL to web api engineers
-  private surveysUrl = 'app/surveys'; // URL to web api engineers
-  private usersUrl = 'app/users'; // URL to web api engineers
+  private WorkspacesUrl = 'http://localhost:3100/workspaces';  // URL to web api Workspaces
+  private engineersUrl = 'http://localhost:3100/engineers'; // URL to web api engineers
+  private surveysUrl = 'http://localhost:3100/surveys'; // URL to web api engineers
+  private usersUrl = 'http://localhost:3100/users'; // URL to web api engineers
+  private regsUrl = 'http://localhost:3100/regs'; // URL to web api regs
+  private convUrl = 'http://localhost:3100/rep'; // URL to web api rep
   constructor(private http: Http) { }
+
+  
 
   getEngineers(): Promise<Engineer[]> {
     return this.http
@@ -27,7 +31,17 @@ export class HeroService {
     return this.http
       .get(this.WorkspacesUrl)
       .toPromise()
-      .then(response => response.json().data as Workspace[])
+      .then(response => response.json() as Workspace[])
+      .catch(this.handleError);
+  }
+
+  getRegs(): Promise<Regarray[]> {
+    return this.http
+      .get(this.regsUrl)
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        return response.json() as Regarray[]})
       .catch(this.handleError);
   }
 
@@ -35,7 +49,30 @@ export class HeroService {
     return this.http
       .get(this.usersUrl)
       .toPromise()
-      .then(response => response.json().data as User[])
+      .then(response => {
+        console.log(response);
+        return response.json() as User[]})
+      .catch(this.handleError);
+  }
+
+  getUserByName(name: string): Promise<User> {
+    return this.getUsers()
+      .then(users => {
+        console.log(users);
+        return users.find(user => user.name === name)
+      });
+  }
+
+  getConv(file:File,regs:Regarray[]): Promise<File> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('file', JSON.stringify(file));
+    params.set('regs', JSON.stringify(regs));
+    // console.log(this.convUrl);
+    // console.log(params);
+    return this.http
+      .get(this.convUrl,{ search: params })
+      .toPromise()
+      .then(response => response.json() as File)
       .catch(this.handleError);
   }
 
@@ -57,10 +94,7 @@ export class HeroService {
       .then(surveys => surveys.find(survey => survey.id === id));
   }
 
-  getUserByName(name: string): Promise<User> {
-    return this.getUsers()
-      .then(users => users.find(user => user.name === name));
-  }
+
 
   getWorkspaceByOwner(owner: string): Promise<Workspace[]> {
     return this.getWorkspaces()
@@ -100,6 +134,20 @@ export class HeroService {
       .catch(this.handleError);
   }
 
+  // Update existing Workspace
+  private put(Workspace: Workspace): Promise<Workspace> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let putworkspaceurl = `${this.WorkspacesUrl}/${Workspace.id}`;
+
+    return this.http
+      .put(putworkspaceurl, JSON.stringify(Workspace), { headers: headers })
+      .toPromise()
+      .then(() => Workspace)
+      .catch(this.handleError);
+  }
+
   // Add new Workspace
   private post(Workspace: Workspace): Promise<Workspace> {
     let headers = new Headers({
@@ -109,7 +157,7 @@ export class HeroService {
     return this.http
       .post(this.WorkspacesUrl, JSON.stringify(Workspace), { headers: headers })
       .toPromise()
-      .then(res => res.json().data)
+      .then(res => res.json())
       .catch(this.handleError);
   }
 
@@ -167,19 +215,7 @@ export class HeroService {
       .catch(this.handleError);
   }
   
-  // Update existing Workspace
-  private put(Workspace: Workspace): Promise<Workspace> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
 
-    let url = `${this.WorkspacesUrl}/${Workspace.id}`;
-
-    return this.http
-      .put(url, JSON.stringify(Workspace), { headers: headers })
-      .toPromise()
-      .then(() => Workspace)
-      .catch(this.handleError);
-  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

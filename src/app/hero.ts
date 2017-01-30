@@ -8,7 +8,7 @@ export class Regarray{
   regReplace : string;
 }
 export class File {
-  id: number;
+  // id: number;
   enable:boolean;
   filename:string;
   path:string;
