@@ -45,7 +45,7 @@ export class WorkspaceComponent implements OnInit {
       } else {
         this.navigated = false;
         this.workspace = new Workspace();
-        this.workspace.owner = JSON.parse(localStorage.getItem('id_token')).name;  
+        this.workspace.owner = JSON.parse(localStorage.getItem('rapper_token')).name;  
         this.workspace.files=[];
         this.workspace.regs=[];
       }

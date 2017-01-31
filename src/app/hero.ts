@@ -1,11 +1,16 @@
 export class Regarray{
   id:number;
+  name:string;
+  owner:string;
+  description:string;
   enable:boolean;
   regScope : string;
   regScopeAttr : string;
   regFind : string;
   regFindAttr : string;
   regReplace : string;
+  createTime:string;
+  updateTime:string;
 }
 export class File {
   // id: number;

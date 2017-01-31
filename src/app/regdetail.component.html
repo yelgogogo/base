@@ -1,0 +1,46 @@
+<div *ngIf="regarray">
+  <h2>{{regarray.name}}{{page.regdetail_h1}}!</h2>
+  <div>
+    <label>id: </label>{{regarray.id}}</div>
+  <div>
+    <label> {{page.regdetail_name}}: </label>
+    <input [(ngModel)]="regarray.name" placeholder="name" />
+  </div>
+  <div>
+    <label> {{page.regdetail_description}}: </label>
+    <input [(ngModel)]="regarray.description" placeholder="description" />
+  </div>
+  <div>
+    <label> {{page.regdetail_regScope}}: </label>
+    <input [(ngModel)]="regarray.regScope" placeholder="regScope"  />
+    <label> {{page.regdetail_regScopeAttr}}: </label>
+    <select class="form-control" name="sel" 
+        [(ngModel)]="selectedScopeAttr" 
+        (ngModelChange)="updateScopeAttr($event)">
+        <option disabled value="0" class="hideoption">{{regarray.regScopeAttr}}</option>
+        <option *ngFor="let scopeattr of regattr" [ngValue]="scopeattr">
+        {{scopeattr.value}} - {{scopeattr.name}}
+      </option>
+      </select>
+  </div>
+  <div> 
+    <label> {{page.regdetail_regFind}}: </label>
+    <input [(ngModel)]="regarray.regFind" placeholder="regFind"  />
+    <label> {{page.regdetail_regFindAttr}}: </label>
+    <select class="form-control" name="sel" 
+        [(ngModel)]="selectedFindAttr" 
+        (ngModelChange)="updateFindAttr($event)">
+        <option disabled value="0" class="hideoption">{{regarray.regFindAttr}}</option>
+        <option *ngFor="let findattr of regattr" [ngValue]="findattr">
+        {{findattr.value}} - {{findattr.name}}
+      </option>
+      </select>
+  </div>
+  <div>
+    <label> {{page.regdetail_regReplace}}: </label>
+    <input [(ngModel)]="regarray.regReplace" placeholder="regReplace" />
+  </div>
+  
+  <button (click)="goBack()"> {{page.regdetail_back}} </button>
+  <button (click)="save()"> {{page.regdetail_save}} </button>
+</div>

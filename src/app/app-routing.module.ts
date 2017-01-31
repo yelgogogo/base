@@ -4,7 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { WorkareaComponent } from './workarea.component';
 import { WorkspaceComponent } from './workspace.component';
 import { Login } from './login';
-
+import {RegsComponent} from './regs.component'
+import {RegDetailComponent} from './regdetail.component'
 
 const routes: Routes = [
   {
@@ -23,7 +24,15 @@ const routes: Routes = [
   {
     path: 'workarea',
     component: WorkareaComponent
-  }
+  },
+  {
+    path: 'regs',
+    component: RegsComponent
+  },
+  {
+    path: 'regdetail/:id',
+    component: RegDetailComponent
+  },
 ];
 
 @NgModule({
@@ -32,4 +41,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routedComponents = [Login, WorkareaComponent, WorkspaceComponent];
+export const routedComponents = [Login, WorkareaComponent, WorkspaceComponent,RegDetailComponent,RegsComponent];

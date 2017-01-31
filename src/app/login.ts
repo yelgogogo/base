@@ -45,7 +45,7 @@ export class Login implements OnInit{
           let name=user.name;
           let email=user.email;
           let body = JSON.stringify({name,email });
-          localStorage.setItem('id_token', body);
+          localStorage.setItem('rapper_token', body);
           this.router.navigate(['workarea']);
         });
   }

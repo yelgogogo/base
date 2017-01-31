@@ -26,7 +26,7 @@ export class WorkareaComponent implements OnInit {
 
   getWorkspacees(): void {
     this.heroService
-      .getWorkspaceByOwner(JSON.parse(localStorage.getItem('id_token')).name)
+      .getWorkspaceByOwner(JSON.parse(localStorage.getItem('rapper_token')).name)
       .then(workspaces => this.workspaces = workspaces)
       .catch(error => this.error = error);
   }

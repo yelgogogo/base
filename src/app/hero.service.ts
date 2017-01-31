@@ -8,7 +8,7 @@ import { Workspace,Engineer,Survey,User,File,Regarray } from './Hero';
 
 @Injectable()
 export class HeroService {
-  private WorkspacesUrl = 'http://localhost:3100/workspaces';  // URL to web api Workspaces
+  private workspacesUrl = 'http://localhost:3100/workspaces';  // URL to web api Workspaces
   private engineersUrl = 'http://localhost:3100/engineers'; // URL to web api engineers
   private surveysUrl = 'http://localhost:3100/surveys'; // URL to web api engineers
   private usersUrl = 'http://localhost:3100/users'; // URL to web api engineers
@@ -29,7 +29,7 @@ export class HeroService {
 
   getWorkspaces(): Promise<Workspace[]> {
     return this.http
-      .get(this.WorkspacesUrl)
+      .get(this.workspacesUrl)
       .toPromise()
       .then(response => response.json() as Workspace[])
       .catch(this.handleError);
@@ -84,6 +84,11 @@ export class HeroService {
       .catch(this.handleError);
   }
 
+  getRegarray(id: number): Promise<Regarray> {
+    return this.getRegs()
+      .then(Workspaces => Workspaces.find(Regarray => Regarray.id === id));
+  }
+
   getWorkspace(id: number): Promise<Workspace> {
     return this.getWorkspaces()
       .then(Workspaces => Workspaces.find(Workspace => Workspace.id === id));
@@ -108,6 +113,13 @@ export class HeroService {
     return this.post(Workspace);
   }
 
+  saveRegarray(regarray: Regarray): Promise<Regarray> {
+    if (regarray.id) {
+      return this.putRegarray(regarray);
+    }
+    return this.postRegarray(regarray);
+  }
+
   saveSurvey(survey: Survey): Promise<Survey> {
     if (survey.id) {
       return this.putSurvey(survey);
@@ -126,7 +138,19 @@ export class HeroService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    let url = `${this.WorkspacesUrl}/${Workspace.id}`;
+    let url = `${this.workspacesUrl}/${Workspace.id}`;
+
+    return this.http
+      .delete(url, { headers: headers })
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  deleteReg(Regarray: Regarray): Promise<Response> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let url = `${this.regsUrl}/${Regarray.id}`;
 
     return this.http
       .delete(url, { headers: headers })
@@ -139,7 +163,7 @@ export class HeroService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    let putworkspaceurl = `${this.WorkspacesUrl}/${Workspace.id}`;
+    let putworkspaceurl = `${this.workspacesUrl}/${Workspace.id}`;
 
     return this.http
       .put(putworkspaceurl, JSON.stringify(Workspace), { headers: headers })
@@ -155,7 +179,34 @@ export class HeroService {
     });
 
     return this.http
-      .post(this.WorkspacesUrl, JSON.stringify(Workspace), { headers: headers })
+      .post(this.workspacesUrl, JSON.stringify(Workspace), { headers: headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+
+  // Update existing Regarray
+  private putRegarray(Regarray: Regarray): Promise<Regarray> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let putworkspaceurl = `${this.regsUrl}/${Regarray.id}`;
+
+    return this.http
+      .put(putworkspaceurl, JSON.stringify(Regarray), { headers: headers })
+      .toPromise()
+      .then(() => Regarray)
+      .catch(this.handleError);
+  }
+
+  // Add new Regarray
+  private postRegarray(Regarray: Regarray): Promise<Regarray> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http
+      .post(this.regsUrl, JSON.stringify(Regarray), { headers: headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
@@ -201,7 +252,7 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  // Update existing Workspace
+  // Update existing Engineer
   private putEngineer(engineer: Engineer): Promise<Engineer> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
