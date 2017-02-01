@@ -2,9 +2,9 @@ export class InMemoryDataService {
   createDb() {
     
     let regs = [
-      {id:1,owner:'Michael',description:'aaa->ReplaceA',enable:true,regScope : 'atest.',regScopeAttr : 'g',regFind : 'aaa',regFindAttr : 'i',regReplace : 'ReplaceA'},
-      {id:2,owner:'Michael',description:'bbb->ReplaceB',enable:true,regScope : 'btest..',regScopeAttr : 'g',regFind : 'bbb',regFindAttr : 'i',regReplace : 'ReplaceBB'},
-      {id:3,owner:'Michael',description:'ccc->ReplaceC',enable:true,regScope : 'ctest...',regScopeAttr : 'g',regFind : 'ccc',regFindAttr : 'i',regReplace : 'ReplaceCCC'}
+      {id:1,owner:'Michael',description:'aaa->ReplaceA',enable:true,regScope : 'atest.',regScopeAttr : {},regFind : 'aaa',regFindAttr : {},regReplace : 'ReplaceA'},
+      {id:2,owner:'Michael',description:'bbb->ReplaceB',enable:true,regScope : 'btest..',regScopeAttr : {},regFind : 'bbb',regFindAttr : {},regReplace : 'ReplaceBB'},
+      {id:3,owner:'Michael',description:'ccc->ReplaceC',enable:true,regScope : 'ctest...',regScopeAttr : {},regFind : 'ccc',regFindAttr : {},regReplace : 'ReplaceCCC'}
     ];
     let files = [
       {id: 1, enable:true, filename:'ASQERA1.rx', path:'uploads\ASQERA1.rx', convFlag:true,convPath:'test\ASQERA1.rx',createTime:'',updateTime:''},

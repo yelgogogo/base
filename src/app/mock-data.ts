@@ -10,7 +10,9 @@ export const REGATTR: any[] = [
 {id:2,value:'g',name:'Global'},
 {id:2,value:'m',name:'MutipleRow'},
 {id:2,value:'i',name:'CaseSensitive'},
-{id:1,value:'i',name:'全局'},
+{id:2,value:'',name:'None'},
+{id:1,value:'',name:'无'},
+{id:1,value:'i',name:'大小写敏感'},
 {id:1,value:'g',name:'全局'},
 {id:1,value:'m',name:'多行'}
 ];

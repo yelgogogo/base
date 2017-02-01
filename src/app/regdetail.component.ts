@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Regarray,Engineer,Survey } from './hero';
+import { Regarray,Engineer,Survey,findReg } from './hero';
 import { HeroService } from './hero.service';
 import { REGATTR,NODEUPLOAD } from './mock-data';
 import { REGDETAILPAGE } from './page-regdetail';
@@ -25,6 +25,7 @@ export class RegDetailComponent implements OnInit {
   engineers:Engineer[];
   selectedScopeAttr :any = 0;
   selectedFindAttr :any = 0;
+
   regattr = REGATTR.filter(regAttr=>regAttr.id == 1); 
   constructor(
     private heroService: HeroService,
@@ -50,7 +51,12 @@ export class RegDetailComponent implements OnInit {
         this.regarray.name = '';
         this.regarray.description = '';
         this.regarray.owner = JSON.parse(localStorage.getItem('rapper_token')).name;
-        this.regarray.enable = true;
+        this.regarray.enable = false;
+        this.regarray.regScopeAttr={id:2,value:'g',name:'Global'};
+        this.regarray.findArray = [];
+        let empfind = new findReg();
+        empfind.regFindAttr={id:2,value:'g',name:'Global'};
+        this.regarray.findArray.push(empfind);
         let today= new  Date();
         this.regarray.createTime = today.toLocaleString();
       }
@@ -58,12 +64,20 @@ export class RegDetailComponent implements OnInit {
 
   }
 
+  addFindArr(event:any):void {
+    let empfind = new findReg();
+    empfind.regFindAttr={id:2,value:'g',name:'Global'};
+    this.regarray.findArray.push(empfind);
+  }
+
   updateScopeAttr(selected:any):void {
-      this.regarray.regScopeAttr=selected.value;
+      // this.regarray.regScopeAttr=selected.value;
   }
 
   updateFindAttr(selected:any):void {
-      this.regarray.regFindAttr=selected.value;
+    // console.log(selected);
+    // console.log(this.regarray.findArray);
+      //this.regarray.regFindAttr=selected.value;
   }
 
   save(): void {

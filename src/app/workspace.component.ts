@@ -19,6 +19,7 @@ export class WorkspaceComponent implements OnInit {
   @Output() close = new EventEmitter();
   error: any;
   navigated = false; // true if navigated here
+  regarrays: Regarray[];
 
   public uploader:FileUploader = new FileUploader({url:NODEUPLOAD+'upload/'});
   nodeupload=NODEUPLOAD;
@@ -27,6 +28,16 @@ export class WorkspaceComponent implements OnInit {
     private heroService: HeroService,
     private route: ActivatedRoute) {
 
+  }
+
+  getRegarrays(): void {
+    this.heroService
+      .getRegs()
+      .then(regarrays => {
+        //regarrays.forEach((h:Regarray)=>{h.status=this.statustype.find(st=>st.statuscode==h.statuscode).status});
+        this.regarrays = regarrays;
+      })
+      .catch(error => this.error = error);
   }
 
   ngOnInit(): void {
@@ -61,6 +72,7 @@ export class WorkspaceComponent implements OnInit {
             console.log(element);
             let resobj = JSON.parse(response);
             element.enable=true;
+            element.encoding='utf8';
             element.filename=resobj.filename;
             element.path=resobj.path;
             element.createTime=resobj.createTime;
@@ -76,13 +88,10 @@ export class WorkspaceComponent implements OnInit {
             else{
               this.workspace.files=[element];
             }
-          // }
-          
-          
-          console.log(this.workspace.files);
         }  
       };
 
+    this.getRegarrays();
     
   }
 
@@ -115,6 +124,14 @@ export class WorkspaceComponent implements OnInit {
       // console.log(this.workspace.files);
   }
 
+  selectRegs(regs:Regarray[],event:any): void{
+      let cc=regs.filter(reg=>reg.enable===true);
+      this.workspace.regs=this.workspace.regs.concat(cc);
+      //console.log(cc);
+      //console.log(this.workspace.regs);
+      //console.log(regs);
+      //console.log(this.regarrays);
+  }
   enable(reg:Regarray,event:any): void{
       // console.log(this.workspace.files);
       let i=this.workspace.regs.indexOf(reg);

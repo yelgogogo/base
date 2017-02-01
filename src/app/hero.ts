@@ -5,15 +5,19 @@ export class Regarray{
   description:string;
   enable:boolean;
   regScope : string;
-  regScopeAttr : string;
-  regFind : string;
-  regFindAttr : string;
-  regReplace : string;
+  regScopeAttr : any;
+  findArray:any[];
   createTime:string;
   updateTime:string;
 }
+export class findReg {
+  regFind : string;
+  regFindAttr : any;
+  regReplace : string;
+}
 export class File {
   // id: number;
+  encoding:string;
   enable:boolean;
   filename:string;
   path:string;

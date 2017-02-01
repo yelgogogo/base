@@ -7,6 +7,10 @@
     <input [(ngModel)]="regarray.name" placeholder="name" />
   </div>
   <div>
+    <label> {{page.regdetail_createTime}}: </label>
+    <input [(ngModel)]="regarray.createTime" placeholder="createTime" readonly="readonly"/>
+  </div>
+  <div>
     <label> {{page.regdetail_description}}: </label>
     <input [(ngModel)]="regarray.description" placeholder="description" />
   </div>
@@ -15,30 +19,31 @@
     <input [(ngModel)]="regarray.regScope" placeholder="regScope"  />
     <label> {{page.regdetail_regScopeAttr}}: </label>
     <select class="form-control" name="sel" 
-        [(ngModel)]="selectedScopeAttr" 
+        [(ngModel)]="regarray.regScopeAttr" 
         (ngModelChange)="updateScopeAttr($event)">
-        <option disabled value="0" class="hideoption">{{regarray.regScopeAttr}}</option>
+        <option disabled value="0" class="hideoption">{{regarray.regScopeAttr.value}}</option>
         <option *ngFor="let scopeattr of regattr" [ngValue]="scopeattr">
         {{scopeattr.value}} - {{scopeattr.name}}
       </option>
       </select>
   </div>
-  <div> 
+  <div><button md-button (click)="addFindArr($event)">Add Find</button><ul>
+    <li *ngFor="let findarr of regarray.findArray" >
     <label> {{page.regdetail_regFind}}: </label>
-    <input [(ngModel)]="regarray.regFind" placeholder="regFind"  />
+    <input [(ngModel)]="findarr.regFind" placeholder="regFind"  />
     <label> {{page.regdetail_regFindAttr}}: </label>
     <select class="form-control" name="sel" 
-        [(ngModel)]="selectedFindAttr" 
+        [(ngModel)]="findarr.regFindAttr" 
         (ngModelChange)="updateFindAttr($event)">
-        <option disabled value="0" class="hideoption">{{regarray.regFindAttr}}</option>
+        <option disabled value="0" class="hideoption">{{findarr.regFindAttr.value}}</option>
         <option *ngFor="let findattr of regattr" [ngValue]="findattr">
         {{findattr.value}} - {{findattr.name}}
       </option>
       </select>
-  </div>
-  <div>
     <label> {{page.regdetail_regReplace}}: </label>
-    <input [(ngModel)]="regarray.regReplace" placeholder="regReplace" />
+    <input [(ngModel)]="findarr.regReplace" placeholder="regReplace" />
+    </li>
+    </ul>
   </div>
   
   <button (click)="goBack()"> {{page.regdetail_back}} </button>

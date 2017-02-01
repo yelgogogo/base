@@ -14,11 +14,27 @@
     <input [(ngModel)]="workspace.name" placeholder="{{page.workspace_name}}" />
   </div>
   <div>
-    <label> {{page.workspace_reglist}}: </label>
+    <md-sidenav-container class="example-container">
+
+        <md-sidenav #sidenav class="example-sidenav"><button md-button (click)="selectRegs(regarrays,$event)">Select</button>
+        <ul>
+        <li *ngFor="let regarray of regarrays"><md-checkbox [(ngModel)]="regarray.enable">{{regarray.id}}-{{regarray.name}}</md-checkbox>
+        </li>
+        </ul>
+    </md-sidenav>    
+      <!--div class="example-sidenav-content">
+        
+      </div-->
+    
+    <label> {{page.workspace_reglist}}: </label><button md-button (click)="sidenav.open()">
+          import RegExp
+        </button>
     <ul>
-    <li *ngFor="let reg of workspace.regs" ><md-slide-toggle (click)="enable(reg, $event)">{{reg.id}}-{{reg.owner}}-{{reg.description}}<button class="glyphicon glyphicon-remove" (click)="delReg(reg, $event)">Unuse</button>
+    <li *ngFor="let reg of workspace.regs" ><md-slide-toggle [(ngModel)]="reg.enable">{{reg.id}}-{{reg.owner}}-{{reg.description}}<button class="glyphicon glyphicon-remove" (click)="delReg(reg, $event)">Unuse</button>
     </md-slide-toggle></li>
     </ul>
+
+    </md-sidenav-container>
   </div>
   <div>
     <label> {{page.workspace_filelist}}: </label>
