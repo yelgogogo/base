@@ -6,15 +6,18 @@ import { Engineer } from './hero';
 // {  id: 4,  name: '工程师丁',email:'a@a.com',city:'Beijing',building:'Road A3',status:'working'}
 // ];
 export const NODEUPLOAD:string='http://localhost:3100/';
+export const HOST:string='http://localhost:3100/';
 export const REGATTR: any[] = [
 {id:2,value:'g',name:'Global'},
-{id:2,value:'m',name:'MutipleRow'},
+{id:2,value:'gi',name:'Global & CaseSensitive'},
 {id:2,value:'i',name:'CaseSensitive'},
 {id:2,value:'',name:'None'},
+{id:2,value:'cg',name:'CrossLine'},
+{id:1,value:'cg',name:'跨行'},
 {id:1,value:'',name:'无'},
 {id:1,value:'i',name:'大小写敏感'},
 {id:1,value:'g',name:'全局'},
-{id:1,value:'m',name:'多行'}
+{id:1,value:'gi',name:'全局大小写敏感'}
 ];
 export const LANGUAGETYPE: any[] = [
 {id:1,name:'中文'},

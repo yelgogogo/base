@@ -67,7 +67,9 @@ export class WorkareaComponent implements OnInit {
   }
 
   gotoWorkspace(): void {
+    console.log(this.selectedWorkspace.id);
     this.router.navigate(['/workspace', this.selectedWorkspace.id]);
+
   }
 
 }

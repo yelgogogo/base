@@ -4,16 +4,17 @@ import { Headers, Http, Response,URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Workspace,Engineer,Survey,User,File,Regarray } from './Hero';
-// import { ENGINEERS } from './mock-data';
+import { HOST } from './mock-data';
 
 @Injectable()
 export class HeroService {
-  private workspacesUrl = 'http://localhost:3100/workspaces';  // URL to web api Workspaces
-  private engineersUrl = 'http://localhost:3100/engineers'; // URL to web api engineers
-  private surveysUrl = 'http://localhost:3100/surveys'; // URL to web api engineers
-  private usersUrl = 'http://localhost:3100/users'; // URL to web api engineers
-  private regsUrl = 'http://localhost:3100/regs'; // URL to web api regs
-  private convUrl = 'http://localhost:3100/rep'; // URL to web api rep
+  private workspacesUrl = HOST+'workspaces';  // URL to web api Workspaces
+  private engineersUrl = HOST+'engineers'; // URL to web api engineers
+  private surveysUrl = HOST+'surveys'; // URL to web api engineers
+  private usersUrl = HOST+'users'; // URL to web api engineers
+  private regsUrl = HOST+'regs'; // URL to web api regs
+  private convUrl = HOST+'rep'; // URL to web api rep
+  private downloadUrl = HOST+'download'; // URL to web api rep
   constructor(private http: Http) { }
 
   
@@ -73,6 +74,18 @@ export class HeroService {
       .get(this.convUrl,{ search: params })
       .toPromise()
       .then(response => response.json() as File)
+      .catch(this.handleError);
+  }
+
+  getDownload(workspace:Workspace): Promise<Workspace> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('workspace', JSON.stringify(workspace));
+    // console.log(this.convUrl);
+    // console.log(params);
+    return this.http
+      .get(this.downloadUrl,{ search: params })
+      .toPromise()
+      .then(response => response.json() as Workspace)
       .catch(this.handleError);
   }
 

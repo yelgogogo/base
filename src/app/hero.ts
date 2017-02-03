@@ -31,6 +31,8 @@ export class Workspace {
   id: number;
   name:string;
   owner:string;
+  path:string;
+  zippath:string;
   description:string;
   createTime:string;
   files:any[];

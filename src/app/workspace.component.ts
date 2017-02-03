@@ -69,7 +69,7 @@ export class WorkspaceComponent implements OnInit {
           // let j:number;
           // for (j=0; j < response.length; ++j) {
             let element= new File();
-            console.log(element);
+            
             let resobj = JSON.parse(response);
             element.enable=true;
             element.encoding='utf8';
@@ -78,10 +78,10 @@ export class WorkspaceComponent implements OnInit {
             element.createTime=resobj.createTime;
             // element.id=this.workspace.files.length + 1;
             element.convFlag=false;
-            let tmp=element.path.replace(/uploads/,this.workspace.name);
+            let tmp=element.path.replace(/uploads/,this.workspace.path);
             tmp=tmp.replace(/\-[0-9]*/,'');
-            element.convPath=tmp
-
+            element.convPath=tmp;
+            console.log(element);
             if(this.workspace.files[0]){
               this.workspace.files.push(element);
             }
@@ -103,6 +103,20 @@ export class WorkspaceComponent implements OnInit {
           this.goBack(workspace);
         })
         .catch(error => this.error = error); // TODO: Display error message
+  }
+
+  delAll(event:any): void{
+      // console.log(this.workspace.files);
+      this.workspace.files=[];
+      // console.log(this.workspace.files);
+  }
+
+  zipAll(event:any): void{
+      // console.log(this.workspace.files);
+      this.heroService.getDownload(this.workspace)
+          .then(res => {this.workspace = res;alert('Zip Done!');});
+
+      // console.log(this.workspace.files);
   }
 
   delAttach(files:File,event:any): void{

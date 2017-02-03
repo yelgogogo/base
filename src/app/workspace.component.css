@@ -56,3 +56,15 @@ body {
 md-sidenav {
     right: 0;
 }
+
+button {
+    background-color: #23a02d;
+    color: #f5f5f5;
+    cursor: auto;
+}
+
+button:disabled {
+    background-color: #23a02d;
+    color: #f5f5f5;
+    cursor: auto;
+}
