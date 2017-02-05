@@ -39,14 +39,16 @@
   <div>
     <label> {{page.workspace_filelist}}: </label>
         <button md-button (click)="delAll($event)">delete All</button>
+        Run Regular Expression for all
+        <button md-button (click)="convAll($event)">Run For All</button>
         download workspace as a zip file
         <button md-button (click)="zipAll($event)">zip</button>
         <label>
         <a href="{{nodeupload}}{{workspace.zippath}}">download </a></label>
     <ul>
     <li *ngFor="let file of workspace.files"><a href="{{nodeupload}}{{file.path}}">{{file.filename}}</a> <button class="glyphicon glyphicon-remove" (click)="delAttach(file, $event)">delete</button>
-    <button *ngIf="workspace.id" class="glyphicon glyphicon-remove" (click)="convFile(file, $event)">Conv</button>
-    <a *ngIf="file.convFlag" href="{{nodeupload}}{{file.convPath}}">converted</a></li>
+    <button *ngIf="workspace.id" class="glyphicon glyphicon-remove" (click)="convFile(file)">Conv</button>
+    <a *ngIf="file.convFlag" href="{{nodeupload}}{{file.convPath}}">converted</a><button *ngIf="file.convFlag" class="glyphicon glyphicon-remove" (click)="delConv(file)">delete Conv</button></li>
     </ul>
   </div>
   <button (click)="goBack()"> {{page.workspace_back}} </button>

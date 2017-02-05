@@ -12,8 +12,6 @@ export const REGATTR: any[] = [
 {id:2,value:'gi',name:'Global & CaseSensitive'},
 {id:2,value:'i',name:'CaseSensitive'},
 {id:2,value:'',name:'None'},
-{id:2,value:'cg',name:'CrossLine'},
-{id:1,value:'cg',name:'跨行'},
 {id:1,value:'',name:'无'},
 {id:1,value:'i',name:'大小写敏感'},
 {id:1,value:'g',name:'全局'},

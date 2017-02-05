@@ -15,6 +15,7 @@ export class HeroService {
   private regsUrl = HOST+'regs'; // URL to web api regs
   private convUrl = HOST+'rep'; // URL to web api rep
   private downloadUrl = HOST+'download'; // URL to web api rep
+  private delconvUrl = HOST+'delconvf';
   constructor(private http: Http) { }
 
   
@@ -168,6 +169,28 @@ export class HeroService {
     return this.http
       .delete(url, { headers: headers })
       .toPromise()
+      .catch(this.handleError);
+  }
+
+  deleteConvFile(file: File): Promise<File> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('file', JSON.stringify(file));
+    // console.log(this.convUrl);
+    // console.log(params);
+    // return this.http
+    //   .get(this.convUrl,{ search: params })
+    //   .toPromise()
+    //   .then(response => response.json() as File)
+    //   .catch(this.handleError);
+    // let headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+
+    let url = this.delconvUrl;
+
+    return this.http
+      .delete(url, { search: params })
+      .toPromise()
+      .then(res => res.json())
       .catch(this.handleError);
   }
 

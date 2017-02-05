@@ -72,7 +72,7 @@ export class WorkspaceComponent implements OnInit {
             
             let resobj = JSON.parse(response);
             element.enable=true;
-            element.encoding='utf8';
+            element.encoding='binary';
             element.filename=resobj.filename;
             element.path=resobj.path;
             element.createTime=resobj.createTime;
@@ -81,7 +81,7 @@ export class WorkspaceComponent implements OnInit {
             let tmp=element.path.replace(/uploads/,this.workspace.path);
             tmp=tmp.replace(/\-[0-9]*/,'');
             element.convPath=tmp;
-            console.log(element);
+            //console.log(element);
             if(this.workspace.files[0]){
               this.workspace.files.push(element);
             }
@@ -119,13 +119,26 @@ export class WorkspaceComponent implements OnInit {
       // console.log(this.workspace.files);
   }
 
+  delConv(file:File): void{
+      // console.log(this.workspace.files);
+      let f = this.workspace.files.findIndex(element => element == file);
+      this.heroService.deleteConvFile(file)
+          .then(res => this.workspace.files[f] = res);
+      //this.workspace.files.splice(this.workspace.files.indexOf(files), 1);
+      // console.log(this.workspace.files);
+  }
+
   delAttach(files:File,event:any): void{
       // console.log(this.workspace.files);
       this.workspace.files.splice(this.workspace.files.indexOf(files), 1);
       // console.log(this.workspace.files);
   }
 
-  convFile(file:File,event:any): void{
+  convAll(event:any): void{
+    this.workspace.files.forEach(file=>this.convFile(file));
+  }
+
+  convFile(file:File): void{
     console.log(file);
     let f = this.workspace.files.findIndex(element => element == file);
     this.heroService.getConv(file,this.workspace.regs)
