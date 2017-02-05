@@ -30,7 +30,7 @@
           import RegExp
         </button>
     <ul>
-    <li *ngFor="let reg of workspace.regs" ><md-slide-toggle [(ngModel)]="reg.enable">{{reg.id}}-{{reg.owner}}-{{reg.description}}<button class="glyphicon glyphicon-remove" (click)="delReg(reg, $event)">Unuse</button>
+    <li *ngFor="let reg of workspace.regs" ><md-slide-toggle [(ngModel)]="reg.enable">{{reg.id}}-{{reg.owner}}-{{reg.description}}<button (click)="delReg(reg, $event)"><i class="glyphicon glyphicon-remove"></i>Unuse</button>
     </md-slide-toggle></li>
     </ul>
 
@@ -38,17 +38,18 @@
   </div>
   <div>
     <label> {{page.workspace_filelist}}: </label>
-        <button md-button (click)="delAll($event)">delete All</button>
+        <button md-button (click)="delAll($event)"><i class="glyphicon glyphicon-trash"></i>delete All</button>
         Run Regular Expression for all
-        <button md-button (click)="convAll($event)">Run For All</button>
+        <button md-button (click)="convAll($event)"><i class="glyphicon glyphicon-retweet"></i>Run For All</button>
         download workspace as a zip file
-        <button md-button (click)="zipAll($event)">zip</button>
+        <button md-button (click)="zipAll($event)"><i class="glyphicon glyphicon-compressed"></i>zip</button>
         <label>
-        <a href="{{nodeupload}}{{workspace.zippath}}">download </a></label>
+        <i class="glyphicon glyphicon-download-alt"></i><a href="{{nodeupload}}{{workspace.zippath}}">download as zip</a></label>
+        <button md-button (click)="delConvAll()"><i class="glyphicon glyphicon-remove"></i>Delete Conv All</button>
     <ul>
-    <li *ngFor="let file of workspace.files"><a href="{{nodeupload}}{{file.path}}">{{file.filename}}</a> <button class="glyphicon glyphicon-remove" (click)="delAttach(file, $event)">delete</button>
-    <button *ngIf="workspace.id" class="glyphicon glyphicon-remove" (click)="convFile(file)">Conv</button>
-    <a *ngIf="file.convFlag" href="{{nodeupload}}{{file.convPath}}">converted</a><button *ngIf="file.convFlag" class="glyphicon glyphicon-remove" (click)="delConv(file)">delete Conv</button></li>
+    <li *ngFor="let file of workspace.files"><a href="{{nodeupload}}{{file.path}}">{{file.filename}}</a> <button (click)="delAttach(file, $event)"><i class="glyphicon glyphicon-trash"></i>delete</button>
+    <button *ngIf="workspace.id" (click)="convFile(file)"><i class="glyphicon glyphicon-refresh"></i>Conv</button>
+    <a *ngIf="file.convFlag" href="{{nodeupload}}{{file.convPath}}">converted</a><button *ngIf="file.convFlag" (click)="delConv(file)"><i class="glyphicon glyphicon-remove"></i>delete Conv</button></li>
     </ul>
   </div>
   <button (click)="goBack()"> {{page.workspace_back}} </button>

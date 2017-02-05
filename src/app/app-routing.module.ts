@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { WorkareaComponent } from './workarea.component';
 import { WorkspaceComponent } from './workspace.component';
 import { Login } from './login';
+import { SignupComponent } from './signup.component'
 import {RegsComponent} from './regs.component'
 import {RegDetailComponent} from './regdetail.component'
 
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
       path: 'login',
       component: Login
+  },
+  {
+      path: 'signup',
+      component: SignupComponent
   },
   {
     path: 'workspace/:id',
@@ -41,4 +46,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routedComponents = [Login, WorkareaComponent, WorkspaceComponent,RegDetailComponent,RegsComponent];
+export const routedComponents = [Login,SignupComponent, WorkareaComponent, WorkspaceComponent,RegDetailComponent,RegsComponent];

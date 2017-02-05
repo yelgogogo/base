@@ -108,6 +108,7 @@ export class WorkspaceComponent implements OnInit {
   delAll(event:any): void{
       // console.log(this.workspace.files);
       this.workspace.files=[];
+      this.delConvAll();
       // console.log(this.workspace.files);
   }
 
@@ -116,6 +117,13 @@ export class WorkspaceComponent implements OnInit {
       this.heroService.getDownload(this.workspace)
           .then(res => {this.workspace = res;alert('Zip Done!');});
 
+      // console.log(this.workspace.files);
+  }
+
+  delConvAll(): void{
+      // console.log(this.workspace.files);
+      this.workspace.files.forEach(file => this.delConv(file));
+      //this.workspace.files.splice(this.workspace.files.indexOf(files), 1);
       // console.log(this.workspace.files);
   }
 

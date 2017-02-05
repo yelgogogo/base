@@ -1,13 +1,18 @@
 <div class="login jumbotron center-block">
   <h1>{{page.login_h1}}</h1>
-  <form role="form" (submit)="login($event, employee.value)">
+  <form role="form" (submit)="login($event, user.value, password.value)">
   <div class="form-group">
-  <label for="employee"><i class="glyphicon glyphicon-user"></i></label>
+  <label for="user"><i class="glyphicon glyphicon-user"></i></label>
     <md-input-container>
     <!--input md-input placeholder="Favorite food" value="Sushi"-->
     
     
-    <input md-input type="text" #employee class="form-control" id="employee" placeholder={{page.login_placeholder1}}>
+    <input md-input type="text" #user class="form-control" id="user" placeholder={{page.login_placeholder1}}>
+
+    </md-input-container>
+  <BR><label for="password"><i class="glyphicon glyphicon-eye-close"></i></label>
+    <md-input-container>
+    <input md-input type="password" #password class="form-control" id="password" placeholder={{page.login_placeholder2}}>
     </md-input-container>
   </div>
   <!--div class="form-group">

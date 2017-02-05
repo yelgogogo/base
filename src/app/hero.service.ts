@@ -12,6 +12,7 @@ export class HeroService {
   private engineersUrl = HOST+'engineers'; // URL to web api engineers
   private surveysUrl = HOST+'surveys'; // URL to web api engineers
   private usersUrl = HOST+'users'; // URL to web api engineers
+  private userbynameUrl = HOST+'userbyname'; // URL to web api engineers
   private regsUrl = HOST+'regs'; // URL to web api regs
   private convUrl = HOST+'rep'; // URL to web api rep
   private downloadUrl = HOST+'download'; // URL to web api rep
@@ -57,12 +58,39 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  getUserByName(name: string): Promise<User> {
-    return this.getUsers()
-      .then(users => {
-        console.log(users);
-        return users.find(user => user.name === name)
-      });
+  postUser(user: User): Promise<User> {
+    // let params: URLSearchParams = new URLSearchParams();
+    // params.set('user', JSON.stringify(user));
+    // console.log(params);
+    // console.log(user);
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http
+      .post(this.usersUrl, JSON.stringify(user), { headers: headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+      
+    // return this.http
+    //   .get(this.userbynameUrl,{ search: params })
+    //   .toPromise()
+    //   .then(response => response.json() as User)
+    //   .catch(this.handleError);
+  }
+
+  getUserByName(user: User): Promise<User> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('user', JSON.stringify(user));
+    console.log(params);
+    console.log(user);
+
+    return this.http
+      .get(this.userbynameUrl,{ search: params })
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
   }
 
   getConv(file:File,regs:Regarray[]): Promise<File> {
