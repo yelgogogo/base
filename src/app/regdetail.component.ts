@@ -52,6 +52,8 @@ export class RegDetailComponent implements OnInit {
         this.regarray.description = '';
         this.regarray.owner = JSON.parse(localStorage.getItem('rapper_token')).name;
         this.regarray.enable = false;
+        this.regarray.share = false;
+        this.regarray.visable = true;
         this.regarray.regScopeAttr={id:2,value:'g',name:'Global'};
         this.regarray.findArray = [];
         let empfind = new findReg();
@@ -81,7 +83,7 @@ export class RegDetailComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.regarray);
+    //console.log(this.regarray);
     let today= new  Date();
     this.regarray.updateTime = today.toLocaleString();
     this.heroService

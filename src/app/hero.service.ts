@@ -38,14 +38,23 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  getRegs(): Promise<Regarray[]> {
+  getRegs(user:string): Promise<Regarray[]> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('user', user);
+
     return this.http
-      .get(this.regsUrl)
+      .get(this.regsUrl,{ search: params })
       .toPromise()
-      .then(response => {
-        console.log(response);
-        return response.json() as Regarray[]})
+      .then(response => response.json() as Regarray[])
       .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.regsUrl)
+    //   .toPromise()
+    //   .then(response => {
+    //     console.log(response);
+    //     return response.json() as Regarray[]})
+    //   .catch(this.handleError);
   }
 
   getUsers(): Promise<User[]> {
@@ -83,8 +92,6 @@ export class HeroService {
   getUserByName(user: User): Promise<User> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('user', JSON.stringify(user));
-    console.log(params);
-    console.log(user);
 
     return this.http
       .get(this.userbynameUrl,{ search: params })
@@ -127,7 +134,7 @@ export class HeroService {
   }
 
   getRegarray(id: number): Promise<Regarray> {
-    return this.getRegs()
+    return this.getRegs(JSON.parse(localStorage.getItem('rapper_token')).name)
       .then(Workspaces => Workspaces.find(Regarray => Regarray.id === id));
   }
 

@@ -20,6 +20,7 @@ export class WorkspaceComponent implements OnInit {
   error: any;
   navigated = false; // true if navigated here
   regarrays: Regarray[];
+  token:string=JSON.parse(localStorage.getItem('rapper_token')).name;
 
   public uploader:FileUploader = new FileUploader({url:NODEUPLOAD+'upload/'});
   nodeupload=NODEUPLOAD;
@@ -32,7 +33,7 @@ export class WorkspaceComponent implements OnInit {
 
   getRegarrays(): void {
     this.heroService
-      .getRegs()
+      .getRegs(this.token)
       .then(regarrays => {
         //regarrays.forEach((h:Regarray)=>{h.status=this.statustype.find(st=>st.statuscode==h.statuscode).status});
         this.regarrays = regarrays;
@@ -41,7 +42,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.route.params);
+    //console.log(this.route.params);
     this.route.params.forEach((params: Params) => {
       if(localStorage.getItem('rapper_language') ){
       let languageid=localStorage.getItem('rapper_language');
@@ -56,7 +57,7 @@ export class WorkspaceComponent implements OnInit {
       } else {
         this.navigated = false;
         this.workspace = new Workspace();
-        this.workspace.owner = JSON.parse(localStorage.getItem('rapper_token')).name;  
+        this.workspace.owner = this.token;  
         this.workspace.files=[];
         this.workspace.regs=[];
       }

@@ -26,9 +26,9 @@ export class RegsComponent implements OnInit {
     private router: Router,
     private heroService: HeroService) { }
 
-  getRegarrays(): void {
+  getRegarrays(user:string): void {
     this.heroService
-      .getRegs()
+      .getRegs(user)
       .then(regarrays => {
         //regarrays.forEach((h:Regarray)=>{h.status=this.statustype.find(st=>st.statuscode==h.statuscode).status});
         this.regarrays = regarrays;
@@ -43,13 +43,23 @@ export class RegsComponent implements OnInit {
 
   close(savedRegarray: Regarray): void {
     this.addingRegarray = false;
-    if (savedRegarray) { this.getRegarrays(); }
+    if (savedRegarray) { this.getRegarrays(JSON.parse(localStorage.getItem('rapper_token')).name); }
   }
 
   deleteRegarray(regarray: Regarray, event: any): void {
     event.stopPropagation();
+    regarray.visable=false;
+    let today= new  Date();
+    regarray.updateTime = today.toLocaleString();
+    // this.heroService
+    //     .saveRegarray(regarray)
+    //     .then(regarray => {
+    //       this.regarray = regarray; // saved regarray, w/ id if new
+    //       this.goBack(regarray);
+    //     })
+    //     .catch(error => this.error = error); // TODO: Display error message
     this.heroService
-      .deleteReg(regarray)
+      .saveRegarray(regarray)
       .then(res => {
         this.regarrays = this.regarrays.filter(h => h !== regarray);
         if (this.selectedRegarray === regarray) { this.selectedRegarray = null; }
@@ -66,7 +76,7 @@ export class RegsComponent implements OnInit {
       //this.statustype=REGSPAGE.filter(statustype=>statustype.id == languageid);
     }
 
-    this.getRegarrays();
+    this.getRegarrays(JSON.parse(localStorage.getItem('rapper_token')).name);
 
     
   }

@@ -7,6 +7,16 @@
     <input [(ngModel)]="regarray.name" placeholder="name" />
   </div>
   <div>
+    <label> {{page.regdetail_visable}}: 
+    </label>
+    <md-slide-toggle [(ngModel)]="regarray.visable"></md-slide-toggle>
+  </div>
+  <div>
+    <label> {{page.regdetail_share}}: 
+    </label>
+    <md-slide-toggle [(ngModel)]="regarray.share"></md-slide-toggle>
+  </div>
+  <div>
     <label> {{page.regdetail_createTime}}: </label>
     <input [(ngModel)]="regarray.createTime" placeholder="createTime" readonly="readonly"/>
   </div>

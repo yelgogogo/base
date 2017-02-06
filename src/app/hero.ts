@@ -4,6 +4,8 @@ export class Regarray{
   owner:string;
   description:string;
   enable:boolean;
+  share:boolean;
+  visable:boolean;
   regScope : string;
   regScopeAttr : any;
   findArray:any[];
