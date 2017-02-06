@@ -5,8 +5,8 @@ import { Engineer } from './hero';
 // {  id: 3,  name: '工程师丙',email:'a@a.com',city:'Beijing',building:'Road A3',status:'working'},  
 // {  id: 4,  name: '工程师丁',email:'a@a.com',city:'Beijing',building:'Road A3',status:'working'}
 // ];
-export const NODEUPLOAD:string='http://localhost:3100/';
-export const HOST:string='http://localhost:3100/';
+export const NODEUPLOAD:string='http://localhost:3200/';
+export const HOST:string='http://localhost:3200/';
 export const REGATTR: any[] = [
 {id:2,value:'g',name:'Global'},
 {id:2,value:'gi',name:'Global & CaseSensitive'},
