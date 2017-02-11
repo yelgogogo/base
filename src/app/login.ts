@@ -1,9 +1,11 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { HeroService } from './hero.service';
 import { LOGINPAGE } from './page-login';
 import { User } from './hero';
+import { MissionService } from './mission.service';
+import { Subscription }   from 'rxjs/Subscription';
 // import { contentHeaders } from '../common/headers';
 
 @Component({
@@ -11,11 +13,17 @@ import { User } from './hero';
   templateUrl: 'login.html',
   styleUrls: [ 'login.css' ]
 })
-export class Login implements OnInit{
+export class Login implements OnInit,OnDestroy{
   page=LOGINPAGE.find(page=>page.id == 1);
   user:User;
 
-  constructor(public router: Router, public http: Http, private heroService: HeroService) {
+  subscription: Subscription;
+
+  constructor(public router: Router, public http: Http, private heroService: HeroService, private missionService: MissionService) {
+    this.subscription = missionService.missionAnnounced$.subscribe(
+      mission => {
+        this.page=LOGINPAGE.find(page=>page.id == mission);
+    });
   }
 
 
@@ -49,4 +57,10 @@ export class Login implements OnInit{
     event.preventDefault();
     this.router.navigate(['signup']);
   }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
+  }
+
 }
