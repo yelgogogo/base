@@ -1,16 +1,25 @@
-<h2> {{page.heroes_h1}} {{latestid}} </h2>
-<h2> {{page.heroes_h2}} </h2>
-<button (click)="addWorkspace()"> {{page.heroes_button}} </button>
-<div *ngIf="addingWorkspace">
-  <my-workspace (close)="close($event)"></my-workspace>
-</div>
+<!--h2> {{page.heroes_h1}} {{latestid}} </h2>
+<h2> {{page.heroes_h2}} </h2-->
 <div class="error" *ngIf="error">{{error}}</div>
-<div *ngIf="selectedWorkspace">
-  <h2>
-    {{selectedWorkspace.name | uppercase}} is my workspace
-  </h2>
-  <button (click)="gotoWorkspace()">View Details</button>
-</div>
+<md-tab-group>
+  <md-tab *ngFor="let area of areas" label="{{area}}" >
+    <md-grid-list cols="6">
+      <md-grid-tile *ngFor="let workspace of workspaces | AreaPipe:area" 
+        [colspan]="workspace.cols"
+        [rowspan]="workspace.rows"
+        [style.background]="workspace.RoomColor" (click)="gotoWorkspace(workspace)">{{workspace.RoomName}}
+      </md-grid-tile>
+    </md-grid-list>
+  </md-tab>
+</md-tab-group>
+
+
+<!--md-grid-list cols="4">
+  <md-grid-tile *ngFor="let workspace of workspaces" [colspan]="workspace.cols"
+      [rowspan]="workspace.rows"
+      [style.background]="workspace.color" (click)="gotoWorkspace(workspace)">{{workspace.name}}</md-grid-tile>
+
+</md-grid-list>
 <div class="grid grid-pad">
   <div *ngFor="let workspace of workspaces" (click)="onSelect(workspace)" [class.selected]="workspace === selectedWorkspace">
     <div class="module workspace">
@@ -18,7 +27,7 @@
     </div>
     <button class="delete-button" (click)="deleteWorkspace(workspace, $event)">Delete</button>
   </div>
-</div>
+</div-->
 
 
 

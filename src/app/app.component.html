@@ -1,15 +1,6 @@
 <md-toolbar color="primary">
   <md-icon>home</md-icon>{{page.app_title}}
 </md-toolbar>
-    <label>语言/Language</label>
-      <select class="form-control" name="sel" 
-        [(ngModel)]="selectedLanguage" 
-        (ngModelChange)="updateLanguage($event)">
-        <option disabled value="0" class="hideoption">中文/English</option>
-        <option *ngFor="let language of languages" [ngValue]="language">
-        {{language.name}}
-      </option>
-      </select>
     <div class="header-bar"></div>
     <nav>
       <a routerLink="/login" routerLinkActive="active">{{page.app_a1}}</a>

@@ -1,154 +1,93 @@
 <div *ngIf="workspace">
-  <div>
-  <h2>{{workspace.name}} {{page.workspace_h1}}!</h2>
-  </div>
-  <div>
-    <label>id: </label>{{workspace.id}}
-  </div>
-  <div>
-    <label> {{page.workspace_employee}}: </label>
-    <input [(ngModel)]="workspace.owner" placeholder="{{page.workspace_employee}}" readonly="readonly"/>
-  </div>
-  <div>
-    <label> {{page.workspace_name}}: </label>
-    <input [(ngModel)]="workspace.name" placeholder="{{page.workspace_name}}" />
-  </div>
-  <div>
-    <md-sidenav-container class="example-container">
-
-        <md-sidenav #sidenav class="example-sidenav"><button md-button (click)="selectRegs(regarrays,$event)">Select</button>
-        <ul>
-        <li *ngFor="let regarray of regarrays"><md-checkbox [(ngModel)]="regarray.enable">{{regarray.id}}-{{regarray.name}}</md-checkbox>
-        </li>
-        </ul>
-    </md-sidenav>    
-      <!--div class="example-sidenav-content">
-        
-      </div-->
-    
-    <label> {{page.workspace_reglist}}: </label><button md-button (click)="sidenav.open()">
-          import RegExp
-        </button>
-    <ul>
-    <li *ngFor="let reg of workspace.regs" ><md-slide-toggle [(ngModel)]="reg.enable">{{reg.id}}-{{reg.owner}}-{{reg.description}}<button (click)="delReg(reg, $event)"><i class="glyphicon glyphicon-remove"></i>Unuse</button>
-    </md-slide-toggle></li>
-    </ul>
-
-    </md-sidenav-container>
-  </div>
-  <div>
-    <label> {{page.workspace_filelist}}: </label>
-        <button md-button (click)="delAll($event)"><i class="glyphicon glyphicon-trash"></i>delete All</button>
-        Run Regular Expression for all
-        <button md-button (click)="convAll($event)"><i class="glyphicon glyphicon-retweet"></i>Run For All</button>
-        download workspace as a zip file
-        <button md-button (click)="zipAll($event)"><i class="glyphicon glyphicon-compressed"></i>zip</button>
-        <label>
-        <i class="glyphicon glyphicon-download-alt"></i><a href="{{nodeupload}}{{workspace.zippath}}">download as zip</a></label>
-        <button md-button (click)="delConvAll()"><i class="glyphicon glyphicon-remove"></i>Delete Conv All</button>
-    <ul>
-    <li *ngFor="let file of workspace.files"><a href="{{nodeupload}}{{file.path}}">{{file.filename}}</a> <button (click)="delAttach(file, $event)"><i class="glyphicon glyphicon-trash"></i>delete</button>
-    <button *ngIf="workspace.id" (click)="convFile(file)"><i class="glyphicon glyphicon-refresh"></i>Conv</button>
-    <a *ngIf="file.convFlag" href="{{nodeupload}}{{file.convPath}}">converted</a><button *ngIf="file.convFlag" (click)="delConv(file)"><i class="glyphicon glyphicon-remove"></i>delete Conv</button></li>
-    </ul>
-  </div>
-  <button (click)="goBack()"> {{page.workspace_back}} </button>
-  <button (click)="save()"> {{page.workspace_save}} </button>
-
-<div *ngIf="workspace.id">
-<nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                            <li><a>File Upload</a></li>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
-                </nav>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <form>
-                                <div class="form-group">
-                                    <label for="multiple">Multiple</label>
-                                    <input type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader" multiple  />
-                                </div>
-                                <div class="form-group">
-                                    <label for="single">single</label>
-                                    <input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />                                  
-                                </div>            
-                            </form>
-                        </div>
-                        <div class="col-md-8">
-                            <h3>File Upload with Angular 2 and Node</h3>
-                            Queue length: {{ uploader?.queue?.length }}
-
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th width="50%">Name</th>
-                                    <th>Size</th>
-                                    <th>Progress</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr *ngFor="let item of uploader.queue">
-                                    <td><strong>{{ item.file.name }}</strong></td>
-                                    <td nowrap>{{ item.file.size/1024/1024 | number:'.2' }} MB</td>
-                                    <td>
-                                        <div class="progress" style="margin-bottom: 0;">
-                                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                        <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                        <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                                    </td>
-                                    <td nowrap>
-                                        <button type="button" class="btn btn-success btn-xs"
-                                                (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                                            <span class="glyphicon glyphicon-upload"></span> Upload
-                                        </button>
-                                        <button type="button" class="btn btn-warning btn-xs"
-                                                (click)="item.cancel()" [disabled]="!item.isUploading">
-                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-xs"
-                                                (click)="item.remove()">
-                                            <span class="glyphicon glyphicon-trash"></span> Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <div>
-                                <div>
-                                    Queue progress:
-                                    <div class="progress" style="">
-                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-success btn-s"
-                                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                    <span class="glyphicon glyphicon-upload"></span> Upload all
-                                </button>
-                                <button type="button" class="btn btn-warning btn-s"
-                                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                                </button>
-                                <button type="button" class="btn btn-danger btn-s"
-                                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<md-toolbar>{{workspace.RoomName}}</md-toolbar>
+<md-tab-group>
+  <md-tab label="菜单">
+    <div class="col-xs-2">
+       <md-list>
+          <md-list-item *ngFor="let goodtype of goodtypes" (click)="selectType(goodtype)">{{goodtype.GoodsTypeName}} </md-list-item>
+       </md-list>
     </div>
+    <div class="col-xs-10">
+      <md-grid-list cols="3">
+        <md-grid-tile *ngFor="let food of foods" [rowspan]="2">
+            <md-card >
+            <md-card-header>
+              <md-card-title>{{food.GoodsName}}</md-card-title>
+            </md-card-header>
+            <img md-card-image src="assets/img/wine.jpg">
+            <md-card-content>
+              <p>
+                {{food.GoodsDetails}}
+              </p>
+            </md-card-content>
+            <md-card-actions>
+              <span class="price">¥{{food.Price}}</span><button md-icon-button class="add"><md-icon>shopping_cart</md-icon></button>
+            </md-card-actions>
+          </md-card>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
+  </md-tab>
+  <md-tab label="说明"></md-tab>
+</md-tab-group>
+</div>
+
+<div >
+
+<md-nav-list>
+  <md-list-item *ngFor="let link of links">
+     <!--a md-line >{{ link }}</a-->
+     <button md-icon-button (click)="showInfo(link)">
+        <md-icon>info</md-icon>
+     </button>
+  </md-list-item>
+</md-nav-list>
+<md-list>
+  <md-list-item *ngFor="let message of messages">
+    <h3 md-line> {{message}} </h3>
+    <p md-line>
+      <span> {{message}} </span>
+      <span class="demo-2"> -- {{message}} </span>
+    </p>
+  </md-list-item>
+</md-list>
+
+<!-- three line list -->
+<md-list>
+  <md-list-item *ngFor="let message of messages">
+    <h3 md-line> {{message}} </h3>
+    <p md-line> {{message}} </p>
+    <p md-line class="demo-2"> {{message}} </p>
+  </md-list-item>
+</md-list>
+<md-list>
+  <md-list-item *ngFor="let message of messages">
+    <img md-list-avatar src="..." alt="...">
+    <h3 md-line> {{message}} </h3>
+    <p md-line>
+      <span> {{message}} </span>
+      <span class="demo-2"> -- {{message}} </span>
+    </p>
+  </md-list-item>
+</md-list>
+<md-list dense>
+ <md-list-item> Pepper </md-list-item>
+ <md-list-item> Salt </md-list-item>
+ <md-list-item> Paprika </md-list-item>
+</md-list>
+<md-list>
+   <h3 md-subheader>Folders</h3>
+   <md-list-item *ngFor="let folder of folders">
+      <md-icon md-list-avatar>folder</md-icon>
+      <h4 md-line>{{folder}}</h4>
+      <p md-line class="demo-2"> {{folder}} </p>
+   </md-list-item>
+   <md-divider></md-divider>
+   <h3 md-subheader>Notes</h3>
+   <md-list-item *ngFor="let note of notes">
+      <md-icon md-list-avatar>note</md-icon>
+      <h4 md-line>{{note}}</h4>
+      <p md-line class="demo-2"> {{note}} </p>
+   </md-list-item>
+</md-list>
 </div>

@@ -13,5 +13,6 @@ export const LOGINPAGE: any[] =
   login_placeholder1:'用户',
   login_placeholder2:'密码',
   login_button:'提交',
+  login_rmps:'记住密码',
   login_a:'注册'
 }];

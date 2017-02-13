@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-// import { InMemoryDataService } from './in-memory-data.service';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
 
 import './rxjs-extensions';
 import { AppComponent } from './app.component';
@@ -14,6 +14,8 @@ import { HeroService } from './hero.service';
 import { MaterialModule} from '@angular/material';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import 'hammerjs';
+import {AreaPipe} from './area.pipe'
+
 
 @NgModule({
   imports: [
@@ -21,12 +23,13 @@ import 'hammerjs';
     FormsModule,
     AppRoutingModule,
     HttpModule,
-//    InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 600 }),
+    InMemoryWebApiModule.forRoot(InMemoryDataService,{delay:600}),
     MaterialModule.forRoot()
   ],
   declarations: [
     AppComponent,
     FileSelectDirective,
+    AreaPipe,
     routedComponents
   ],
   providers: [

@@ -29,16 +29,62 @@ export class File {
   updateTime:string;
 }
 
+export class GoodType {
+  id:number;
+  GoodsTypeName:string;
+}
+
+export class Good {
+  DisplayOrder:number;
+  GoodsCount:number;
+  GoodsDetails:string;
+  GoodsName:string;
+  GoodsTypeName:string;
+  ID:number;
+  IsHot:boolean;
+  IsPack:boolean;
+  Price:number;
+  Remarks:string;
+  Sales:number;
+  Unit:string;
+}
+
 export class Workspace {
-  id: number;
-  name:string;
-  owner:string;
-  path:string;
-  zippath:string;
-  description:string;
-  createTime:string;
-  files:any[];
-  regs:any[];
+  ConsumeAmount:string;
+  DiscountAmount:string;
+  FColor:string;
+  GuestCount:number;
+  GuestName:string;
+  ID:string;
+  MinConsume:string;
+  OpenRoomDateTime:string;
+  PresentAmount:string;
+  PriceCase:string;
+  ReservationDateTime:string;
+  ReservationEmpName:string;
+  RoomAreaId:string;
+  RoomAreaName:string;
+  RoomCode:string;
+  RoomColor:string;
+  RoomName:string;
+  RoomOpCode:string;
+  RoomOpenTimes:string;
+  RoomStateName:string;
+  RoomTypeName:string;
+  ServiceAmount:string;
+  // id: number;
+  cols:number;
+  rows:number;
+  // color:string;
+  // area:string;
+  // name:string;
+  // owner:string;
+  // path:string;
+  // zippath:string;
+  // description:string;
+  // createTime:string;
+  // files:any[];
+  // regs:any[];
 }
 export class User {
   id: number;

@@ -18,6 +18,7 @@ export class WorkareaComponent implements OnInit {
   selectedWorkspace: Workspace;
   addingWorkspace = false;
   latestid = 18;
+  areas:string[]=['大厅','包房','外卖'];
   error: any;
 
   constructor(
@@ -26,8 +27,24 @@ export class WorkareaComponent implements OnInit {
 
   getWorkspacees(): void {
     this.heroService
-      .getWorkspaceByOwner(JSON.parse(localStorage.getItem('rapper_token')).name)
-      .then(workspaces => this.workspaces = workspaces)
+      .getWorkspaces()
+      .then(workspaces => {
+        workspaces.forEach(w=>{
+          switch (w.RoomTypeName) {
+             case "小桌":
+               w.cols=1;
+               w.rows=1;
+               // code...
+               break;
+             
+             default:
+               w.cols=1;
+               w.rows=1;
+               break;
+           } (w.RoomTypeName === "小桌" )
+
+        })
+        this.workspaces = workspaces;})
       .catch(error => this.error = error);
   }
 
@@ -66,10 +83,14 @@ export class WorkareaComponent implements OnInit {
     this.addingWorkspace = false;
   }
 
-  gotoWorkspace(): void {
-    console.log(this.selectedWorkspace.id);
-    this.router.navigate(['/workspace', this.selectedWorkspace.id]);
+  // gotoArea(selected: string): void {
+  //   this.workspaces=this.workspaces.filter(s=>s.area===selected);
+  //   console.log(this.workspaces);
+  // }
 
+  gotoWorkspace(selectedWorkspace: Workspace): void {
+    // console.log(selectedWorkspace.ID);
+    this.router.navigate(['/workspace', selectedWorkspace.ID]);
   }
 
 }

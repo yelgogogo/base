@@ -9,7 +9,7 @@ export const APPPAGE: any[] =
   app_a5:'Queue'
 },
 { id:1,
-  app_title:'智慧社区',
+  app_title:'欢迎',
   app_a1:'登录',
   app_a2:'工单',
   app_a3:'规则',

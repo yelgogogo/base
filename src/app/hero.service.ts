@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response,URLSearchParams } from '@angular/http';
-
+//import {  } from '@angular/http';
+// import { InMemoryDataService } from './in-memory-data.service';
 import 'rxjs/add/operator/toPromise';
 
-import { Workspace,Engineer,Survey,User,File,Regarray } from './Hero';
+import { Workspace,Engineer,Survey,User,File,Regarray,Good } from './Hero';
 import { HOST } from './mock-data';
+
 
 @Injectable()
 export class HeroService {
@@ -17,6 +19,7 @@ export class HeroService {
   private convUrl = HOST+'rep'; // URL to web api rep
   private downloadUrl = HOST+'download'; // URL to web api rep
   private delconvUrl = HOST+'delconvf';
+  private goodsUrl = HOST+'goods';
   constructor(private http: Http) { }
 
   
@@ -34,7 +37,21 @@ export class HeroService {
     return this.http
       .get(this.workspacesUrl)
       .toPromise()
-      .then(response => response.json() as Workspace[])
+      // .then(response => response.json() as Workspace[])
+       .then(response => {
+         // console.log(JSON.parse(response.json().data.d));
+        return JSON.parse(response.json().data.d) as Workspace[];})
+      .catch(this.handleError);
+  }
+
+  getGoods(): Promise<Good[]> {
+    return this.http
+      .get(this.goodsUrl)
+      .toPromise()
+      // .then(response => response.json() as Workspace[])
+       .then(response => {
+         // console.log(JSON.parse(response.json().data.d));
+        return JSON.parse(response.json().data.d) as Good[];})
       .catch(this.handleError);
   }
 
@@ -63,7 +80,8 @@ export class HeroService {
       .toPromise()
       .then(response => {
         console.log(response);
-        return response.json() as User[]})
+        // return response.json() as User[]})
+        return response.json().data as User[]})
       .catch(this.handleError);
   }
 
@@ -89,15 +107,17 @@ export class HeroService {
     //   .catch(this.handleError);
   }
 
-  getUserByName(user: User): Promise<User> {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('user', JSON.stringify(user));
+  getUserByName(userin: User): Promise<User> {
+    return this.getUsers()
+      .then(users => users.find(user => user.name === userin.name));
+    // let params: URLSearchParams = new URLSearchParams();
+    // params.set('user', JSON.stringify(user));
 
-    return this.http
-      .get(this.userbynameUrl,{ search: params })
-      .toPromise()
-      .then(response => response.json() as User)
-      .catch(this.handleError);
+    // return this.http
+    //   .get(this.userbynameUrl,{ search: params })
+    //   .toPromise()
+    //   .then(response => response.json() as User)
+    //   .catch(this.handleError);
   }
 
   getConv(file:File,regs:Regarray[]): Promise<File> {
@@ -138,9 +158,11 @@ export class HeroService {
       .then(Workspaces => Workspaces.find(Regarray => Regarray.id === id));
   }
 
-  getWorkspace(id: number): Promise<Workspace> {
+  getWorkspace(id: string): Promise<Workspace> {
     return this.getWorkspaces()
-      .then(Workspaces => Workspaces.find(Workspace => Workspace.id === id));
+      .then(Workspaces => {
+        return Workspaces.find(Workspace => Workspace.ID === id)
+      });
   }
 
   getSurvey(id: number): Promise<Survey> {
@@ -150,13 +172,13 @@ export class HeroService {
 
 
 
-  getWorkspaceByOwner(owner: string): Promise<Workspace[]> {
-    return this.getWorkspaces()
-      .then(Workspaces => Workspaces.filter(Workspace => Workspace.owner === owner));
-  }
+  // getWorkspaceByOwner(owner: string): Promise<Workspace[]> {
+  //   return this.getWorkspaces()
+  //     .then(Workspaces => Workspaces.filter(Workspace => Workspace.owner === owner));
+  // }
 
   save(Workspace: Workspace): Promise<Workspace> {
-    if (Workspace.id) {
+    if (Workspace.ID) {
       return this.put(Workspace);
     }
     return this.post(Workspace);
@@ -187,7 +209,7 @@ export class HeroService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    let url = `${this.workspacesUrl}/${Workspace.id}`;
+    let url = `${this.workspacesUrl}/${Workspace.ID}`;
 
     return this.http
       .delete(url, { headers: headers })
@@ -234,7 +256,7 @@ export class HeroService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    let putworkspaceurl = `${this.workspacesUrl}/${Workspace.id}`;
+    let putworkspaceurl = `${this.workspacesUrl}/${Workspace.ID}`;
 
     return this.http
       .put(putworkspaceurl, JSON.stringify(Workspace), { headers: headers })
