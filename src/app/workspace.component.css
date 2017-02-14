@@ -76,3 +76,11 @@ button:disabled {
 .price{
   float: left;
 }
+
+md-card {
+    height: 100%;
+}
+
+[md-card-image] {
+    width: 80%;
+}

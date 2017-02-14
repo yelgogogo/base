@@ -1,5 +1,5 @@
 <div *ngIf="workspace">
-<md-toolbar>{{workspace.RoomName}}</md-toolbar>
+<md-toolbar>{{workspace.RoomName}} <span *ngIf="cart"><md-icon>credit_card</md-icon>¥{{cart.Sum}}</span><button md-button (click)="addCart(food)"><md-icon>euro_symbol</md-icon>提交</button></md-toolbar>
 <md-tab-group>
   <md-tab label="菜单">
     <div class="col-xs-2">
@@ -9,85 +9,29 @@
     </div>
     <div class="col-xs-10">
       <md-grid-list cols="3">
-        <md-grid-tile *ngFor="let food of foods" [rowspan]="2">
+        <md-grid-tile *ngFor="let food of foods" [rowspan]="1">
             <md-card >
-            <md-card-header>
-              <md-card-title>{{food.GoodsName}}</md-card-title>
-            </md-card-header>
+            
             <img md-card-image src="assets/img/wine.jpg">
-            <md-card-content>
+            <!--md-card-header>
+              <md-card-title>{{food.GoodsName}} ¥{{food.Price}} / {{food.Unit}}</md-card-title>
+            </md-card-header-->
+            <!--md-card-content>
               <p>
                 {{food.GoodsDetails}}
               </p>
-            </md-card-content>
+            </md-card-content-->
             <md-card-actions>
-              <span class="price">¥{{food.Price}}</span><button md-icon-button class="add"><md-icon>shopping_cart</md-icon></button>
+              {{food.GoodsName}} ¥{{food.Price}} / {{food.Unit}}<button md-button class="add" (click)="addCart(food)"> {{food.GoodsCount}} <md-icon>shopping_cart</md-icon></button>
             </md-card-actions>
           </md-card>
         </md-grid-tile>
       </md-grid-list>
     </div>
   </md-tab>
+  <md-tab label="消费"><orderlist></orderlist></md-tab>
   <md-tab label="说明"></md-tab>
+  
 </md-tab-group>
 </div>
 
-<div >
-
-<md-nav-list>
-  <md-list-item *ngFor="let link of links">
-     <!--a md-line >{{ link }}</a-->
-     <button md-icon-button (click)="showInfo(link)">
-        <md-icon>info</md-icon>
-     </button>
-  </md-list-item>
-</md-nav-list>
-<md-list>
-  <md-list-item *ngFor="let message of messages">
-    <h3 md-line> {{message}} </h3>
-    <p md-line>
-      <span> {{message}} </span>
-      <span class="demo-2"> -- {{message}} </span>
-    </p>
-  </md-list-item>
-</md-list>
-
-<!-- three line list -->
-<md-list>
-  <md-list-item *ngFor="let message of messages">
-    <h3 md-line> {{message}} </h3>
-    <p md-line> {{message}} </p>
-    <p md-line class="demo-2"> {{message}} </p>
-  </md-list-item>
-</md-list>
-<md-list>
-  <md-list-item *ngFor="let message of messages">
-    <img md-list-avatar src="..." alt="...">
-    <h3 md-line> {{message}} </h3>
-    <p md-line>
-      <span> {{message}} </span>
-      <span class="demo-2"> -- {{message}} </span>
-    </p>
-  </md-list-item>
-</md-list>
-<md-list dense>
- <md-list-item> Pepper </md-list-item>
- <md-list-item> Salt </md-list-item>
- <md-list-item> Paprika </md-list-item>
-</md-list>
-<md-list>
-   <h3 md-subheader>Folders</h3>
-   <md-list-item *ngFor="let folder of folders">
-      <md-icon md-list-avatar>folder</md-icon>
-      <h4 md-line>{{folder}}</h4>
-      <p md-line class="demo-2"> {{folder}} </p>
-   </md-list-item>
-   <md-divider></md-divider>
-   <h3 md-subheader>Notes</h3>
-   <md-list-item *ngFor="let note of notes">
-      <md-icon md-list-avatar>note</md-icon>
-      <h4 md-line>{{note}}</h4>
-      <p md-line class="demo-2"> {{note}} </p>
-   </md-list-item>
-</md-list>
-</div>

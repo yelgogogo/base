@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Workspace,Regarray,File,Good,GoodType } from './hero';
+import { Workspace,Regarray,File,Good,GoodType,Cart } from './hero';
 import { HeroService } from './hero.service';
 import { CATEGORIES,NODEUPLOAD } from './mock-data';
 import { WORKSPACEPAGE } from './page-workspace';
@@ -27,6 +27,7 @@ export class WorkspaceComponent implements OnInit {
   goodtypes:GoodType[]=[];
   curtypeid:number=1;
   foods:Good[];
+  cart:Cart;
 
   links=['a','b','c'];
   messages=['d','e','f'];
@@ -46,10 +47,13 @@ export class WorkspaceComponent implements OnInit {
       let id = params['id'];
       this.heroService.getWorkspace(id)
         .then(workspace => {
-          this.workspace = workspace; 
+          this.workspace = workspace;
+          this.getCart(workspace);
         })
         .catch(error => this.error = error); 
       });
+
+    
 
     this.heroService.getGoods()
         .then(goods => {
@@ -63,8 +67,41 @@ export class WorkspaceComponent implements OnInit {
           }); 
         })
         .catch(error => this.error = error); 
-      
+
+  }
+
+  getCart(wk:Workspace): void {
+    this.heroService.getCart(wk)
+        .then(c => { this.cart = c })
+        .catch(error => this.error = error); 
+  }
+
+  addCart(select:Good): void {
     
+    let flag = false;
+    console.log(select);
+    let sum = 0;
+    
+    this.cart.goods.forEach(function (gd, i) {
+      if(gd.ID === select.ID) {
+        gd.GoodsCount = (gd.GoodsCount || 0) + 1 ;
+        // gd.chili = true;
+        flag = true;
+      }
+      console.log(select);
+      sum+=  (gd.GoodsCount || 0) * gd.Price      
+    });
+    if(!flag) {
+      console.log(select);
+      select.GoodsCount += 1;
+      // goods.chili = true;
+      // let tmp:Good =select;
+      sum += select.GoodsCount  * select.Price;
+      this.cart.goods.push(select);
+      console.log(select);
+    }
+    this.cart.Sum = sum;
+    console.log(this.cart);
   }
 
   selectType(select:GoodType): void {

@@ -4,7 +4,7 @@ import { Headers, Http, Response,URLSearchParams } from '@angular/http';
 // import { InMemoryDataService } from './in-memory-data.service';
 import 'rxjs/add/operator/toPromise';
 
-import { Workspace,Engineer,Survey,User,File,Regarray,Good } from './Hero';
+import { Workspace,Engineer,Survey,User,File,Regarray,Good,Cart,Order } from './hero';
 import { HOST } from './mock-data';
 
 
@@ -20,9 +20,37 @@ export class HeroService {
   private downloadUrl = HOST+'download'; // URL to web api rep
   private delconvUrl = HOST+'delconvf';
   private goodsUrl = HOST+'goods';
+  private ordersUrl = HOST+'orders';
   constructor(private http: Http) { }
 
-  
+  getCart(wk:Workspace):Promise<Cart> {
+    let cartdata= new Cart();
+    if(localStorage.getItem('base_cart') ){
+      let localdata=JSON.parse(localStorage.getItem('base_cart'));
+      if (localdata.RoomOpCode === wk.RoomOpCode){
+        cartdata = localdata;
+      }else{
+        cartdata.ID = wk.ID;
+        cartdata.Sum = 0; 
+        cartdata.RoomCode = wk.RoomCode; 
+        cartdata.RoomOpCode = wk.RoomOpCode;
+        cartdata.RoomName = wk.RoomName; 
+        cartdata.RoomTypeName = wk.RoomTypeName;   
+        cartdata.goods = []; 
+      } 
+    }else{
+        cartdata.ID = wk.ID;
+        cartdata.Sum = 0; 
+        cartdata.RoomOpCode = wk.RoomOpCode;
+        cartdata.RoomCode = wk.RoomCode; 
+        cartdata.RoomName = wk.RoomName; 
+        cartdata.RoomTypeName = wk.RoomTypeName;   
+        cartdata.goods = []; 
+    } 
+    let body = JSON.stringify(cartdata);
+    localStorage.setItem('base_cart', body);
+    return Promise.resolve(cartdata);
+  }
 
   getEngineers(): Promise<Engineer[]> {
     return this.http
@@ -31,6 +59,17 @@ export class HeroService {
       .then(response => response.json().data as Engineer[])
       .catch(this.handleError);
     // return Promise.resolve(ENGINEERS);
+  }
+
+  getOrders(): Promise<Order[]> {
+    return this.http
+      .get(this.ordersUrl)
+      .toPromise()
+      // .then(response => response.json() as Workspace[])
+       .then(response => {
+         // console.log(JSON.parse(response.json().data.d));
+        return JSON.parse(response.json().data.d) as Order[];})
+      .catch(this.handleError);
   }
 
   getWorkspaces(): Promise<Workspace[]> {

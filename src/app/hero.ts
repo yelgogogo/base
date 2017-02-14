@@ -12,6 +12,36 @@ export class Regarray{
   createTime:string;
   updateTime:string;
 }
+export class Order {
+  BackColor:string;
+  CanceledUser:string;
+  ForeColor:string;
+  GoodsCount:number;
+  GoodsID:number;
+  GoodsName:string;
+  GoodsTypeName:string;
+  IsCanceled:boolean;
+  IsDazhe:boolean;
+  IsPresent:boolean;
+  MaxDazhe:number;
+  OpCode:string;
+  OrderDetailID:number;
+  OrderID:number;
+  OrderSerialNumber:string;
+  OrderTime:string;
+  PackNo:number;
+  PresentUser:string;
+  PresentWay:string;
+  Price:number;
+  ProduceSerialNumber:string;
+  ProduceSite:string;
+  Remarks:string;
+  RoomName:string;
+  SendUser:string;
+  Status:string;
+  SubTotal:number;
+  Unit:string;
+}
 export class findReg {
   regFind : string;
   regFindAttr : any;
@@ -47,6 +77,17 @@ export class Good {
   Remarks:string;
   Sales:number;
   Unit:string;
+}
+
+export class Cart {
+  ID:string;
+  RoomCode:string;
+  RoomName:string;
+  RoomOpCode:string;
+  RoomTypeName:string;
+  Sum:number;
+  goods:Good[];
+
 }
 
 export class Workspace {
