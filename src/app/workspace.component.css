@@ -54,7 +54,7 @@ body {
 }
 
 md-sidenav {
-    right: 0;
+   /* right: 0;*/
 }
 
 button {
@@ -70,7 +70,7 @@ button:disabled {
 }
 
 .add{
-  float: right;
+  right: 0
 }
 
 .price{
@@ -107,5 +107,52 @@ md-card {
 }
 
 [md-mini-fab]{
-  border-radius: 50%
+/*  box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline: 0;
+    border: none;
+    display: inline-block;*/
+    /* white-space: nowrap; */
+/*    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 14px;*/
+    /* font-family: Roboto,"Helvetica Neue",sans-serif; */
+    /* font-weight: 500; */
+    /* color: currentColor; */
+    text-align: center;
+    margin: 0;
+    min-width: 30px;
+    /* line-height: 36px; */
+    padding: 0 0px;
+  border-radius: 50%;
+/*      height: 30px;
+      width: 30px;*/
 }
+
+.col-xs-3{
+  padding: 0;
+}
+
+.food-img{
+    position: absolute;
+    /* top: 0px; */
+    top: -30%;;
+    width: 100%;
+    height: 10%;
+}
+
+.food-content{
+    position: absolute;
+    /* top: 0px; */
+  /*  bottom: 30px;*/
+    bottom: 40%;
+    width: 100%;
+    height: 10%;
+    text-align: right;
+}
+

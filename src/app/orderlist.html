@@ -1,10 +1,11 @@
 <md-list>
   <md-list-item *ngFor="let order of orders">
     <img md-list-avatar src="assets/img/wine.jpg" alt="assets/img/wine.jpg">
-    <h3 md-line> {{order.GoodsName}} </h3>
+    <h3 md-line> {{order.GoodsName}} <span>¥ {{order.SubTotal}}</span></h3>
     <p md-line>
       
       <span> ¥ {{order.Price}} / {{order.Unit}}</span>
+      <span> X </span>
       <span> {{order.GoodsCount}} </span>
     </p>
   </md-list-item>

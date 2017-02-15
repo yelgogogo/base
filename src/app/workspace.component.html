@@ -1,12 +1,17 @@
 <div *ngIf="workspace">
 <md-sidenav-container class="example-container">
-  <md-sidenav #sidenav  class="example-sidenav">
-    ¥{{cart.Sum}}<button md-button (click)="sidenav.open()"><md-icon>credit_card</md-icon>提交</button>
+  <md-sidenav #sidenav  class="example-sidenav" align="end">
+    预计消费: ¥{{cart.Sum}}<button md-button (click)="sidenav.open()"><md-icon>credit_card</md-icon>提交</button>
     <md-chip-list class="md-chip-list-stacked">
-      <md-chip *ngFor="let good of cart.goods"
-          selected="true" >
+
+      <p *ngFor="let good of cart.goods">
+      <md-chip *ngIf="good.GoodsCount>0"
+          selected="true" color="accent">
+        
         <button md-mini-fab (click)="deleteCart(good)" ><md-icon>delete</md-icon></button> {{good.GoodsName}} ¥ {{good.Price}} / {{good.Unit}} <button md-mini-fab (click)="removeCart(good)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addCart(good)"><md-icon>add</md-icon></button>
+        
       </md-chip>
+      </p>
     </md-chip-list>
     <!--md-list>
       <md-list-item *ngFor="let good of cart.goods" >
@@ -21,32 +26,33 @@
       </md-list-item>
     </md-list-->
   </md-sidenav>
-  <md-toolbar>{{workspace.RoomName}} <span *ngIf="cart"><md-icon>credit_card</md-icon>¥{{cart.Sum}}</span><button md-button (click)="sidenav.open()"><md-icon>euro_symbol</md-icon>提交</button></md-toolbar>
+  <md-toolbar>{{workspace.RoomName}} <span *ngIf="cart"><md-icon>credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span><button md-button (click)="sidenav.open()">¥{{cart.Sum}}<md-icon>shopping_cart</md-icon>提交</button></md-toolbar>
   <md-tab-group>
     <md-tab label="菜单">
-      <div class="col-xs-2">
+      <div class="col-xs-3">
          <md-list>
             <md-list-item *ngFor="let goodtype of goodtypes" (click)="selectType(goodtype)">{{goodtype.GoodsTypeName}} </md-list-item>
          </md-list>
       </div>
-      <div class="col-xs-10">
+      <div class="col-xs-9">
         <md-grid-list cols="2">
           <md-grid-tile *ngFor="let food of foods" [rowspan]="1">
-              <md-card >
-              
+     
+              <div class="food-img">
               <img md-card-image src="assets/img/wine.jpg">
-              <!--md-card-header>
-                <md-card-title>{{food.GoodsName}} ¥{{food.Price}} / {{food.Unit}}</md-card-title>
-              </md-card-header-->
+              </div>
+   
               <!--md-card-content>
                 <p>
                   {{food.GoodsDetails}}
                 </p>
               </md-card-content-->
-              <md-card-actions>
-                {{food.GoodsName}} ¥{{food.Price}} / {{food.Unit}}<button md-button class="add" (click)="addCart(food)"> {{food.GoodsCount}} <md-icon>shopping_cart</md-icon></button>
-              </md-card-actions>
-            </md-card>
+          
+              <div class="food-content">
+                {{food.GoodsName}} ¥{{food.Price}}<br><span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span><span><button md-mini-fab (click)="addCart(food)" ><md-icon>add</md-icon></button></span>
+             
+              </div>
+    
           </md-grid-tile>
         </md-grid-list>
       </div>

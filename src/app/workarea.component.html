@@ -3,7 +3,7 @@
 <div class="error" *ngIf="error">{{error}}</div>
 <md-tab-group>
   <md-tab *ngFor="let area of areas" label="{{area}}" >
-    <md-grid-list cols="6">
+    <md-grid-list cols="4">
       <md-grid-tile *ngFor="let workspace of workspaces | AreaPipe:area" 
         [colspan]="workspace.cols"
         [rowspan]="workspace.rows"
