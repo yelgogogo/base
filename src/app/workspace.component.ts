@@ -77,32 +77,64 @@ export class WorkspaceComponent implements OnInit {
   }
 
   addCart(select:Good): void {
-    
     let flag = false;
-    console.log(select);
     let sum = 0;
-    
     this.cart.goods.forEach(function (gd, i) {
       if(gd.ID === select.ID) {
         gd.GoodsCount = (gd.GoodsCount || 0) + 1 ;
+        select.GoodsCount=gd.GoodsCount;
         // gd.chili = true;
         flag = true;
       }
-      console.log(select);
       sum+=  (gd.GoodsCount || 0) * gd.Price      
     });
     if(!flag) {
-      console.log(select);
       select.GoodsCount += 1;
-      // goods.chili = true;
-      // let tmp:Good =select;
       sum += select.GoodsCount  * select.Price;
       this.cart.goods.push(select);
-      console.log(select);
     }
     this.cart.Sum = sum;
-    console.log(this.cart);
+    let body = JSON.stringify(this.cart);
+    localStorage.setItem('base_cart', body);
   }
+
+  removeCart(select:Good): void {
+    let flag = false;
+    let sum = 0;
+    this.cart.goods.forEach(function (gd, i) {
+      if(gd.ID === select.ID) {
+        gd.GoodsCount = (gd.GoodsCount || 0) - 1 ;
+        if (gd.GoodsCount < 0) gd.GoodsCount = 0;
+        select.GoodsCount=gd.GoodsCount;
+        flag = true;
+      }
+      sum+=  (gd.GoodsCount || 0) * gd.Price      
+    });
+    if(!flag) {
+      select.GoodsCount -= 1;
+      if (select.GoodsCount < 0) select.GoodsCount = 0;
+      sum += select.GoodsCount  * select.Price;
+      this.cart.goods.push(select);
+    }
+    this.cart.Sum = sum;
+    let body = JSON.stringify(this.cart);
+    localStorage.setItem('base_cart', body);
+  }
+
+  deleteCart(select:Good): void {
+    let sum = 0;
+    this.cart.goods.forEach(function (gd, i) {
+      if(gd.ID === select.ID) {
+        gd.GoodsCount = 0 ;
+        select.GoodsCount=gd.GoodsCount;
+      }
+      sum+=  (gd.GoodsCount || 0) * gd.Price      
+    });
+    this.cart.Sum = sum;
+    let body = JSON.stringify(this.cart);
+    localStorage.setItem('base_cart', body);
+  }
+
 
   selectType(select:GoodType): void {
     this.foods = this.goods.filter(g=>g.DisplayOrder===select.id);
