@@ -27,6 +27,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 0,title:'',categoryid:0,category:'',  area:'', subarea:'',  status:'',  statuscode:0,  q1: 0,  q1txt:'',  a1: 0,  q2: 0,  q2txt:'',  a2: 0,  q3: 0,  q3txt:'',  a3: 0},
       { id: 14,title:'',categoryid:0,category:'',  area:'', subarea:'',  status:'',  statuscode:0,  q1: 0,  q1txt:'',  a1: 1,  q2: 0,  q2txt:'',  a2: 1,  q3: 0,  q3txt:'',  a3: 1}
     ];
+    let manager = {"d":"[{\"RoomTotal\":20,\"RoomOpenTotal\":3,\"RoomOpen\":4,\"RoomPosed\":5,\"HallTotal\":21,\"HallOpenTotal\":6,\"HallOpen\":7,\"HallPosed\":8,\"PosedAmount\":9,\"PosedRoomAmount\":10,\"PosedHallAmount\":11,\"PosingAmount\":12,\"PosFinallyAmount\":13,\"ConsumeAmount\":14,\"SumServiceAmount\":15,\"SumDiscountAmount\":16,\"PresentAmount\":17,\"PresentAmountEmp\":18,\"PresentAmountCompany\":19,\"CurrentBill\":[]}]"};
     let users = [
       {id:1,name:'Michael',email:'001@wic.com',city:'Beijing',building:'Road A3',status:'online'},
       {id:2,name:'Michael',email:'002@wic.com',city:'Beijing',building:'Road A3',status:'online'},
@@ -36,6 +37,6 @@ export class InMemoryDataService implements InMemoryDbService {
       {id:6,name:'Michael',email:'006@wic.com',city:'Beijing',building:'Road A3',status:'online'}
     ];
 
-    return { workspaces,regs,engineers,surveys,users,goods,orders };
+    return { workspaces,regs,engineers,surveys,users,goods,orders,manager };
   }
 }

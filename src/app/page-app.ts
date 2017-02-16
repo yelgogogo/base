@@ -12,7 +12,7 @@ export const APPPAGE: any[] =
   app_title:'欢迎',
   app_a1:'登录',
   app_a2:'工单',
-  app_a3:'规则',
+  app_a3:'经理查询',
   app_a4:'公示板',
   app_a5:'队列'
 }];

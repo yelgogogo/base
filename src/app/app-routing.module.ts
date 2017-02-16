@@ -5,7 +5,7 @@ import { WorkareaComponent } from './workarea.component';
 import { WorkspaceComponent } from './workspace.component';
 import { Login } from './login';
 import { SignupComponent } from './signup.component'
-import {RegsComponent} from './regs.component'
+import {ManagerComponent} from './manager.component'
 import {RegDetailComponent} from './regdetail.component'
 
 const routes: Routes = [
@@ -31,8 +31,8 @@ const routes: Routes = [
     component: WorkareaComponent
   },
   {
-    path: 'regs',
-    component: RegsComponent
+    path: 'mng',
+    component: ManagerComponent
   },
   {
     path: 'regdetail/:id',
@@ -46,4 +46,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routedComponents = [Login,SignupComponent, WorkareaComponent, WorkspaceComponent,RegDetailComponent,RegsComponent];
+export const routedComponents = [Login,SignupComponent, WorkareaComponent, WorkspaceComponent,RegDetailComponent,ManagerComponent];

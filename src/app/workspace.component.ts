@@ -137,6 +137,7 @@ export class WorkspaceComponent implements OnInit {
 
 
   selectType(select:GoodType): void {
+    this.curtypeid = select.id;
     this.foods = this.goods.filter(g=>g.DisplayOrder===select.id);
   }
 

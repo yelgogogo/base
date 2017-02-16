@@ -79,6 +79,28 @@ export class Good {
   Unit:string;
 }
 
+export class Manager{
+  ConsumeAmount:number;
+  CurrentBill:any[];
+  HallOpen:number;
+  HallOpenTotal:number;
+  HallPosed:number;
+  HallTotal:number;
+  PosFinallyAmount:number;
+  PosedAmount:number;
+  PosedHallAmount:number;
+  PosedRoomAmount:number;
+  PosingAmount:number;
+  PresentAmount:number;
+  PresentAmountCompany:number;
+  PresentAmountEmp:number;
+  RoomOpen:number;
+  RoomOpenTotal:number;
+  RoomPosed:number;
+  RoomTotal:number;
+  SumDiscountAmount:number;
+  SumServiceAmount:number;
+}
 export class Cart {
   ID:string;
   RoomCode:string;

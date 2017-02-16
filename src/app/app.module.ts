@@ -16,7 +16,9 @@ import { MaterialModule} from '@angular/material';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import 'hammerjs';
 import {AreaPipe} from './area.pipe'
-
+// import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+// import { BarChartDemoComponent } from './components/charts/bar-chart-demo';
 
 @NgModule({
   imports: [
@@ -25,12 +27,14 @@ import {AreaPipe} from './area.pipe'
     AppRoutingModule,
     HttpModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService,{delay:600}),
+    ChartsModule,
     MaterialModule.forRoot()
   ],
   declarations: [
     AppComponent,
     FileSelectDirective,
     AreaPipe,OrderList,
+    // BarChartDemoComponent,
     routedComponents
   ],
   providers: [

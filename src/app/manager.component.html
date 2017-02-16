@@ -1,0 +1,32 @@
+<h2>{{page.queue_h1}}</h2>
+<div>
+  <div class="bar" >
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+
+  <md-button-toggle-group name="pies" [(ngModel)]="favoritePie" (ngModelChange)="selectLabel(favoritePie)">
+  <md-button-toggle *ngFor="let pie of cLabel" [value]="pie">
+    {{pie}}
+  </md-button-toggle>
+  </md-button-toggle-group>
+
+  <div class="bar" >
+  <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+</div>
+</div>
+
+
+
+

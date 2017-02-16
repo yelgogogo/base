@@ -88,9 +88,16 @@ export class WorkareaComponent implements OnInit {
   //   console.log(this.workspaces);
   // }
 
-  gotoWorkspace(selectedWorkspace: Workspace): void {
+  gotoWorkspace(selected: Workspace): void {
+    if (selected.RoomStateName === "空房" || selected.RoomStateName === "买单"){
+      alert("未开房或者已买单");
+    }else{
+      this.router.navigate(['/workspace', selected.ID]);  
+    }
+
+
     // console.log(selectedWorkspace.ID);
-    this.router.navigate(['/workspace', selectedWorkspace.ID]);
+    
   }
 
 }

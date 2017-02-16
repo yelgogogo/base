@@ -4,7 +4,7 @@ import { Headers, Http, Response,URLSearchParams } from '@angular/http';
 // import { InMemoryDataService } from './in-memory-data.service';
 import 'rxjs/add/operator/toPromise';
 
-import { Workspace,Engineer,Survey,User,File,Regarray,Good,Cart,Order } from './hero';
+import { Workspace,Engineer,Survey,User,File,Regarray,Good,Cart,Order,Manager } from './hero';
 import { HOST } from './mock-data';
 
 
@@ -21,6 +21,8 @@ export class HeroService {
   private delconvUrl = HOST+'delconvf';
   private goodsUrl = HOST+'goods';
   private ordersUrl = HOST+'orders';
+  private managerUrl = HOST+'manager';
+  
   constructor(private http: Http) { }
 
   getCart(wk:Workspace):Promise<Cart> {
@@ -59,6 +61,18 @@ export class HeroService {
       .then(response => response.json().data as Engineer[])
       .catch(this.handleError);
     // return Promise.resolve(ENGINEERS);
+  }
+
+
+  getManager(): Promise<Manager[]> {
+    return this.http
+      .get(this.managerUrl)
+      .toPromise()
+      // .then(response => response.json() as Workspace[])
+       .then(response => {
+         // console.log(JSON.parse(response.json().data.d));
+        return JSON.parse(response.json().data.d) as Manager[];})
+      .catch(this.handleError);
   }
 
   getOrders(): Promise<Order[]> {

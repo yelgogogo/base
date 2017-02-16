@@ -63,9 +63,15 @@ button:hover {
   background-color: #cfd8dc;
 }
 .error {color:red;}
+
 button.delete-button{
   float:right;
   background-color: gray !important;
   background-color: rgb(216,59,1) !important;
   color:white;
+}
+
+.bar{
+  display: block;
+  max-width: 768px;
 }
