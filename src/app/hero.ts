@@ -102,13 +102,18 @@ export class Manager{
   SumServiceAmount:number;
 }
 export class Cart {
-  ID:string;
+  storename:string;
   RoomCode:string;
   RoomName:string;
+  isPresent:boolean;
+  roomID:string;
+  userNo:string;
+  cardNo:string;
+  orderType:string;
   RoomOpCode:string;
   RoomTypeName:string;
   Sum:number;
-  goods:Good[];
+  SubmitOrders:Good[];
 
 }
 
@@ -151,8 +156,10 @@ export class Workspace {
 }
 export class User {
   id: number;
-  name: string;
+  user: string;
+  username: string;
   password: string;
+  rights:string[];
   email:string;
   city: string;
   building: string;

@@ -38,18 +38,19 @@ export class Login implements OnInit,OnDestroy{
   login(event: any, user:string, password:string) {
     event.preventDefault();
     
-    this.user.name=user;
+    this.user.username=user;
     this.user.password=password;
     
     this.heroService.getUserByName(this.user)
       .then(useri => 
         {
-          this.user = useri;
-          let name=this.user.name;
-          let email=this.user.email;
-          let body = JSON.stringify({name,email });
+          this.user=useri;
+          this.user.username = user;
+          let body = JSON.stringify(this.user);
           localStorage.setItem('rapper_token', body);
+          console.log('login');
           this.router.navigate(['workarea']);
+
         });
   }
 

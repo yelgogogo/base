@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 import { Workspace } from './hero';
 import { HeroService } from './hero.service';
 import { WORKAREAPAGE } from './page-workarea';
@@ -18,7 +19,7 @@ export class WorkareaComponent implements OnInit {
   selectedWorkspace: Workspace;
   addingWorkspace = false;
   latestid = 18;
-  areas:string[]=['大厅','包房','外卖'];
+  areas:any[]=[];
   error: any;
 
   constructor(
@@ -29,21 +30,27 @@ export class WorkareaComponent implements OnInit {
     this.heroService
       .getWorkspaces()
       .then(workspaces => {
+        let uniarea= new Set();
         workspaces.forEach(w=>{
-          switch (w.RoomTypeName) {
-             case "小桌":
+          uniarea.add(JSON.stringify({RoomAreaId:w.RoomAreaId,RoomAreaName:w.RoomAreaName}));
+          
+          // switch (w.RoomTypeName) {
+          //    case "小桌":
                w.cols=1;
                w.rows=1;
                // code...
-               break;
+        //        break;
              
-             default:
-               w.cols=1;
-               w.rows=1;
-               break;
-           } (w.RoomTypeName === "小桌" )
+        //      default:
+        //        w.cols=1;
+        //        w.rows=1;
+        //        break;
+        //    } (w.RoomTypeName === "小桌" )
 
-        })
+         })
+        console.log(uniarea);
+        uniarea.forEach(u=>this.areas.push(JSON.parse(u)));
+        // this.areas.sort();
         this.workspaces = workspaces;})
       .catch(error => this.error = error);
   }
@@ -89,10 +96,11 @@ export class WorkareaComponent implements OnInit {
   // }
 
   gotoWorkspace(selected: Workspace): void {
-    if (selected.RoomStateName === "空房" || selected.RoomStateName === "买单"){
-      alert("未开房或者已买单");
-    }else{
+    if (selected.RoomStateName === "消费" || selected.RoomStateName === "开房"){
+      
       this.router.navigate(['/workspace', selected.ID]);  
+    }else{
+      // alert("未开房或者已买单");
     }
 
 

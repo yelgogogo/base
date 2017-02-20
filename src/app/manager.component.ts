@@ -19,6 +19,9 @@ export class ManagerComponent implements OnInit {
   manager:Manager;
   cLabel:any[];
   cData:any[];
+
+  pieTitle={area:'',amount:0};
+
   constructor(
     private router: Router,
     private heroService: HeroService) { }
@@ -39,21 +42,26 @@ export class ManagerComponent implements OnInit {
   selectLabel(sel:string):void{
     // console.log(this.cData);
     // console.log(this.cData.filter(f=>f.label===sel));
-    
+    //this.doughnutChartLabels = ['已收款 ¥'+this.doughnutChartData[0], '预计未收款 ¥'+this.doughnutChartData[1]];
     this.barChartData=this.cData;
     let clone = JSON.parse(JSON.stringify(this.cData));
+    this.pieTitle.area=sel;
     switch (sel) {
-      case "全部":
+      case '全部':
+        this.pieTitle.amount=this.manager.PosFinallyAmount;
         break;
-      case "包房":
-        this.doughnutChartData=[this.manager.RoomPosed,(this.manager.RoomTotal-this.manager.RoomPosed)];
+      case '包房':
+        this.pieTitle.amount=this.manager.PosedRoomAmount;
+        this.doughnutChartData=[this.manager.PosedRoomAmount,this.manager.PosingAmount];
+
         clone.forEach(data=>{
           if (data.label !==sel){data.data=[0, 0, 0, 0]};
           });
         this.barChartData = clone;
         break;
-      case "大厅":    
-        this.doughnutChartData=[this.manager.HallPosed,(this.manager.HallTotal-this.manager.HallPosed)];
+      case '大厅':  
+        this.pieTitle.amount=this.manager.PosedHallAmount;  
+        this.doughnutChartData=[this.manager.PosedHallAmount,0];
            
         clone.forEach(data=>{
           if (data.label !==sel){data.data=[0, 0, 0, 0]};
@@ -61,31 +69,57 @@ export class ManagerComponent implements OnInit {
         this.barChartData = clone;
         break;
     }
-
   }
 
   getManager(wk:string): void {
     this.heroService.getManager()
         .then(c => { this.manager = c[0];
-          this.barChartLabels=['累计开台', '累计开台','当前开台', '已经结帐'];
+          this.barChartLabels=['房间总数','当前开台', '累计开台','已经结帐' ];
           this.cLabel=['全部', '大厅','包房'];
           this.cData= [
-    {data: [this.manager.HallOpen, this.manager.HallOpenTotal, this.manager.HallPosed, this.manager.HallTotal], label: '大厅'},
-    {data: [this.manager.RoomOpen, this.manager.RoomOpenTotal, this.manager.RoomPosed, this.manager.RoomTotal], label: '包房'}];
-    this.doughnutChartData=[this.manager.PosedAmount,this.manager.PosingAmount];
-    // console.log(this.manager);
-    // console.log(this.cData);
-    this.barChartData=this.cData; 
+            {data: [this.manager.HallTotal,this.manager.HallOpen, this.manager.HallOpenTotal, this.manager.HallPosed], label: '大厅'},
+            {data: [ this.manager.RoomTotal,this.manager.RoomOpen, this.manager.RoomOpenTotal, this.manager.RoomPosed], label: '包房'}];
+          this.doughnutChartData=[this.manager.PosedAmount,this.manager.PosingAmount];
+          // console.log(this.manager);
+          this.barChartData=this.cData;
+          this.pieTitle.area='全部';
+          this.pieTitle.amount=this.manager.PosFinallyAmount;
         })
         .catch(error => this.error = error); 
     }
 
 //-------------chart---------------
    public barChartOptions:any = {
-    scaleShowVerticalLines: false,
+     title: {
+            display: true,
+            fontSize:18,
+            text: '房台统计'
+        },
+     tooltips :{
+       titleFontSize:18,
+       bodyFontSize:18,
+     },
+     animation: {
+      duration: 500,
+      onComplete: function () {
+          // render the value of the chart above the bar
+          var ctx = this.chart.ctx;
+          //ctx.font = this.chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
+          ctx.fillStyle = this.chart.config.options.defaultFontColor;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          this.data.datasets.forEach(function (dataset) {
+              for (var i = 0; i < dataset.data.length ; i++) {
+                  if ( dataset.data[i] > 0) 
+                  {var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                      
+                              ctx.fillText(dataset.data[i], model.x, model.y - 5);}
+              }
+          });
+      }},
     responsive: true
   };
-  public barChartLabels:string[] = ['累计开台', '累计开台','当前开台', '已经结帐'];
+  public barChartLabels:string[] = ['房间总数','当前开台', '累计开台','已经结帐'];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
  
@@ -120,10 +154,11 @@ export class ManagerComponent implements OnInit {
    }
 //-------------pie---------------
   // Doughnut
-  public doughnutChartLabels:string[] = ['已收款', '预计未收款'];
+  public doughnutChartLabels:string[] = ['已收款', '未收款'];
   public doughnutChartData:number[] = [0, 0];
   public doughnutChartType:string = 'doughnut';
- 
+   public doughnutOptions:any = { };
+
   // events
   // public chartClicked(e:any):void {
   //   console.log(e);

@@ -1,10 +1,10 @@
 <!--h2> {{page.heroes_h1}} {{latestid}} </h2>
 <h2> {{page.heroes_h2}} </h2-->
 <div class="error" *ngIf="error">{{error}}</div>
-<md-tab-group>
-  <md-tab *ngFor="let area of areas" label="{{area}}" >
+<md-tab-group *ngIf="areas">
+  <md-tab *ngFor="let area of areas | orderBy:'RoomAreaId'" label="{{area.RoomAreaName}}" >
     <md-grid-list cols="4">
-      <md-grid-tile *ngFor="let workspace of workspaces | AreaPipe:area" 
+      <md-grid-tile *ngFor="let workspace of workspaces | AreaPipe:area.RoomAreaName" 
         [colspan]="workspace.cols"
         [rowspan]="workspace.rows"
         [style.background]="workspace.RoomColor" (click)="gotoWorkspace(workspace)">{{workspace.RoomName}}

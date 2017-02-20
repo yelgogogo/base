@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit{
   signup(event: any, user:string, password:string,email:string) {
     event.preventDefault();
     
-    this.user.name=user;
+    this.user.user=user;
     this.user.password=password;
     this.user.email=email;
     

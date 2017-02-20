@@ -1,10 +1,10 @@
-import { RapperPage } from './app.po';
+import { TtPage } from './app.po';
 
-describe('rapper App', function() {
-  let page: RapperPage;
+describe('tt App', () => {
+  let page: TtPage;
 
   beforeEach(() => {
-    page = new RapperPage();
+    page = new TtPage();
   });
 
   it('should display message saying app works', () => {

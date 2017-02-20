@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class RapperPage {
+export class TtPage {
   navigateTo() {
     return browser.get('/');
   }
