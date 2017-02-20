@@ -19,6 +19,7 @@ export class ManagerComponent implements OnInit {
   manager:Manager;
   cLabel:any[];
   cData:any[];
+  cData2:any[];
 
   pieTitle={area:'',amount:0};
 
@@ -79,9 +80,21 @@ export class ManagerComponent implements OnInit {
           this.cData= [
             {data: [this.manager.HallTotal,this.manager.HallOpen, this.manager.HallOpenTotal, this.manager.HallPosed], label: '大厅'},
             {data: [ this.manager.RoomTotal,this.manager.RoomOpen, this.manager.RoomOpenTotal, this.manager.RoomPosed], label: '包房'}];
+            this.cData2= [
+            {data:  [
+                      this.manager.PosFinallyAmount,
+                      this.manager.PosingAmount, 
+                      this.manager.PosedAmount, 
+                      this.manager.PosedHallAmount, 
+                      this.manager.PosedRoomAmount, 
+                      this.manager.PresentAmount, 
+                      this.manager.PresentAmountEmp, 
+                      this.manager.PresentAmountCompany
+                    ], label: '大厅'}];
           this.doughnutChartData=[this.manager.PosedAmount,this.manager.PosingAmount];
           // console.log(this.manager);
           this.barChartData=this.cData;
+          this.barChartData2=this.cData2;
           this.pieTitle.area='全部';
           this.pieTitle.amount=this.manager.PosFinallyAmount;
         })
@@ -128,7 +141,66 @@ export class ManagerComponent implements OnInit {
     ,
     {data: [0, 0, 0, 0], label: '包房'}
     ];
+ //-------------chart2---------------
+   public barChartOptions2:any = {
+     title: {
+            display: true,
+            fontSize:18,
+            text: '房台统计'
+        },
+     legend:{display:true,labels:{fontSize:18}},
+     tooltips :{
+       titleFontSize:18,
+       bodyFontSize:18
+     },
+     scales :{
+       xAxes:[{
+         ticks:{
+
+           fontSize:18
+         }
+       }],
+       yAxes:[{
+         ticks:{
+
+           fontSize:18
+         }
+       }],
+       pointLabel:{fontSize:18},
+       titleFontSize:18,
+       fontSize:18,
+       bodyFontSize:18
+     },
+     fontSize:18,
+     animation: {
+      duration: 500,
+      onComplete: function () {
+          // render the value of the chart above the bar
+          var ctx = this.chart.ctx;
+          //ctx.font = this.chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
+          ctx.fillStyle = this.chart.config.options.defaultFontColor;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          this.data.datasets.forEach(function (dataset) {
+              for (var i = 0; i < dataset.data.length ; i++) {
+                  if ( dataset.data[i] > 0) 
+                  {var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                      
+                              ctx.fillText(dataset.data[i], model.x, model.y + 10);}
+              }
+          });
+      }},
+    responsive: true
+  };
+  public barChartLabels2:string[] = ['预计收款','预计未收款','已收款','大厅收款', '包房收款','赠送合计','员工赠送','公司例送'];
+  public barChartType2:string = 'horizontalBar';
+  public barChartLegend2:boolean = true;
  
+  public barChartData2:any[] = [
+    {data: [0, 0, 0, 0, 0, 0, 0, 0], label: '大厅'}
+    // ,
+    // {data: [0, 0, 0, 0, 0, 0, 0, 0], label: '包房'}
+    ];
   // events
   public chartClicked(e:any):void {
     console.log(e);
@@ -138,20 +210,20 @@ export class ManagerComponent implements OnInit {
     console.log(e);
   }
  
-  public randomize():void {
-    // Only Change 3 values
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-   }
+  // public randomize():void {
+  //   // Only Change 3 values
+  //   let data = [
+  //     Math.round(Math.random() * 100),
+  //     59,
+  //     80,
+  //     (Math.random() * 100),
+  //     56,
+  //     (Math.random() * 100),
+  //     40];
+  //   let clone = JSON.parse(JSON.stringify(this.barChartData));
+  //   clone[0].data = data;
+  //   this.barChartData = clone;
+  //  }
 //-------------pie---------------
   // Doughnut
   public doughnutChartLabels:string[] = ['已收款', '未收款'];

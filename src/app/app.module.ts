@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, routedComponents } from './app-routing.module';
 import { Login } from './login';
 import { OrderList } from './orderlist';
+import { RoomInfo } from './roominfo';
 import { HeroService } from './hero.service';
 import { MaterialModule} from '@angular/material';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
@@ -34,7 +35,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   declarations: [
     AppComponent,
     FileSelectDirective,
-    AreaPipe,OrderList,OrderByPipe,
+    AreaPipe,OrderList,OrderByPipe,RoomInfo,
     // BarChartDemoComponent,
     routedComponents
   ],
