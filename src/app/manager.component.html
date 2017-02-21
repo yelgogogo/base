@@ -1,4 +1,3 @@
-<h2>{{page.queue_h1}}</h2>
 <div>
   <div class="bar" >
     <canvas baseChart
@@ -16,11 +15,12 @@
     {{pie}}
   </md-button-toggle>
   </md-button-toggle-group>
-
+  <h4 *ngIf="manager">预计{{pieTitle.area}}总收款¥{{pieTitle.amount}}</h4>
   <div class="bar" >
   <canvas baseChart
               [data]="doughnutChartData"
               [labels]="doughnutChartLabels"
+              [options]="doughnutOptions"
               [chartType]="doughnutChartType"
               (chartHover)="chartHovered($event)"
               (chartClick)="chartClicked($event)"></canvas>
