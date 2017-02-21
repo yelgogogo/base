@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, routedComponents } from './app-routing.module';
 import { Login } from './login';
 import { OrderList } from './orderlist';
+import { PackageDialog } from './workspace.component';
 import { RoomInfo } from './roominfo';
 import { HeroService } from './hero.service';
 import { MaterialModule} from '@angular/material';
@@ -37,7 +38,11 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     FileSelectDirective,
     AreaPipe,OrderList,OrderByPipe,RoomInfo,
     // BarChartDemoComponent,
+    PackageDialog,
     routedComponents
+  ],
+  entryComponents:[
+    PackageDialog
   ],
   providers: [
     HeroService
