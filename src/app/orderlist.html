@@ -1,5 +1,5 @@
-<md-list>
-  <md-list-item *ngFor="let order of orders">
+<md-list *ngIf="orders">
+  <md-list-item *ngFor="let order of orders" [style.background]="order.BackColor" [style.color]= "order.ForeColor">
     <img md-list-avatar src="assets/img/wine.jpg" alt="assets/img/wine.jpg">
     <h3 md-line> {{order.GoodsName}} <span>¥ {{order.SubTotal}}</span></h3>
     <p md-line>
@@ -7,6 +7,7 @@
       <span> ¥ {{order.Price}} / {{order.Unit}}</span>
       <span> X </span>
       <span> {{order.GoodsCount}} </span>
+      <span *ngIf="order.IsPresent"> <md-icon>card_giftcard</md-icon> </span>
     </p>
   </md-list-item>
 </md-list>

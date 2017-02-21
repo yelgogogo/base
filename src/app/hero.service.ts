@@ -10,47 +10,97 @@ import { HOST } from './mock-data';
 
 @Injectable()
 export class HeroService {
-  private workspacesUrl = HOST+'workspaces';  // URL to web api Workspaces
+  //private workspacesUrl = HOST+'workspaces';  // URL to web api Workspaces
+  private workspacesUrl = HOST +'WebServiceEx.asmx/JSON_Get_Room';
   private engineersUrl = HOST+'engineers'; // URL to web api engineers
   private surveysUrl = HOST+'surveys'; // URL to web api engineers
-  private usersUrl = HOST+'users'; // URL to web api engineers
-  private userbynameUrl = HOST+'userbyname'; // URL to web api engineers
+  private usersUrl = HOST+'WebServiceEx.asmx/JSON_CheckPassword'; // URL to web api engineers
+  private userbynameUrl = HOST+'WebServiceEx.asmx/JSON_CheckPassword'; // URL to web api engineers
   private regsUrl = HOST+'regs'; // URL to web api regs
   private convUrl = HOST+'rep'; // URL to web api rep
   private downloadUrl = HOST+'download'; // URL to web api rep
   private delconvUrl = HOST+'delconvf';
-  private goodsUrl = HOST+'goods';
-  private ordersUrl = HOST+'orders';
-  private managerUrl = HOST+'manager';
+  private goodsUrl = HOST+'WebServiceEx.asmx/JSON_Get_RoomGoods';
+  private ordersUrl = HOST+'WebServiceEx.asmx/JSON_GetRoomOrderList';
+  private cartUrl = HOST+'WebServiceEx.asmx/JSON_Add_Orders';
+  private managerUrl = HOST+'WebServiceEx.asmx/JSON_GetManagerOverView';
+  private giftUrl = HOST+'WebServiceEx.asmx/JSON_Get_PresentGoods';
   
   constructor(private http: Http) { }
 
   getCart(wk:Workspace):Promise<Cart> {
     let cartdata= new Cart();
+    cartdata.storename='base_cart';
     if(localStorage.getItem('base_cart') ){
       let localdata=JSON.parse(localStorage.getItem('base_cart'));
-      if (localdata.RoomOpCode === wk.RoomOpCode){
+      if (localdata.RoomCode === wk.RoomCode){
         cartdata = localdata;
       }else{
-        cartdata.ID = wk.ID;
+        cartdata.roomID = wk.ID;
         cartdata.Sum = 0; 
         cartdata.RoomCode = wk.RoomCode; 
         cartdata.RoomOpCode = wk.RoomOpCode;
         cartdata.RoomName = wk.RoomName; 
         cartdata.RoomTypeName = wk.RoomTypeName;   
-        cartdata.goods = []; 
+        cartdata.SubmitOrders = []; 
+        cartdata.userNo=JSON.parse(localStorage.getItem('rapper_token')).username;
+        cartdata.cardNo='';
+        cartdata.isPresent=false;
+        cartdata.orderType='落单';
       } 
     }else{
-        cartdata.ID = wk.ID;
+        cartdata.roomID = wk.ID;
         cartdata.Sum = 0; 
         cartdata.RoomOpCode = wk.RoomOpCode;
         cartdata.RoomCode = wk.RoomCode; 
         cartdata.RoomName = wk.RoomName; 
         cartdata.RoomTypeName = wk.RoomTypeName;   
-        cartdata.goods = []; 
+        cartdata.SubmitOrders = []; 
+        cartdata.userNo=JSON.parse(localStorage.getItem('rapper_token')).username;
+        cartdata.cardNo='';
+        cartdata.isPresent=false;
+        cartdata.orderType='落单';
     } 
     let body = JSON.stringify(cartdata);
     localStorage.setItem('base_cart', body);
+    return Promise.resolve(cartdata);
+  }
+
+  getGiftCart(wk:Workspace):Promise<Cart> {
+    let cartdata= new Cart();
+    cartdata.storename='base_giftcart';
+    if(localStorage.getItem('base_giftcart') ){
+      let localdata=JSON.parse(localStorage.getItem('base_giftcart'));
+      if (localdata.RoomCode === wk.RoomCode){
+        cartdata = localdata;
+      }else{
+        cartdata.roomID = wk.ID;
+        cartdata.Sum = 0; 
+        cartdata.RoomCode = wk.RoomCode; 
+        cartdata.RoomOpCode = wk.RoomOpCode;
+        cartdata.RoomName = wk.RoomName; 
+        cartdata.RoomTypeName = wk.RoomTypeName;   
+        cartdata.SubmitOrders = []; 
+        cartdata.userNo=JSON.parse(localStorage.getItem('rapper_token')).username;
+        cartdata.cardNo='';
+        cartdata.isPresent=true;
+        cartdata.orderType='赠送';
+      } 
+    }else{
+        cartdata.roomID = wk.ID;
+        cartdata.Sum = 0; 
+        cartdata.RoomOpCode = wk.RoomOpCode;
+        cartdata.RoomCode = wk.RoomCode; 
+        cartdata.RoomName = wk.RoomName; 
+        cartdata.RoomTypeName = wk.RoomTypeName;   
+        cartdata.SubmitOrders = []; 
+        cartdata.userNo=JSON.parse(localStorage.getItem('rapper_token')).username;
+        cartdata.cardNo='';
+        cartdata.isPresent=true;
+        cartdata.orderType='赠送';
+    } 
+    let body = JSON.stringify(cartdata);
+    localStorage.setItem(cartdata.storename, body);
     return Promise.resolve(cartdata);
   }
 
@@ -65,47 +115,164 @@ export class HeroService {
 
 
   getManager(): Promise<Manager[]> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    let postdata = {};
+
     return this.http
-      .get(this.managerUrl)
+      .post(this.managerUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
-      // .then(response => response.json() as Workspace[])
-       .then(response => {
-         // console.log(JSON.parse(response.json().data.d));
-        return JSON.parse(response.json().data.d) as Manager[];})
+      .then(response => {
+        console.log("submitCart");
+     
+        let json=response.json().d;
+        // json=json.replace(/Room\:/,'"Room":');
+        // json=json.replace(/Orders\:/,'"Orders":');
+        //  console.log(JSON.parse(json));
+        return JSON.parse(json);
+      })
       .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.managerUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Manager[];})
+    //   .catch(this.handleError);
   }
 
-  getOrders(): Promise<Order[]> {
+  submitCart(cart:Cart): Promise<String> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    let postdata = {submitMobile:JSON.stringify(cart)};
+
     return this.http
-      .get(this.ordersUrl)
+      .post(this.cartUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
-      // .then(response => response.json() as Workspace[])
-       .then(response => {
-         // console.log(JSON.parse(response.json().data.d));
-        return JSON.parse(response.json().data.d) as Order[];})
+      .then(response => {
+        console.log("submitCart");
+     
+        let json=response.json().d;
+        // json=json.replace(/Room\:/,'"Room":');
+        // json=json.replace(/Orders\:/,'"Orders":');
+        //  console.log(JSON.parse(json));
+        return json;
+      })
       .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.ordersUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Order[];})
+    //   .catch(this.handleError);
+  }
+
+  getOrders(wk:Workspace): Promise<Order[]> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    let postdata = {roomID:wk.ID,opCode:wk.RoomOpCode};
+
+    return this.http
+      .post(this.ordersUrl, JSON.stringify(postdata), { headers: headers })
+      .toPromise()
+      .then(response => {
+        console.log("getOrders");
+     
+        let json=response.json().d;
+        json=json.replace(/Room\:/,'"Room":');
+        json=json.replace(/Orders\:/,'"Orders":');
+         console.log(JSON.parse(json));
+        return JSON.parse(json).Orders as Order[];})
+      .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.ordersUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Order[];})
+    //   .catch(this.handleError);
   }
 
   getWorkspaces(): Promise<Workspace[]> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
     return this.http
-      .get(this.workspacesUrl)
+      .post(this.workspacesUrl, JSON.stringify(Workspace), { headers: headers })
       .toPromise()
-      // .then(response => response.json() as Workspace[])
-       .then(response => {
-         // console.log(JSON.parse(response.json().data.d));
-        return JSON.parse(response.json().data.d) as Workspace[];})
+      .then(response => {
+      console.log(response);
+        return JSON.parse(response.json().d) as Workspace[];})
       .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.workspacesUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //     console.log(response);
+    //     return JSON.parse(response.json().data.d) as Workspace[];})
+    //   .catch(this.handleError);
   }
 
-  getGoods(): Promise<Good[]> {
+  getGoods(wk:Workspace): Promise<Good[]> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    let postdata = {roomID:wk.ID};
     return this.http
-      .get(this.goodsUrl)
+      .post(this.goodsUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
-      // .then(response => response.json() as Workspace[])
-       .then(response => {
-         // console.log(JSON.parse(response.json().data.d));
-        return JSON.parse(response.json().data.d) as Good[];})
+      .then(response => {
+      console.log(response);
+        return JSON.parse(response.json().d) as Good[];})
       .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.goodsUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Good[];})
+    //   .catch(this.handleError);
+  }
+
+  getGift(roomID:string,user:User): Promise<Good[]> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    let postdata = {roomID:roomID,PresentUserNO:user.username};
+    return this.http
+      .post(this.giftUrl, JSON.stringify(postdata), { headers: headers })
+      .toPromise()
+      .then(response => {
+      console.log(response);
+        return JSON.parse(response.json().d) as Good[];})
+      .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.goodsUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Good[];})
+    //   .catch(this.handleError);
   }
 
   getRegs(user:string): Promise<Regarray[]> {
@@ -161,8 +328,28 @@ export class HeroService {
   }
 
   getUserByName(userin: User): Promise<User> {
-    return this.getUsers()
-      .then(users => users.find(user => user.name === userin.name));
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    let postdata = {username:userin.username,password:userin.password};
+
+    return this.http
+      .post(this.userbynameUrl, JSON.stringify(postdata), { headers: headers })
+      .toPromise()
+      .then(response => {
+        console.log("getUserByName");
+     
+        let json=response.json().d;
+        json=json.replace(/user\:/,'"user":');
+        json=json.replace(/rights\:/,'"rights":');
+        json=json.replace(/\'/g,'"');
+         console.log(JSON.parse(json));
+        return JSON.parse(json);})
+      .catch(this.handleError);
+
+    // return this.getUsers()
+    //   .then(users => users.find(user => user.name === userin.name));
     // let params: URLSearchParams = new URLSearchParams();
     // params.set('user', JSON.stringify(user));
 

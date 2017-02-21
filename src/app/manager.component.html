@@ -17,13 +17,21 @@
   </md-button-toggle-group>
   <h4 *ngIf="manager">预计{{pieTitle.area}}总收款¥{{pieTitle.amount}}</h4>
   <div class="bar" >
-  <canvas baseChart
+  <canvas height="200%" baseChart
+            [datasets]="barChartData2"
+            [labels]="barChartLabels2"
+            [options]="barChartOptions2"
+            [legend]="barChartLegend2"
+            [chartType]="barChartType2"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  <!--canvas baseChart
               [data]="doughnutChartData"
               [labels]="doughnutChartLabels"
               [options]="doughnutOptions"
               [chartType]="doughnutChartType"
               (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
+              (chartClick)="chartClicked($event)"></canvas-->
 </div>
 </div>
 
