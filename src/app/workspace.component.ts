@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Workspace,Regarray,File,Good,GoodType,Cart,User,GoodDetails } from './hero';
+import { Workspace,Regarray,File,Good,GoodType,Cart,User,GoodsDetails } from './hero';
 import { HeroService } from './hero.service';
 import { CATEGORIES,NODEUPLOAD } from './mock-data';
 import { WORKSPACEPAGE } from './page-workspace';
@@ -37,7 +37,7 @@ export class WorkspaceComponent implements OnInit {
   giftcart:Cart;
   orderSub:boolean=false;
   goodshow:boolean=true;
-  fooddetail:GoodDetails[];
+  fooddetail:GoodsDetails[];
 
   links=['a','b','c'];
   messages=['d','e','f'];
@@ -295,6 +295,6 @@ export class WorkspaceComponent implements OnInit {
   templateUrl: './packagedialog.html',
 })
 export class PackageDialog {
-  fooddetail:Good[];
+  fooddetail:GoodsDetails[];
   constructor(public dialogRef: MdDialogRef<PackageDialog>) {}
 }

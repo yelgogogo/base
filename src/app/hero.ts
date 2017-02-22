@@ -67,7 +67,7 @@ export class GoodType {
 export class Good {
   DisplayOrder:number;
   GoodsCount:number;
-  GoodsDetails:GoodDetails[];
+  GoodsDetails:GoodsDetails[];
   GoodsName:string;
   GoodsTypeName:string;
   ID:number;
@@ -79,7 +79,7 @@ export class Good {
   Unit:string;
 }
 
-export class GoodDetails{
+export class GoodsDetails{
   GoodsDetailCount:number;
   GoodsNamestring:string;
   GoodsTypeName:string;
