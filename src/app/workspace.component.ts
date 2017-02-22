@@ -265,9 +265,10 @@ export class WorkspaceComponent implements OnInit {
     console.log(select);
     let dialogRef = this.dialog.open(PackageDialog);
     let instance = dialogRef.componentInstance;
-    instance.fooddetail=select.GoodsDetails;
+    instance.packagefood=select;
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
+      select=instance.packagefood;
     });
     // cartin.SubmitOrders.forEach(function (gd, i) {
     //   if(gd.ID === select.ID) {
@@ -295,6 +296,14 @@ export class WorkspaceComponent implements OnInit {
   templateUrl: './packagedialog.html',
 })
 export class PackageDialog {
-  fooddetail:GoodsDetails[];
+  packagefood:Good;
   constructor(public dialogRef: MdDialogRef<PackageDialog>) {}
+
+  addPackage(select:GoodsDetails): void {
+    select.GoodsDetailCount += 1;
+  }
+
+  removePackage(select:GoodsDetails): void {
+    select.GoodsDetailCount -= 1;
+  }
 }

@@ -80,10 +80,14 @@ export class Good {
 }
 
 export class GoodsDetails{
+  // add for gourp control
+  GroupLimit:number;
+  //
   GoodsDetailCount:number;
   GoodsNamestring:string;
   GoodsTypeName:string;
   GroupCount:number;
+
   GroupName:string;
   ID:number;
   IsFixed:boolean;
