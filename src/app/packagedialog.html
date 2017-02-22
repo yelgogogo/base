@@ -12,9 +12,9 @@
 
       </p>
       <span *ngIf="!order.IsFixed && order.GoodsDetailCount>0"><button md-mini-fab (click)="removePackage(order)" ><md-icon>remove</md-icon></button></span>
-      <span> {{order.GoodsDetailCount}} </span>
-      <span *ngIf="order.IsFixed || order.GoodsDetailCount>=order.GroupCount"> <button md-mini-fab><md-icon>lock</md-icon></button></span>
-      <span *ngIf="!order.IsFixed && order.GoodsDetailCount<order.GroupCount"><button md-mini-fab (click)="addPackage(order)" ><md-icon>add</md-icon></button></span>
+      <span *ngIf="order.GoodsDetailCount>0"> {{order.GoodsDetailCount}} </span>
+      <span *ngIf="order.IsFixed || order.GoodsDetailCount>=order.GroupLimit"> <button md-mini-fab><md-icon>lock</md-icon></button></span>
+      <span *ngIf="!order.IsFixed && order.GoodsDetailCount<order.GroupLimit"><button md-mini-fab (click)="addPackage(order)" ><md-icon>add</md-icon></button></span>
     </md-list-item>
   </md-list>
 </md-dialog-content>

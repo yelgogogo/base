@@ -1,10 +1,44 @@
 <md-toolbar color="primary">
   <md-icon>home</md-icon>{{page.app_title}}
+  <span [style.width]="'100%'" >
+  <nav >
+    <button [style.float]="'right'" md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>more_horiz</md-icon>
+	</button>
+	<md-menu #menu="mdMenu">
+	<a routerLink="/login" routerLinkActive="active">
+	  <button md-menu-item>
+	    <md-icon>account_circle</md-icon>
+	    <span>{{page.app_a1}}</span>
+	  </button>
+	  </a>
+	  <a routerLink="/workarea" routerLinkActive="active">
+	  <button md-menu-item >
+	    <md-icon>business</md-icon>
+	    <span>{{page.app_a2}}</span>
+	  </button>
+	  </a>
+	  <a routerLink="/mng" routerLinkActive="active">
+	  <button md-menu-item>
+	    <md-icon>content_paste</md-icon>
+	    <span>{{page.app_a3}}</span>
+	  </button>
+	  </a>
+	</md-menu>
+	
+</nav>
+</span>
+	  <!--md-chip-list>
+		  <md-chip><a routerLink="/login" routerLinkActive="active">{{page.app_a1}}</a></md-chip>
+		  <md-chip><a routerLink="/workarea" routerLinkActive="active">{{page.app_a2}}</a></md-chip>
+		  <md-chip color="accent" selected="true"><a routerLink="/mng" routerLinkActive="active">{{page.app_a3}}</a></md-chip>
+	  </md-chip-list>
+  </nav-->
 </md-toolbar>
-    <div class="header-bar"></div>
+<!--     <div class="header-bar"></div>
     <nav>
       <a routerLink="/login" routerLinkActive="active">{{page.app_a1}}</a>
       <a routerLink="/workarea" routerLinkActive="active">{{page.app_a2}}</a>
       <a routerLink="/mng" routerLinkActive="active">{{page.app_a3}}</a>
-    </nav>
+    </nav> -->
     <router-outlet></router-outlet>

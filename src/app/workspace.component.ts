@@ -39,6 +39,10 @@ export class WorkspaceComponent implements OnInit {
   goodshow:boolean=true;
   fooddetail:GoodsDetails[];
 
+  innerHeight: number;
+  innerWidth: number;
+  listHeight: number;
+
   links=['a','b','c'];
   messages=['d','e','f'];
   folders=['g','h','i'];
@@ -54,7 +58,9 @@ export class WorkspaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.initWorkspace();  
-
+    this.innerHeight=window.screen.height;
+    this.listHeight=this.innerHeight*0.7;
+    console.log(window.screen.height);
   }
 
   initWorkspace():void{
@@ -265,6 +271,7 @@ export class WorkspaceComponent implements OnInit {
     console.log(select);
     let dialogRef = this.dialog.open(PackageDialog);
     let instance = dialogRef.componentInstance;
+    select.GoodsDetails.forEach(g=>{if(!g.GroupLimit){g.GroupLimit=g.GroupCount}});
     instance.packagefood=select;
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
@@ -301,9 +308,11 @@ export class PackageDialog {
 
   addPackage(select:GoodsDetails): void {
     select.GoodsDetailCount += 1;
+    this.packagefood.GoodsDetails.forEach(p=>{if(p.GroupName===select.GroupName){p.GroupLimit-=1}});
   }
 
   removePackage(select:GoodsDetails): void {
     select.GoodsDetailCount -= 1;
+    this.packagefood.GoodsDetails.forEach(p=>{if(p.GroupName===select.GroupName){p.GroupLimit+=1}});
   }
 }
