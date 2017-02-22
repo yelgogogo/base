@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Workspace,Regarray,File,Good,GoodType,Cart,User } from './hero';
+import { Workspace,Regarray,File,Good,GoodType,Cart,User,GoodsDetails } from './hero';
 import { HeroService } from './hero.service';
 import { CATEGORIES,NODEUPLOAD } from './mock-data';
 import { WORKSPACEPAGE } from './page-workspace';
+import {MdDialog, MdDialogRef} from '@angular/material';
+// import { OrderList } from './orderlist';
 
 @Component({
   moduleId: module.id,
@@ -35,6 +37,7 @@ export class WorkspaceComponent implements OnInit {
   giftcart:Cart;
   orderSub:boolean=false;
   goodshow:boolean=true;
+  fooddetail:GoodsDetails[];
 
   links=['a','b','c'];
   messages=['d','e','f'];
@@ -42,6 +45,7 @@ export class WorkspaceComponent implements OnInit {
   notes=['j','k','l'];
 
   constructor(
+    public dialog: MdDialog,
     private heroService: HeroService,
     private route: ActivatedRoute) {
 
@@ -72,9 +76,8 @@ export class WorkspaceComponent implements OnInit {
         this.getGift(id,this.token);
       }
      });
-
-
   }
+
 
   getGift(roomID:string,token:User):void{
     this.heroService.getGift(roomID,token)
@@ -162,6 +165,8 @@ export class WorkspaceComponent implements OnInit {
           console.log(c);})
         .catch(error => this.error = error); 
   }
+
+
 
   addCart(select:Good,cartin:Cart): void {
     let flag = false;
@@ -254,4 +259,42 @@ export class WorkspaceComponent implements OnInit {
   //   console.log(select);
   //   select=false;
   // }
+    setPackage(select:Good,cartin:Cart): void {
+    // let flag = false;
+    // let sum = 0;
+    console.log(select);
+    let dialogRef = this.dialog.open(PackageDialog);
+    let instance = dialogRef.componentInstance;
+    instance.fooddetail=select.GoodsDetails;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+    // cartin.SubmitOrders.forEach(function (gd, i) {
+    //   if(gd.ID === select.ID) {
+    //     gd.GoodsCount = (gd.GoodsCount || 0) + 1 ;
+    //     select.GoodsCount=gd.GoodsCount;
+    //     // gd.chili = true;
+    //     flag = true;
+    //   }
+    //   sum+=  (gd.GoodsCount || 0) * gd.Price      
+    // });
+    // if(!flag) {
+    //   select.GoodsCount += 1;
+    //   sum += select.GoodsCount  * select.Price;
+    //   cartin.SubmitOrders.push(select);
+    // }
+    // cartin.Sum = sum;
+    // let body = JSON.stringify(cartin);
+    // localStorage.setItem(cartin.storename, body);
+  }
+}
+
+
+@Component({
+  selector: 'dialog-result-example-dialog',
+  templateUrl: './packagedialog.html',
+})
+export class PackageDialog {
+  fooddetail:GoodsDetails[];
+  constructor(public dialogRef: MdDialogRef<PackageDialog>) {}
 }

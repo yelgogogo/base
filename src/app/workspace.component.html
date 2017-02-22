@@ -44,7 +44,7 @@
               <img md-card-image src="assets/img/wine.jpg">
               </div>
               <div class="food-content">
-                {{food.GoodsName}} ¥{{food.Price}}<br><span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span><span><button md-mini-fab (click)="addCart(food,cart)" ><md-icon>add</md-icon></button></span>
+                {{food.GoodsName}} ¥{{food.Price}}<br><span><button md-mini-fab (click)="setPackage(food,cart)" ><md-icon>add</md-icon></button></span><span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span><span><button md-mini-fab (click)="addCart(food,cart)" ><md-icon>add</md-icon></button></span>
              
               </div>
     

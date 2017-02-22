@@ -1,0 +1,18 @@
+<md-dialog-content>
+  <md-list *ngIf="fooddetail">
+    <md-list-item *ngFor="let order of fooddetail" [style.background]="order.BackColor" [style.color]= "order.ForeColor">
+      <img md-list-avatar src="assets/img/wine.jpg" alt="assets/img/wine.jpg">
+      <h3 md-line> {{order.GoodsName}} <span>¥ {{order.Price}}</span></h3>
+      <p md-line>
+        
+        <span> ¥ {{order.Price}} / {{order.Unit}}</span>
+        <span> X </span>
+        <span> {{order.GoodsDetailCount}} </span>
+        <span *ngIf="order.IsFixed"> <md-icon>lock</md-icon> </span>
+
+      </p>
+      <span><button md-mini-fab (click)="removeCart(fooddetail)" ><md-icon>remove</md-icon></button></span>
+      <span><button md-mini-fab (click)="addCart(fooddetail)" ><md-icon>add</md-icon></button></span>
+    </md-list-item>
+  </md-list>
+</md-dialog-content>

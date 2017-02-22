@@ -7,7 +7,9 @@ import { Engineer } from './hero';
 // ];
 export const NODEUPLOAD:string='http://localhost:3200/';
 // export const HOST:string='http://localhost:3200/';
-export const HOST:string='http://localhost:89/';
+// export const HOST:string='http://localhost:89/';
+export const HOST:string='http://www.starstech.cc/base/';
+
 export const REGATTR: any[] = [
 {id:2,value:'g',name:'Global'},
 {id:2,value:'gi',name:'Global & CaseSensitive'},
