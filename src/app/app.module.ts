@@ -15,7 +15,7 @@ import { PackageDialog } from './workspace.component';
 import { RoomInfo } from './roominfo';
 import { HeroService } from './hero.service';
 import { MaterialModule} from '@angular/material';
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+// import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import 'hammerjs';
 import {AreaPipe} from './area.pipe'
 import {OrderByPipe} from './orderby';
@@ -35,7 +35,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   ],
   declarations: [
     AppComponent,
-    FileSelectDirective,
+    // FileSelectDirective,
     AreaPipe,OrderList,OrderByPipe,RoomInfo,
     // BarChartDemoComponent,
     PackageDialog,
