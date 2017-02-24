@@ -1,14 +1,16 @@
 <div *ngIf="workspace">
 <md-sidenav-container class="example-container" >
   <md-sidenav #sidenav  class="example-sidenav" align="end">
-    预计消费: <span class="color-price">¥{{cart.Sum}}</span>
+    预计消费: <span class="color-price">¥{{cart.Sum}}</span><button md-icon-button (click)="clearCart(cart)" color="warn" class="clear-cart" *ngIf="cart.Sum>0"><md-icon>delete</md-icon>清空</button>
     <md-chip-list class="md-chip-list-stacked">
 
       <div *ngFor="let good of cart.SubmitOrders">
         <md-chip *ngIf="good.GoodsCount>0"
             selected="true" color="accent" >
+          <span [style.float]="'right'"><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,cart)"><md-icon>add</md-icon></button>
+          </span>
+          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
           
-          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span> {{good.GoodsName}}¥ {{good.Price}} / {{good.Unit}} </span><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addCart(good,cart)"><md-icon>add</md-icon></button>
           
         </md-chip>
       </div>
@@ -17,17 +19,18 @@
     </md-chip-list>
   </md-sidenav>
   <md-sidenav #giftnav  class="example-sidenav" align="start">
-    赠送总额: <span class="color-price">¥{{giftcart.Sum}}</span>
+    赠送总额: <span class="color-price">¥{{giftcart.Sum}}</span><button md-icon-button (click)="clearCart(giftcart)" color="warn" class="clear-cart" *ngIf="giftcart.Sum>0"><md-icon>delete</md-icon>清空</button>
     <md-chip-list class="md-chip-list-stacked">
 
       <div *ngFor="let good of giftcart.SubmitOrders">
       <md-chip *ngIf="good.GoodsCount>0"
           selected="true" color="accent">
-        
-        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span> {{good.GoodsName}}¥ {{good.Price}} / {{good.Unit}} </span>
         <span [style.float]="'right'">
-        <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addCart(good,giftcart)"><md-icon>add</md-icon></button>
+        <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,giftcart)"><md-icon>add</md-icon></button>
         </span>
+        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} ¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
+
+        
       </md-chip>
       </div>
       <button *ngIf="giftcart.Sum>0" md-raised-button [disabled]="orderSub" (click)="addOrder(giftcart)" [style.float]="'right'" color="accent"><md-icon>card_giftcard</md-icon>赠送</button>
@@ -63,7 +66,7 @@
                 <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
-                  <span *ngIf="food.GoodsDetails"><button md-button (click)="setPackage(food,giftcart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
+                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,giftcart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
                 </span>
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
                 <button md-mini-fab (click)="addCart(food,giftcart)" ><md-icon>add</md-icon></button>
@@ -107,12 +110,7 @@
                 <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
-                  <span *ngIf="food.GoodsDetails"><button md-button (click)="setPackage(food,cart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
-                  <span [style.float]="'right'">
-                     
-                     
-                     <span></span>
-                  </span>
+                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,cart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
                   
              
                 </span>

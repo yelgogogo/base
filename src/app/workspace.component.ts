@@ -43,11 +43,6 @@ export class WorkspaceComponent implements OnInit {
   innerWidth: number;
   listHeight: number;
 
-  links=['a','b','c'];
-  messages=['d','e','f'];
-  folders=['g','h','i'];
-  notes=['j','k','l'];
-
   constructor(
     public dialog: MdDialog,
     private heroService: HeroService,
@@ -173,7 +168,20 @@ export class WorkspaceComponent implements OnInit {
         .catch(error => this.error = error); 
   }
 
+  addInCart(select:Good,cartin:Cart): void {
+    let sum = 0;
+    cartin.SubmitOrders.forEach(function (gd, i) {
+      if(gd.ID === select.ID) {
+        gd.GoodsCount = (gd.GoodsCount || 0) + 1 ;
+        select.GoodsCount=gd.GoodsCount;
+      }
+      sum+=  (gd.GoodsCount || 0) * gd.Price      
+    });
 
+    cartin.Sum = sum;
+    let body = JSON.stringify(cartin);
+    localStorage.setItem(cartin.storename, body);
+  }
 
   addCart(select:Good,cartin:Cart): void {
     let flag = false;
@@ -240,6 +248,12 @@ export class WorkspaceComponent implements OnInit {
     localStorage.setItem(cartin.storename, body);
   }
 
+  clearCart(cartin:Cart): void {
+    cartin.SubmitOrders=[];
+    cartin.Sum = 0;
+    let body = JSON.stringify(cartin);
+    localStorage.setItem(cartin.storename, body);
+  }
 
   selectType(select:GoodType): void {
     this.curtypeid = select.id;
