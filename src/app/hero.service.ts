@@ -238,8 +238,15 @@ export class HeroService {
       .post(this.goodsUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-      console.log(response);
-        return JSON.parse(response.json().d) as Good[];})
+      // console.log(response);
+        let tmp:Good[] = JSON.parse(response.json().d);
+        tmp.forEach(t=>{
+          if(t.GoodsDetails){
+            t.GoodsDetails.forEach(g=>{if(!g.GroupLimit){g.GroupLimit=g.GroupCount}});
+          }
+        })
+        
+        return tmp as Good[];})
       .catch(this.handleError);
 
     // return this.http

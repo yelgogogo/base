@@ -11,7 +11,7 @@ input {
   font-size: 1em;
   padding-left: .4em;
 }
-button {
+/*button {
   margin-top: 20px;
   font-family: Arial;
   background-color: #eee;
@@ -19,15 +19,15 @@ button {
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer; cursor: hand;
-}
-button:hover {
+}*/
+/*button:hover {
   background-color: #cfd8dc;
 }
 button:disabled {
   background-color: #eee;
   color: #ccc;
   cursor: auto;
-}
+}*/
 body {
     line-height: initial;
 }
@@ -50,13 +50,17 @@ body {
 }
 
 .example-sidenav {
-  width: 85%;
+  width: 75%;
   padding: 20px;
 }
 
+.mainfat{
+    right: -20%;
+    /* top: 50%; */
+    position: relative;
+}
 
-
-button {
+/*button {
     background-color: #23a02d;
     color: #f5f5f5;
     cursor: auto;
@@ -66,7 +70,7 @@ button:disabled {
     background-color: #23a02d;
     color: #f5f5f5;
     cursor: auto;
-}
+}*/
 
 .add{
   right: 0
@@ -85,7 +89,7 @@ md-card {
 }
 
 [md-card-image] {
-    width: 80%;
+    width: 100%;
 }
 
 .example-container {
@@ -152,7 +156,7 @@ md-card {
 .food-img{
     position: inherit;
     /* top: 0px; */
-    top: -30%;;
+    top: -35%;;
     width: 100%;
     height: 10%;
 }
@@ -162,9 +166,13 @@ md-card {
     /* top: 0px; */
   /*  bottom: 30px;*/
     font-size: small;
-    bottom: -5%;
+    bottom: -25%;
     width: 100%;
     height: 10%;
     text-align: left;
 }
 
+.color-price {
+    color: #f74342;
+    font-size: initial;
+}

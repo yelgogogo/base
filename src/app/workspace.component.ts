@@ -59,7 +59,7 @@ export class WorkspaceComponent implements OnInit {
   ngOnInit(): void {
     this.initWorkspace();  
     this.innerHeight=window.screen.height;
-    this.listHeight=this.innerHeight*0.7;
+    this.listHeight=this.innerHeight*0.8;
     console.log(window.screen.height);
   }
 
@@ -79,6 +79,7 @@ export class WorkspaceComponent implements OnInit {
         .catch(error => this.error = error); 
 
       if (this.token.rights.indexOf("赠送")>0){
+        this.goodshow=false;
         this.getGift(id,this.token);
       }
      });
@@ -186,9 +187,13 @@ export class WorkspaceComponent implements OnInit {
       }
       sum+=  (gd.GoodsCount || 0) * gd.Price      
     });
+    
     if(!flag) {
       select.GoodsCount += 1;
       sum += select.GoodsCount  * select.Price;
+      cartin.SubmitOrders.push(select);
+    }else{
+      cartin.SubmitOrders=cartin.SubmitOrders.filter(f=>f.ID!==select.ID);
       cartin.SubmitOrders.push(select);
     }
     cartin.Sum = sum;
@@ -214,6 +219,7 @@ export class WorkspaceComponent implements OnInit {
       sum += select.GoodsCount  * select.Price;
       cartin.SubmitOrders.push(select);
     }
+    cartin.SubmitOrders=cartin.SubmitOrders.filter(f=>f.GoodsCount>0);
     cartin.Sum = sum;
     let body = JSON.stringify(cartin);
     localStorage.setItem(cartin.storename, body);
@@ -228,6 +234,7 @@ export class WorkspaceComponent implements OnInit {
       }
       sum+=  (gd.GoodsCount || 0) * gd.Price      
     });
+    cartin.SubmitOrders=cartin.SubmitOrders.filter(f=>f.GoodsCount>0);
     cartin.Sum = sum;
     let body = JSON.stringify(cartin);
     localStorage.setItem(cartin.storename, body);
@@ -271,7 +278,7 @@ export class WorkspaceComponent implements OnInit {
     console.log(select);
     let dialogRef = this.dialog.open(PackageDialog);
     let instance = dialogRef.componentInstance;
-    select.GoodsDetails.forEach(g=>{if(!g.GroupLimit){g.GroupLimit=g.GroupCount}});
+    
     instance.packagefood=select;
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
