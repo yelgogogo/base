@@ -295,8 +295,15 @@ export class WorkspaceComponent implements OnInit {
     
     instance.packagefood=select;
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      
       select=instance.packagefood;
+      let limtcount=0;
+      select.GoodsDetails.forEach(c=>limtcount +=c.GroupLimit);
+      if (limtcount === 0){
+        select.GoodsDetailsDone=true;
+      }else{
+        select.GoodsDetailsDone=false;
+      }
     });
     // cartin.SubmitOrders.forEach(function (gd, i) {
     //   if(gd.ID === select.ID) {

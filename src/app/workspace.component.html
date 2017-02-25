@@ -9,7 +9,7 @@
             selected="true" color="accent" >
           <span [style.float]="'right'"><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,cart)"><md-icon>add</md-icon></button>
           </span>
-          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
+          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
           
           
         </md-chip>
@@ -28,7 +28,7 @@
         <span [style.float]="'right'">
         <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,giftcart)"><md-icon>add</md-icon></button>
         </span>
-        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} ¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
+        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} ¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
 
         
       </md-chip>
@@ -66,7 +66,7 @@
                 <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
-                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,giftcart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
+                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,giftcart)" ><md-icon color="warn">pie_chart_outlined</md-icon></button></span>
                 </span>
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
                 <button md-mini-fab (click)="addCart(food,giftcart)" ><md-icon>add</md-icon></button>
@@ -110,7 +110,7 @@
                 <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
-                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,cart)" ><md-icon>pie_chart_outlined</md-icon></button></span>
+                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,cart)" ><md-icon *ngIf="!food.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon><md-icon *ngIf="food.GoodsDetailsDone">check</md-icon></button></span>
                   
              
                 </span>

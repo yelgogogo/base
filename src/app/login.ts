@@ -16,6 +16,8 @@ import { Subscription }   from 'rxjs/Subscription';
 export class Login implements OnInit,OnDestroy{
   page=LOGINPAGE.find(page=>page.id == 1);
   user:User;
+  remember=false;
+  userstore:User;
 
   subscription: Subscription;
 
@@ -24,6 +26,7 @@ export class Login implements OnInit,OnDestroy{
       mission => {
         this.page=LOGINPAGE.find(page=>page.id == mission);
     });
+
   }
 
 
@@ -32,7 +35,17 @@ export class Login implements OnInit,OnDestroy{
       let languageid=localStorage.getItem('rapper_language');
       this.page=LOGINPAGE.find(page=>page.id == languageid);
     }
+
     this.user= new User();
+
+    if(localStorage.getItem('rapper_token')){
+      this.userstore=JSON.parse(localStorage.getItem('rapper_token'));
+      console.log(this.userstore);
+      if (this.userstore.remember){
+        this.user=  this.userstore;
+        this.remember=true;
+      }    
+    }
   }
 
   login(event: any, user:string, password:string) {
@@ -44,11 +57,19 @@ export class Login implements OnInit,OnDestroy{
     this.heroService.getUserByName(this.user)
       .then(useri => 
         {
-          this.user=useri;
-          this.user.username = user;
+          this.user.rights=useri.rights;
+          // this.user.username = user;
+          this.user.remember = this.remember;
+          if(this.remember){
+
+          }else{
+            this.user.password='';
+          }
+          
           let body = JSON.stringify(this.user);
           localStorage.setItem('rapper_token', body);
           console.log('login');
+          console.log(this.user);
           this.router.navigate(['workarea']);
 
         });

@@ -47,6 +47,7 @@ export class HeroService {
         cartdata.cardNo='';
         cartdata.isPresent=false;
         cartdata.orderType='落单';
+        cartdata.CartDone=true;
       } 
     }else{
         cartdata.roomID = wk.ID;
@@ -60,6 +61,7 @@ export class HeroService {
         cartdata.cardNo='';
         cartdata.isPresent=false;
         cartdata.orderType='落单';
+        cartdata.CartDone=true;
     } 
     let body = JSON.stringify(cartdata);
     localStorage.setItem('base_cart', body);
@@ -85,6 +87,7 @@ export class HeroService {
         cartdata.cardNo='';
         cartdata.isPresent=true;
         cartdata.orderType='赠送';
+        cartdata.CartDone=true;
       } 
     }else{
         cartdata.roomID = wk.ID;
@@ -98,6 +101,7 @@ export class HeroService {
         cartdata.cardNo='';
         cartdata.isPresent=true;
         cartdata.orderType='赠送';
+        cartdata.CartDone=true;
     } 
     let body = JSON.stringify(cartdata);
     localStorage.setItem(cartdata.storename, body);
@@ -243,6 +247,7 @@ export class HeroService {
         tmp.forEach(t=>{
           if(t.GoodsDetails){
             t.GoodsDetails.forEach(g=>{if(!g.GroupLimit){g.GroupLimit=g.GroupCount}});
+            t.GoodsDetailsDone=false;
           }
         })
         

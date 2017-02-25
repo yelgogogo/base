@@ -68,6 +68,9 @@ export class Good {
   DisplayOrder:number;
   GoodsCount:number;
   GoodsDetails:GoodsDetails[];
+  // add for gourp control
+  GoodsDetailsDone:boolean;
+  //
   GoodsName:string;
   GoodsTypeName:string;
   ID:number;
@@ -119,6 +122,9 @@ export class Manager{
   SumServiceAmount:number;
 }
 export class Cart {
+  // add for gourp control
+  CartDone:boolean;
+  //
   storename:string;
   RoomCode:string;
   RoomName:string;
@@ -181,6 +187,7 @@ export class User {
   city: string;
   building: string;
   status: string;
+  remember:boolean;
 }
 
 export class Engineer {

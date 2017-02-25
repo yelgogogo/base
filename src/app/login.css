@@ -1,12 +1,15 @@
 .login {
-  width: 80%;
+  width: 100%;
+  padding: 10%;
 }
 
 .form-control {
     display: initial;
-    width: 50%;
+    width: 100%;
+    border-radius: 20px;
+
 }
 
 .rmps{
-	float: left;
+	/*float: left;*/
 };
