@@ -1,4 +1,4 @@
-<div *ngIf="workspace" [class.app-dark-theme]="true">
+<div *ngIf="workspace" [class.app-dark-theme]="nightmode">
 <md-sidenav-container class="example-container" >
   <md-sidenav #sidenav  class="example-sidenav" align="end">
     预计消费: <span class="color-price">¥{{cart.Sum}}</span><button md-icon-button (click)="clearCart(cart)" color="warn" class="clear-cart" *ngIf="cart.Sum>0"><md-icon>delete</md-icon>清空</button>
@@ -36,7 +36,7 @@
       <button *ngIf="giftcart.Sum>0" md-raised-button [disabled]="checkCart(giftcart)" (click)="addOrder(giftcart)" [style.float]="'right'" color="accent"><md-icon>card_giftcard</md-icon>赠送</button>
     </md-chip-list>
   </md-sidenav>
-  <md-toolbar ><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
+  <md-toolbar color="accent"><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
   <span *ngIf="cart" [style.font-size]="'small'"><md-icon>credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
     <span class="mainfat">
     <button *ngIf="goodshow" md-fab (click)="sidenav.open()"><md-icon>shopping_cart</md-icon>¥{{cart.Sum}}</button>
@@ -57,7 +57,7 @@
          </md-list-->
       </div>
       <div class="col-xs-9" [style.height]="listHeight+'px'">
-        <md-grid-list cols="2">
+        <md-grid-list cols="{{gridcol}}" gutterSize="3">
           <md-grid-tile *ngFor="let food of giftfoods" [rowspan]="1">
               <div class="food-img">
                 <img md-card-image src="assets/img/wine.jpg">
@@ -100,7 +100,7 @@
          </md-list-->
       </div>
       <div class="col-xs-9" [style.height]="listHeight+'px'">
-        <md-grid-list cols="2">
+        <md-grid-list cols="{{gridcol}}" >
           <md-grid-tile *ngFor="let food of foods" [rowspan]="1">
      
               <div class="food-img">

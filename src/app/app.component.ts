@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
   selectedLanguage:any=0;
   languages=LANGUAGETYPE;
   title = 'Walk In Center';
+  nightmode=false;
 
   constructor(private missionService: MissionService) {
     // missionService.missionConfirmed$.subscribe(
@@ -29,6 +30,15 @@ export class AppComponent implements OnInit{
     }
   }
 
+  changeMode(select:boolean):void{
+    if (select){
+      this.nightmode=false;
+    }else{
+      this.nightmode=true;
+    }
+    this.missionService.changeMode(this.nightmode);
+    
+  }
 
   updateLanguage(selectedLanguage:any): void {
     console.log(selectedLanguage);

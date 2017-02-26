@@ -1,4 +1,4 @@
-<h3 md-dialog-title>{{ packagefood.GoodsName }}</h3>
+<h6 md-dialog-title>{{ packagefood.GoodsName }}</h6>
 <md-dialog-content>
   <md-list *ngIf="packagefood.GoodsDetails">
     <md-list-item *ngFor="let order of packagefood.GoodsDetails" [style.background]="order.BackColor" [style.color]= "order.ForeColor">

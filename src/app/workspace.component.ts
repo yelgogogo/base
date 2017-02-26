@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output,OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params,Router } from '@angular/router';
 // import { Location } from '@angular/common';
 import { Workspace,Regarray,File,Good,GoodType,Cart,User,GoodsDetails } from './hero';
@@ -6,6 +6,8 @@ import { HeroService } from './hero.service';
 import { CATEGORIES,NODEUPLOAD } from './mock-data';
 import { WORKSPACEPAGE } from './page-workspace';
 import {MdDialog, MdDialogRef} from '@angular/material';
+import { MissionService } from './mission.service';
+import { Subscription }   from 'rxjs/Subscription';
 // import { OrderList } from './orderlist';
 
 @Component({
@@ -38,7 +40,10 @@ export class WorkspaceComponent implements OnInit {
   orderSub:boolean=false;
   goodshow:boolean=true;
   fooddetail:GoodsDetails[];
+  gridcol:number;
 
+  subscription: Subscription;
+  nightmode=false; 
   innerHeight: number;
   innerWidth: number;
   listHeight: number;
@@ -48,7 +53,13 @@ export class WorkspaceComponent implements OnInit {
     private heroService: HeroService,
     public router: Router,
     // private location: Location,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, 
+    private missionService: MissionService) {
+    this.subscription = missionService.modeChanged$.subscribe(
+      mission => {
+        // this.page=LOGINPAGE.find(page=>page.id == mission);
+        this.nightmode=mission;
+    });
 
   }
 
@@ -56,8 +67,12 @@ export class WorkspaceComponent implements OnInit {
   ngOnInit(): void {
     this.initWorkspace();  
     this.innerHeight=window.screen.height;
+    this.innerWidth=window.screen.width;
     this.listHeight=this.innerHeight*0.8;
+    this.gridcol=Math.floor(this.innerWidth*0.75/135);
+    this.nightmode=this.missionService.share;
     console.log(window.screen.height);
+    console.log(this.gridcol);
   }
 
   initWorkspace():void{
@@ -194,7 +209,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   checkCart(cartin:Cart):boolean {
-    // console.log("checkCart");
+    
     let rtn=false;
     if(cartin.CartDone){
       cartin.SubmitOrders.forEach(o=>{
@@ -205,7 +220,8 @@ export class WorkspaceComponent implements OnInit {
     }else{
       rtn= true;
     }
-    // console.log(rtn);
+    console.log(cartin);
+    console.log(rtn);
     return rtn;
   }
 

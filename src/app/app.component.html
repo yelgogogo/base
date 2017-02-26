@@ -24,6 +24,12 @@
 	    <span>{{page.app_a3}}</span>
 	  </button>
 	  </a>
+	  <button md-menu-item (click)="changeMode(nightmode)">
+	    <md-icon *ngIf="!nightmode">brightness_4</md-icon>
+	    <span *ngIf="!nightmode">夜晚模式</span>
+	    <md-icon *ngIf="nightmode">brightness_5</md-icon>
+	    <span *ngIf="nightmode">日间模式</span>
+	  </button>
 	</md-menu>
 	
 </nav>

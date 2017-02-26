@@ -5,6 +5,8 @@ import { Manager } from './hero';
 import { HeroService } from './hero.service';
 import { REGSPAGE } from './page-manager';
 // import { STATUSTYPE } from './mock-data';
+import { MissionService } from './mission.service';
+import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
   selector: 'my-manager',
@@ -23,9 +25,19 @@ export class ManagerComponent implements OnInit {
 
   pieTitle={area:'',amount:0};
 
+  subscription: Subscription;
+  nightmode=false; 
+
   constructor(
     private router: Router,
-    private heroService: HeroService) { }
+    private heroService: HeroService, 
+    private missionService: MissionService) {
+    this.subscription = missionService.modeChanged$.subscribe(
+      mission => {
+        // this.page=LOGINPAGE.find(page=>page.id == mission);
+        this.nightmode=mission;
+    });
+  }
 
   ngOnInit(): void {
     
@@ -35,7 +47,7 @@ export class ManagerComponent implements OnInit {
       this.page=REGSPAGE.find(page=>page.id == languageid);
       //this.statustype=REGSPAGE.filter(statustype=>statustype.id == languageid);
     }
-    
+    this.nightmode=this.missionService.share;
     this.getManager('x');
     
   }

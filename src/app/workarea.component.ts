@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Workspace } from './hero';
 import { HeroService } from './hero.service';
 import { WORKAREAPAGE } from './page-workarea';
+import { MissionService } from './mission.service';
+import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
   //moduleId: module.id,
@@ -21,10 +23,23 @@ export class WorkareaComponent implements OnInit {
   latestid = 18;
   areas:any[]=[];
   error: any;
+  gridcol:number;
+  innerHeight: number;
+  innerWidth: number;
+
+  subscription: Subscription;
+  nightmode=false;
 
   constructor(
     private router: Router,
-    private heroService: HeroService) { }
+    private heroService: HeroService,
+    private missionService: MissionService) {
+    this.subscription = missionService.modeChanged$.subscribe(
+      mission => {
+        // this.page=LOGINPAGE.find(page=>page.id == mission);
+        this.nightmode=mission;
+    });
+  }
 
   getWorkspacees(): void {
     this.heroService
@@ -77,8 +92,10 @@ export class WorkareaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.innerWidth=window.screen.width;
+    this.gridcol=Math.floor(this.innerWidth/90);
     this.getWorkspacees();
-
+    this.nightmode=this.missionService.share;
     if(localStorage.getItem('rapper_language') ){
       let languageid=localStorage.getItem('rapper_language');
       this.page=WORKAREAPAGE.find(page=>page.id == languageid);

@@ -18,13 +18,15 @@ export class Login implements OnInit,OnDestroy{
   user:User;
   remember=false;
   userstore:User;
+  nightmode=false;
 
   subscription: Subscription;
 
   constructor(public router: Router, public http: Http, private heroService: HeroService, private missionService: MissionService) {
-    this.subscription = missionService.missionAnnounced$.subscribe(
+    this.subscription = missionService.modeChanged$.subscribe(
       mission => {
-        this.page=LOGINPAGE.find(page=>page.id == mission);
+        // this.page=LOGINPAGE.find(page=>page.id == mission);
+        this.nightmode=mission;
     });
 
   }
@@ -46,6 +48,9 @@ export class Login implements OnInit,OnDestroy{
         this.remember=true;
       }    
     }
+    this.nightmode=this.missionService.share;
+    console.log(this.missionService.modeChanged$);
+    console.log(this.missionService.share);
   }
 
   login(event: any, user:string, password:string) {
