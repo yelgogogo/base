@@ -1,4 +1,4 @@
-<div *ngIf="workspace">
+<div *ngIf="workspace" [class.app-dark-theme]="true">
 <md-sidenav-container class="example-container" >
   <md-sidenav #sidenav  class="example-sidenav" align="end">
     预计消费: <span class="color-price">¥{{cart.Sum}}</span><button md-icon-button (click)="clearCart(cart)" color="warn" class="clear-cart" *ngIf="cart.Sum>0"><md-icon>delete</md-icon>清空</button>
