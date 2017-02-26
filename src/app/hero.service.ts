@@ -248,6 +248,8 @@ export class HeroService {
           if(t.GoodsDetails){
             t.GoodsDetails.forEach(g=>{if(!g.GroupLimit){g.GroupLimit=g.GroupCount}});
             t.GoodsDetailsDone=false;
+          }else{
+            t.GoodsDetailsDone=true;
           }
         })
         

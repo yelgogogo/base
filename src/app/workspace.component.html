@@ -14,7 +14,7 @@
           
         </md-chip>
       </div>
-      <button *ngIf="cart.Sum>0" md-raised-button [disabled]="orderSub" (click)="addOrder(cart)" [style.float]="'right'" color="accent"><md-icon>credit_card</md-icon>提交</button>
+      <button *ngIf="cart.Sum>0" md-raised-button [disabled]="checkCart(cart)" (click)="addOrder(cart)" [style.float]="'right'" color="accent"><md-icon>credit_card</md-icon>提交</button>
       
     </md-chip-list>
   </md-sidenav>
@@ -33,11 +33,11 @@
         
       </md-chip>
       </div>
-      <button *ngIf="giftcart.Sum>0" md-raised-button [disabled]="orderSub" (click)="addOrder(giftcart)" [style.float]="'right'" color="accent"><md-icon>card_giftcard</md-icon>赠送</button>
+      <button *ngIf="giftcart.Sum>0" md-raised-button [disabled]="checkCart(giftcart)" (click)="addOrder(giftcart)" [style.float]="'right'" color="accent"><md-icon>card_giftcard</md-icon>赠送</button>
     </md-chip-list>
   </md-sidenav>
-  <md-toolbar >{{workspace.RoomName}} 
-  <span *ngIf="cart"><md-icon>credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
+  <md-toolbar ><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
+  <span *ngIf="cart" [style.font-size]="'small'"><md-icon>credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
     <span class="mainfat">
     <button *ngIf="goodshow" md-fab (click)="sidenav.open()"><md-icon>shopping_cart</md-icon>¥{{cart.Sum}}</button>
     <button *ngIf="!goodshow" md-fab (click)="giftnav.open()"><md-icon>shopping_basket</md-icon>¥{{giftcart.Sum}}</button>

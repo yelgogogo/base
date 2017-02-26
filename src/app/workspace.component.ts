@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-
+import { ActivatedRoute, Params,Router } from '@angular/router';
+// import { Location } from '@angular/common';
 import { Workspace,Regarray,File,Good,GoodType,Cart,User,GoodsDetails } from './hero';
 import { HeroService } from './hero.service';
 import { CATEGORIES,NODEUPLOAD } from './mock-data';
@@ -46,6 +46,8 @@ export class WorkspaceComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     private heroService: HeroService,
+    public router: Router,
+    // private location: Location,
     private route: ActivatedRoute) {
 
   }
@@ -80,6 +82,14 @@ export class WorkspaceComponent implements OnInit {
      });
   }
 
+  show(event:any):void{
+    event.stopPropagation();
+    console.log("click");
+  }
+
+  goBack():void{
+    this.router.navigate(['workarea']);
+  }
 
   getGift(roomID:string,token:User):void{
     this.heroService.getGift(roomID,token)
@@ -109,7 +119,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   addOrder(cart:Cart):void{
-    this.orderSub=true;
+    this.cart.CartDone=false;
     console.log(cart);
     this.heroService.submitCart(cart)
         .then(c => { 
@@ -121,7 +131,7 @@ export class WorkspaceComponent implements OnInit {
             let body = JSON.stringify(this.cart);
             localStorage.setItem('base_cart', body);
           } 
-          this.orderSub=false;
+          this.cart.CartDone=true;
           this.initWorkspace();  
         })
         .catch(error => this.error = error); 
@@ -183,6 +193,22 @@ export class WorkspaceComponent implements OnInit {
     localStorage.setItem(cartin.storename, body);
   }
 
+  checkCart(cartin:Cart):boolean {
+    // console.log("checkCart");
+    let rtn=false;
+    if(cartin.CartDone){
+      cartin.SubmitOrders.forEach(o=>{
+        if (!o.GoodsDetailsDone){
+          rtn= true;
+        }
+      });
+    }else{
+      rtn= true;
+    }
+    // console.log(rtn);
+    return rtn;
+  }
+
   addCart(select:Good,cartin:Cart): void {
     let flag = false;
     let sum = 0;
@@ -205,6 +231,9 @@ export class WorkspaceComponent implements OnInit {
       cartin.SubmitOrders.push(select);
     }
     cartin.Sum = sum;
+  
+    // cartin.CartDone=select.GoodsDetailsDone;
+ 
     let body = JSON.stringify(cartin);
     localStorage.setItem(cartin.storename, body);
   }
@@ -265,10 +294,11 @@ export class WorkspaceComponent implements OnInit {
     this.giftfoods = this.giftgoods.filter(g=>g.DisplayOrder===select.id);
   }
 
-  goBack(savedHero: Workspace = null): void {
-    // this.close.emit(savedHero);
-    if (this.navigated) { window.history.back(); }
-  }
+  // goBack(): void {
+  //   // this.close.emit(savedHero);
+  //   console.log("go back");
+  //   if (this.navigated) { window.history.back(); }
+  // }
 
   listGoods(select:boolean,event:any):void{
     
