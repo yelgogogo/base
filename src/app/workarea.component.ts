@@ -93,6 +93,7 @@ export class WorkareaComponent implements OnInit {
 
   ngOnInit(): void {
     this.innerWidth=window.screen.width;
+    this.innerHeight=window.screen.height;
     this.gridcol=Math.floor(this.innerWidth/90);
     this.getWorkspacees();
     this.nightmode=this.missionService.share;

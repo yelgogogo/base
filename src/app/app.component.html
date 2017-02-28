@@ -6,19 +6,19 @@
     <md-icon>more_horiz</md-icon>
 	</button>
 	<md-menu #menu="mdMenu">
-	<a routerLink="/login" routerLinkActive="active">
+	<a *ngIf="!login" routerLink="/login" routerLinkActive="active">
 	  <button md-menu-item>
 	    <md-icon>account_circle</md-icon>
 	    <span>{{page.app_a1}}</span>
 	  </button>
 	  </a>
-	  <a routerLink="/workarea" routerLinkActive="active">
+	  <a *ngIf="login" routerLink="/workarea" routerLinkActive="active">
 	  <button md-menu-item >
 	    <md-icon>business</md-icon>
 	    <span>{{page.app_a2}}</span>
 	  </button>
 	  </a>
-	  <a routerLink="/mng" routerLinkActive="active">
+	  <a *ngIf="login" routerLink="/mng" routerLinkActive="active">
 	  <button md-menu-item>
 	    <md-icon>content_paste</md-icon>
 	    <span>{{page.app_a3}}</span>
@@ -29,6 +29,10 @@
 	    <span *ngIf="!nightmode">夜晚模式</span>
 	    <md-icon *ngIf="nightmode">brightness_5</md-icon>
 	    <span *ngIf="nightmode">日间模式</span>
+	  </button>
+	  <button *ngIf="login" md-menu-item (click)="logOut($event)">
+	    <md-icon >reply_all</md-icon>
+	    <span>退出</span>
 	  </button>
 	</md-menu>
 	

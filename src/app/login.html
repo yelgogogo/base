@@ -1,29 +1,28 @@
-<div class="login center-block" [class.app-dark-theme]="nightmode">
-  <md-toolbar color="accent">
+
+<div class="login" [class.app-dark-theme]="nightmode" [style.height]="innerHeight+'px'">
+  <md-toolbar color="accent" >
   <h3>{{page.login_h1}}</h3>
   </md-toolbar>
-  <br />
+
+  <md-sidenav-container [style.height]="'inherit'" [style.font-size]="'large'">
+  <br>
   <form role="form" (submit)="login($event, userin.value, passwordin.value)">
   <div class="form-group">
   <label for="userin"></label>
-    <md-input-container [style.width]="'100%'" >
-    <!--input md-input placeholder="Favorite food" value="Sushi"-->
+    <md-input-container [style.width]="'80%'">
     
     <input mdInput type="text" #userin class="form-control" id="userin" placeholder={{page.login_placeholder1}} value={{user.username}}>
 
     </md-input-container>
   <BR><label for="password"></label>
-    <md-input-container [style.width]="'100%'" >
+    <md-input-container [style.width]="'80%'" >
     <input mdInput type="password" #passwordin class="form-control" id="passwordin" placeholder={{page.login_placeholder2}} value={{user.password}} >
     </md-input-container>
   </div>
-  <!--div class="form-group">
-    <label for="email"><i class="glyphicon glyphicon-globe"></i></label>
-    <input type="email" #email class="form-control" id="email" placeholder={{page.login_placeholder2}}>
-  </div-->
   <p>记住密码<md-checkbox class="rmps" [(ngModel)]="remember" [ngModelOptions]="{standalone: true}"></md-checkbox></p>
   
-  <p ><button md-raised-button type="submit" [style.width]="'100%'">提交</button></p>
+  <p ><button md-raised-button type="submit" [style.width]="'80%'" [style.border-radius]="'20px'">提交</button></p>
     
-</form>
+    </form>
+  </md-sidenav-container>
 </div>

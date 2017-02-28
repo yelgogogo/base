@@ -27,6 +27,8 @@ export class ManagerComponent implements OnInit {
 
   subscription: Subscription;
   nightmode=false; 
+  innerHeight: number;
+  innerWidth: number;
 
   constructor(
     private router: Router,
@@ -40,7 +42,8 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.innerWidth=window.screen.width;
+    this.innerHeight=window.screen.height;
 
     if(localStorage.getItem('wic_language') ){
       let languageid=localStorage.getItem('wic_language');

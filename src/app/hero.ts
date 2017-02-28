@@ -188,6 +188,7 @@ export class User {
   building: string;
   status: string;
   remember:boolean;
+  token:string;
 }
 
 export class Engineer {

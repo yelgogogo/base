@@ -19,7 +19,7 @@ export class Login implements OnInit,OnDestroy{
   remember=false;
   userstore:User;
   nightmode=false;
-
+  innerHeight:number;
   subscription: Subscription;
 
   constructor(public router: Router, public http: Http, private heroService: HeroService, private missionService: MissionService) {
@@ -33,6 +33,8 @@ export class Login implements OnInit,OnDestroy{
 
 
   ngOnInit(): void {
+    this.innerHeight=window.screen.height;
+
     if(localStorage.getItem('rapper_language') ){
       let languageid=localStorage.getItem('rapper_language');
       this.page=LOGINPAGE.find(page=>page.id == languageid);
@@ -63,6 +65,7 @@ export class Login implements OnInit,OnDestroy{
       .then(useri => 
         {
           this.user.rights=useri.rights;
+          this.user.token="login";
           // this.user.username = user;
           this.user.remember = this.remember;
           if(this.remember){
@@ -70,7 +73,7 @@ export class Login implements OnInit,OnDestroy{
           }else{
             this.user.password='';
           }
-          
+          this.missionService.Login(true);
           let body = JSON.stringify(this.user);
           localStorage.setItem('rapper_token', body);
           console.log('login');
@@ -84,6 +87,7 @@ export class Login implements OnInit,OnDestroy{
     event.preventDefault();
     this.router.navigate(['signup']);
   }
+
 
   ngOnDestroy() {
     // prevent memory leak when component destroyed

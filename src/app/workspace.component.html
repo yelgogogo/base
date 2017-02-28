@@ -37,7 +37,7 @@
     </md-chip-list>
   </md-sidenav>
   <md-toolbar color="accent"><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
-  <span *ngIf="cart" [style.font-size]="'small'"><md-icon>credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
+  <span *ngIf="cart" [style.font-size]="'small'"><md-icon class="mini-icon">credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
     <span class="mainfat">
     <button *ngIf="goodshow" md-fab (click)="sidenav.open()"><md-icon>shopping_cart</md-icon>¥{{cart.Sum}}</button>
     <button *ngIf="!goodshow" md-fab (click)="giftnav.open()"><md-icon>shopping_basket</md-icon>¥{{giftcart.Sum}}</button>
@@ -62,12 +62,12 @@
               <div class="food-img">
                 <img md-card-image src="assets/img/wine.jpg">
               </div>
-              <md-grid-tile-footer [style.padding]="'0 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'">
-                <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
+              <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
                   <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,giftcart)" ><md-icon color="warn">pie_chart_outlined</md-icon></button></span>
                 </span>
+                <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
                 <button md-mini-fab (click)="addCart(food,giftcart)" ><md-icon>add</md-icon></button>
               </md-grid-tile-footer>
@@ -106,16 +106,18 @@
               <div class="food-img">
               <img md-card-image src="assets/img/wine.jpg">
               </div>
-              <md-grid-tile-footer [style.padding]="'0 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'">
-                <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
+              <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
+                
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
-                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,cart)" ><md-icon *ngIf="!food.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon><md-icon *ngIf="food.GoodsDetailsDone">check</md-icon></button></span>
+                 <!--  <span *ngIf="food.GoodsDetails"></span> -->
                   
              
                 </span>
+                <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
-                <button md-mini-fab (click)="addCart(food,cart)" ><md-icon>add</md-icon></button>
+                <button md-mini-fab (click)="setPackage(food,cart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
+                <button md-mini-fab (click)="addCart(food,cart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon>add</md-icon></button>
               </md-grid-tile-footer>
     
           </md-grid-tile>

@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { LANGUAGETYPE } from './mock-data';
+import { Router } from '@angular/router';
 import { APPPAGE } from './page-app';
 import { MissionService }     from './mission.service';
 
@@ -15,12 +16,13 @@ export class AppComponent implements OnInit{
   languages=LANGUAGETYPE;
   title = 'Walk In Center';
   nightmode=false;
+  login=false;
 
-  constructor(private missionService: MissionService) {
-    // missionService.missionConfirmed$.subscribe(
-    //   astronaut => {
-    //     this.history.push(`${astronaut} confirmed the mission`);
-      // });
+  constructor(public router: Router, private missionService: MissionService) {
+    missionService.Login$.subscribe(
+      l => {
+        this.login=l;
+      });
   }
 
   ngOnInit(): void {
@@ -38,6 +40,11 @@ export class AppComponent implements OnInit{
     }
     this.missionService.changeMode(this.nightmode);
     
+  }
+
+  logOut(event: any) {
+    event.preventDefault();
+    this.router.navigate(['login']);
   }
 
   updateLanguage(selectedLanguage:any): void {

@@ -72,6 +72,12 @@ button:disabled {
     cursor: auto;
 }*/
 
+.mini-icon{
+  font-size:small;
+  height: 16px;
+  width: 16px;
+}
+
 .add{
   right: 0
 }
@@ -156,7 +162,7 @@ md-card {
 .food-img{
     position: inherit;
     /* top: 0px; */
-    top: -37%;;
+    top: -32%;;
     width: 100%;
     height: 10%;
 }

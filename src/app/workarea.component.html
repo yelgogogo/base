@@ -1,6 +1,7 @@
 <!--h2> {{page.heroes_h1}} {{latestid}} </h2>
 <h2> {{page.heroes_h2}} </h2-->
-<div [class.app-dark-theme]="nightmode">
+<div [class.app-dark-theme]="nightmode" [style.height]="innerHeight+'px'">
+<md-sidenav-container [style.height]="'inherit'">
 <div class="error" *ngIf="error">{{error}}</div>
 <md-tab-group *ngIf="areas" >
   <md-tab *ngFor="let area of areas | orderBy:'RoomAreaId'" label="{{area.RoomAreaName}}" md-swipe-content="">
@@ -13,7 +14,9 @@
     </md-grid-list>
   </md-tab>
 </md-tab-group>
+</md-sidenav-container>
 </div>
+
 
 
 <!--md-grid-list cols="4">
