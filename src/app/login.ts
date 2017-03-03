@@ -35,24 +35,24 @@ export class Login implements OnInit,OnDestroy{
   ngOnInit(): void {
     this.innerHeight=window.screen.height;
 
-    if(localStorage.getItem('rapper_language') ){
-      let languageid=localStorage.getItem('rapper_language');
-      this.page=LOGINPAGE.find(page=>page.id == languageid);
-    }
+    // if(localStorage.getItem('rapper_language') ){
+    //   let languageid=localStorage.getItem('rapper_language');
+    //   this.page=LOGINPAGE.find(page=>page.id == languageid);
+    // }
 
     this.user= new User();
 
     if(localStorage.getItem('rapper_token')){
       this.userstore=JSON.parse(localStorage.getItem('rapper_token'));
-      console.log(this.userstore);
+      // //console.log(this.userstore);
       if (this.userstore.remember){
         this.user=  this.userstore;
         this.remember=true;
       }    
     }
     this.nightmode=this.missionService.share;
-    console.log(this.missionService.modeChanged$);
-    console.log(this.missionService.share);
+    // //console.log(this.missionService.modeChanged$);
+    // //console.log(this.missionService.share);
   }
 
   login(event: any, user:string, password:string) {
@@ -76,8 +76,8 @@ export class Login implements OnInit,OnDestroy{
           this.missionService.Login(true);
           let body = JSON.stringify(this.user);
           localStorage.setItem('rapper_token', body);
-          console.log('login');
-          console.log(this.user);
+          // //console.log('login');
+          // //console.log(this.user);
           this.router.navigate(['workarea']);
 
         });

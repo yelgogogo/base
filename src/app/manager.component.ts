@@ -56,8 +56,8 @@ export class ManagerComponent implements OnInit {
   }
 
   selectLabel(sel:string):void{
-    // console.log(this.cData);
-    // console.log(this.cData.filter(f=>f.label===sel));
+    // //console.log(this.cData);
+    // //console.log(this.cData.filter(f=>f.label===sel));
     //this.doughnutChartLabels = ['已收款 ¥'+this.doughnutChartData[0], '预计未收款 ¥'+this.doughnutChartData[1]];
     this.barChartData=this.cData;
     let clone = JSON.parse(JSON.stringify(this.cData));
@@ -107,7 +107,7 @@ export class ManagerComponent implements OnInit {
                       this.manager.PresentAmountCompany
                     ], label: '大厅'}];
           this.doughnutChartData=[this.manager.PosedAmount,this.manager.PosingAmount];
-          // console.log(this.manager);
+          // //console.log(this.manager);
           this.barChartData=this.cData;
           this.barChartData2=this.cData2;
           this.pieTitle.area='全部';
@@ -218,11 +218,11 @@ export class ManagerComponent implements OnInit {
     ];
   // events
   public chartClicked(e:any):void {
-    console.log(e);
+    //console.log(e);
   }
  
   public chartHovered(e:any):void {
-    console.log(e);
+    //console.log(e);
   }
  
   // public randomize():void {
@@ -248,11 +248,11 @@ export class ManagerComponent implements OnInit {
 
   // events
   // public chartClicked(e:any):void {
-  //   console.log(e);
+  //   //console.log(e);
   // }
  
   // public chartHovered(e:any):void {
-  //   console.log(e);
+  //   //console.log(e);
   // }
 
 }

@@ -45,10 +45,11 @@ export class AppComponent implements OnInit{
   logOut(event: any) {
     event.preventDefault();
     this.router.navigate(['login']);
+    this.missionService.Login(false);
   }
 
   updateLanguage(selectedLanguage:any): void {
-    console.log(selectedLanguage);
+    //console.log(selectedLanguage);
 
     localStorage.setItem('rapper_language', selectedLanguage.id);
     this.page=APPPAGE.find(page=>page.id == selectedLanguage.id);

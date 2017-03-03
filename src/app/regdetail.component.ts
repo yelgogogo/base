@@ -77,13 +77,13 @@ export class RegDetailComponent implements OnInit {
   }
 
   updateFindAttr(selected:any):void {
-    // console.log(selected);
-    // console.log(this.regarray.findArray);
+    // //console.log(selected);
+    // //console.log(this.regarray.findArray);
       //this.regarray.regFindAttr=selected.value;
   }
 
   save(): void {
-    //console.log(this.regarray);
+    ////console.log(this.regarray);
     let today= new  Date();
     this.regarray.updateTime = today.toLocaleString();
     this.heroService

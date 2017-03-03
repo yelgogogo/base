@@ -129,12 +129,12 @@ export class HeroService {
       .post(this.managerUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-        console.log("submitCart");
+        //console.log("submitCart");
      
         let json=response.json().d;
         // json=json.replace(/Room\:/,'"Room":');
         // json=json.replace(/Orders\:/,'"Orders":');
-        //  console.log(JSON.parse(json));
+        //  //console.log(JSON.parse(json));
         return JSON.parse(json);
       })
       .catch(this.handleError);
@@ -144,7 +144,7 @@ export class HeroService {
     //   .toPromise()
     //   // .then(response => response.json() as Workspace[])
     //    .then(response => {
-    //      // console.log(JSON.parse(response.json().data.d));
+    //      // //console.log(JSON.parse(response.json().data.d));
     //     return JSON.parse(response.json().data.d) as Manager[];})
     //   .catch(this.handleError);
   }
@@ -160,12 +160,12 @@ export class HeroService {
       .post(this.cartUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-        console.log("submitCart");
+        //console.log("submitCart");
      
         let json=response.json().d;
         // json=json.replace(/Room\:/,'"Room":');
         // json=json.replace(/Orders\:/,'"Orders":');
-        //  console.log(JSON.parse(json));
+        //  //console.log(JSON.parse(json));
         return json;
       })
       .catch(this.handleError);
@@ -175,7 +175,7 @@ export class HeroService {
     //   .toPromise()
     //   // .then(response => response.json() as Workspace[])
     //    .then(response => {
-    //      // console.log(JSON.parse(response.json().data.d));
+    //      // //console.log(JSON.parse(response.json().data.d));
     //     return JSON.parse(response.json().data.d) as Order[];})
     //   .catch(this.handleError);
   }
@@ -191,12 +191,12 @@ export class HeroService {
       .post(this.ordersUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-        console.log("getOrders");
+        //console.log("getOrders");
      
         let json=response.json().d;
         json=json.replace(/Room\:/,'"Room":');
         json=json.replace(/Orders\:/,'"Orders":');
-         console.log(JSON.parse(json));
+         //console.log(JSON.parse(json));
         return JSON.parse(json).Orders as Order[];})
       .catch(this.handleError);
 
@@ -205,7 +205,7 @@ export class HeroService {
     //   .toPromise()
     //   // .then(response => response.json() as Workspace[])
     //    .then(response => {
-    //      // console.log(JSON.parse(response.json().data.d));
+    //      // //console.log(JSON.parse(response.json().data.d));
     //     return JSON.parse(response.json().data.d) as Order[];})
     //   .catch(this.handleError);
   }
@@ -219,7 +219,7 @@ export class HeroService {
       .post(this.workspacesUrl, JSON.stringify(Workspace), { headers: headers })
       .toPromise()
       .then(response => {
-      console.log(response);
+      //console.log(response);
         return JSON.parse(response.json().d) as Workspace[];})
       .catch(this.handleError);
 
@@ -228,7 +228,7 @@ export class HeroService {
     //   .toPromise()
     //   // .then(response => response.json() as Workspace[])
     //    .then(response => {
-    //     console.log(response);
+    //     //console.log(response);
     //     return JSON.parse(response.json().data.d) as Workspace[];})
     //   .catch(this.handleError);
   }
@@ -242,7 +242,7 @@ export class HeroService {
       .post(this.goodsUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-      // console.log(response);
+      // //console.log(response);
         let tmp:Good[] = JSON.parse(response.json().d);
         tmp.forEach(t=>{
           if(t.GoodsDetails){
@@ -261,7 +261,7 @@ export class HeroService {
     //   .toPromise()
     //   // .then(response => response.json() as Workspace[])
     //    .then(response => {
-    //      // console.log(JSON.parse(response.json().data.d));
+    //      // //console.log(JSON.parse(response.json().data.d));
     //     return JSON.parse(response.json().data.d) as Good[];})
     //   .catch(this.handleError);
   }
@@ -275,7 +275,7 @@ export class HeroService {
       .post(this.giftUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-      // console.log(response);
+      // //console.log(response);
         let tmp:Good[] = JSON.parse(response.json().d);
         tmp.forEach(t=>{
           if(t.GoodsDetails){
@@ -294,7 +294,7 @@ export class HeroService {
     //   .toPromise()
     //   // .then(response => response.json() as Workspace[])
     //    .then(response => {
-    //      // console.log(JSON.parse(response.json().data.d));
+    //      // //console.log(JSON.parse(response.json().data.d));
     //     return JSON.parse(response.json().data.d) as Good[];})
     //   .catch(this.handleError);
   }
@@ -313,7 +313,7 @@ export class HeroService {
     //   .get(this.regsUrl)
     //   .toPromise()
     //   .then(response => {
-    //     console.log(response);
+    //     //console.log(response);
     //     return response.json() as Regarray[]})
     //   .catch(this.handleError);
   }
@@ -323,7 +323,7 @@ export class HeroService {
       .get(this.usersUrl)
       .toPromise()
       .then(response => {
-        console.log(response);
+        //console.log(response);
         // return response.json() as User[]})
         return response.json().data as User[]})
       .catch(this.handleError);
@@ -332,8 +332,8 @@ export class HeroService {
   postUser(user: User): Promise<User> {
     // let params: URLSearchParams = new URLSearchParams();
     // params.set('user', JSON.stringify(user));
-    // console.log(params);
-    // console.log(user);
+    // //console.log(params);
+    // //console.log(user);
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -362,13 +362,13 @@ export class HeroService {
       .post(this.userbynameUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
-        console.log("getUserByName");
+        //console.log("getUserByName");
      
         let json=response.json().d;
         json=json.replace(/user\:/,'"user":');
         json=json.replace(/rights\:/,'"rights":');
         json=json.replace(/\'/g,'"');
-         console.log(JSON.parse(json));
+         //console.log(JSON.parse(json));
         return JSON.parse(json);})
       .catch(this.handleError);
 
@@ -388,8 +388,8 @@ export class HeroService {
     let params: URLSearchParams = new URLSearchParams();
     params.set('file', JSON.stringify(file));
     params.set('regs', JSON.stringify(regs));
-    // console.log(this.convUrl);
-    // console.log(params);
+    // //console.log(this.convUrl);
+    // //console.log(params);
     return this.http
       .get(this.convUrl,{ search: params })
       .toPromise()
@@ -400,8 +400,8 @@ export class HeroService {
   getDownload(workspace:Workspace): Promise<Workspace> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('workspace', JSON.stringify(workspace));
-    // console.log(this.convUrl);
-    // console.log(params);
+    // //console.log(this.convUrl);
+    // //console.log(params);
     return this.http
       .get(this.downloadUrl,{ search: params })
       .toPromise()
@@ -496,8 +496,8 @@ export class HeroService {
   deleteConvFile(file: File): Promise<File> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('file', JSON.stringify(file));
-    // console.log(this.convUrl);
-    // console.log(params);
+    // //console.log(this.convUrl);
+    // //console.log(params);
     // return this.http
     //   .get(this.convUrl,{ search: params })
     //   .toPromise()

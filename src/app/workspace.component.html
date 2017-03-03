@@ -7,9 +7,9 @@
       <div *ngFor="let good of cart.SubmitOrders">
         <md-chip *ngIf="good.GoodsCount>0"
             selected="true" color="accent" >
-          <span [style.float]="'right'"><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,cart)"><md-icon>add</md-icon></button>
+          <span class="cartrow"><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon class="sicon">remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,cart)"><md-icon class="sicon">add</md-icon></button>
           </span>
-          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
+          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}<br>¥ {{good.Price}}/{{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
           
           
         </md-chip>
@@ -25,10 +25,10 @@
       <div *ngFor="let good of giftcart.SubmitOrders">
       <md-chip *ngIf="good.GoodsCount>0"
           selected="true" color="accent">
-        <span [style.float]="'right'">
-        <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon>remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,giftcart)"><md-icon>add</md-icon></button>
+        <span class="cartrow">
+        <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon class="sicon">remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,giftcart)"><md-icon class="sicon">add</md-icon></button>
         </span>
-        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} ¥ {{good.Price}} / {{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
+        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} <br>¥ {{good.Price}}/{{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
 
         
       </md-chip>
@@ -63,14 +63,22 @@
                 <img md-card-image src="assets/img/wine.jpg">
               </div>
               <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
+                
                 <span md-line>
                   <span class="color-price"><b>¥{{food.Price}}</b></span>
-                  <span *ngIf="food.GoodsDetails"><button md-icon-button (click)="setPackage(food,giftcart)" ><md-icon color="warn">pie_chart_outlined</md-icon></button></span>
+                 <!--  <span *ngIf="food.GoodsDetails"></span> -->
+                  
+             
                 </span>
-                <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
+              <!--   <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6> -->
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
-                <button md-mini-fab (click)="addCart(food,giftcart)" ><md-icon>add</md-icon></button>
+                <button md-mini-fab (click)="setPackage(food,giftcart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
+                <button md-mini-fab (click)="addCart(food,giftcart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon class="sicon">add</md-icon></button>
+                <span md-line><md-icon color="accent"  *ngFor="let rate of [0,1,2,3,4]" [style.height]="'12px'" [style.width]="'12px'" [style.font-size]="'medium'">star</md-icon></span>
               </md-grid-tile-footer>
+              <md-grid-tile-header>
+              <h5  [style.font-size]="'medium'">{{food.GoodsName}}</h5>
+              </md-grid-tile-header>
               <!-- <div class="food-img">
               <img md-card-image src="assets/img/wine.jpg">
               </div>
@@ -114,12 +122,54 @@
                   
              
                 </span>
-                <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6>
+              <!--   <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6> -->
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
                 <button md-mini-fab (click)="setPackage(food,cart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
-                <button md-mini-fab (click)="addCart(food,cart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon>add</md-icon></button>
+                <button md-mini-fab (click)="addCart(food,cart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon class="sicon">add</md-icon></button>
+                <span md-line><md-icon color="accent"  *ngFor="let rate of [0,1,2,3,4]" [style.height]="'12px'" [style.width]="'12px'" [style.font-size]="'medium'">star</md-icon></span>
               </md-grid-tile-footer>
-    
+              <md-grid-tile-header>
+              <h5 [style.font-size]="'medium'">{{food.GoodsName}}</h5>
+              </md-grid-tile-header>
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+    </md-tab>
+    <md-tab label="菜单" >
+      <div class="col-xs-3" [style.height]="listHeight+'px'">
+        <md-button-toggle-group *ngIf="goodtypes" name="pies" vertical="true">
+          <md-button-toggle *ngFor="let goodtype of goodtypes" [value]="goodtype" (click)="selectType(goodtype)">
+            {{goodtype.GoodsTypeName}}
+          </md-button-toggle>
+        </md-button-toggle-group>
+         <!--md-list *ngIf="goodtypes">
+            <md-list-item *ngFor="let goodtype of goodtypes" (click)="selectType(goodtype)">{{goodtype.GoodsTypeName}} </md-list-item>
+         </md-list-->
+      </div>
+      <div class="col-xs-9" [style.height]="listHeight+'px'">
+        <md-grid-list cols="{{gridcol}}" >
+          <md-grid-tile *ngFor="let food of foods" [rowspan]="1">
+     
+              <div class="food-img">
+              <img md-card-image src="assets/img/wine.jpg">
+              </div>
+              <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
+                
+                <span md-line>
+                  <span class="color-price"><b>¥{{food.Price}}</b></span>
+                 <!--  <span *ngIf="food.GoodsDetails"></span> -->
+                  
+             
+                </span>
+              <!--   <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6> -->
+                <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
+                <button md-mini-fab (click)="setPackage(food,cart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
+                <button md-mini-fab (click)="addCart(food,cart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon class="sicon">add</md-icon></button>
+                <span md-line><md-icon color="accent"  *ngFor="let rate of [0,1,2,3,4]" [style.height]="'12px'" [style.width]="'12px'" [style.font-size]="'medium'">star</md-icon></span>
+              </md-grid-tile-footer>
+              <md-grid-tile-header>
+              <h5 [style.font-size]="'medium'">{{food.GoodsName}}</h5>
+              </md-grid-tile-header>
           </md-grid-tile>
         </md-grid-list>
       </div>

@@ -141,12 +141,32 @@ md-card {
     margin: 0;
     min-width: 30px;
     /* line-height: 36px; */
-    padding: 0 0px;
+    padding: 0 6px;
   border-radius: 50%;
-/*      height: 30px;
-      width: 30px;*/
+      height: 35px;
+      width: 35px;
 }
 
+.cartrow{
+  float: right;
+  padding: 4px 0px;
+}
+
+.sicon{
+  margin-top: 10px;
+  line-height: 0px;
+/*  text-align: center;*/
+/*   position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);*/
+/*    width: 10px;、
+
+    height: 10px;*/
+/*    display: block;*/
+
+}
 .col-xs-3{
   padding: 0;
   overflow-y: auto;
@@ -162,9 +182,9 @@ md-card {
 .food-img{
     position: inherit;
     /* top: 0px; */
-    top: -32%;;
+    top: -35%;;
     width: 100%;
-    height: 10%;
+  /*  height: 10%;*/
 }
 
 .food-content{
@@ -172,9 +192,9 @@ md-card {
     /* top: 0px; */
   /*  bottom: 30px;*/
     font-size: small;
-    bottom: -25%;
+    bottom: -35%;
     width: 100%;
-    height: 10%;
+/*    height: 10%;*/
     text-align: left;
 }
 

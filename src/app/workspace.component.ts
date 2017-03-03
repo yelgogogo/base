@@ -71,8 +71,8 @@ export class WorkspaceComponent implements OnInit {
     this.listHeight=this.innerHeight*0.8;
     this.gridcol=Math.floor(this.innerWidth*0.75/135);
     this.nightmode=this.missionService.share;
-    console.log(window.screen.height);
-    console.log(this.gridcol);
+    // //console.log(window.screen.height);
+    // //console.log(this.gridcol);
   }
 
   initWorkspace():void{
@@ -99,7 +99,7 @@ export class WorkspaceComponent implements OnInit {
 
   show(event:any):void{
     event.stopPropagation();
-    console.log("click");
+    ////console.log("click");
   }
 
   goBack():void{
@@ -109,8 +109,8 @@ export class WorkspaceComponent implements OnInit {
   getGift(roomID:string,token:User):void{
     this.heroService.getGift(roomID,token)
         .then(goods => {
-          // console.log(goods);
-          // console.log(this.gifttypes);
+          // //console.log(goods);
+          // //console.log(this.gifttypes);
           this.giftgoods = goods;
           
           let goodlsit= new Set();
@@ -120,7 +120,7 @@ export class WorkspaceComponent implements OnInit {
             gt.GoodsTypeName=g.GoodsTypeName;
             goodlsit.add(JSON.stringify(gt));
             // this.goodtypes[g.DisplayOrder-1]=gt;
-            // console.log(this.gifttypes);
+            // //console.log(this.gifttypes);
 
           }); 
           goodlsit.forEach(u=>this.gifttypes.push(JSON.parse(u)));
@@ -128,21 +128,22 @@ export class WorkspaceComponent implements OnInit {
             this.curgiftid=this.gifttypes[0].id
           }
           this.giftfoods = goods.filter(g=>g.DisplayOrder===this.curgiftid);
-          // console.log(this.gifttypes);
+          // //console.log(this.gifttypes);
         })
         .catch(error => this.error = error);  
   }
 
   addOrder(cart:Cart):void{
     this.cart.CartDone=false;
-    console.log(cart);
+    ////console.log(cart);
     this.heroService.submitCart(cart)
         .then(c => { 
           if (c){
             alert(c);
           }else{
+            // this.clearCart(cart);
             cart.SubmitOrders.forEach(s=>this.deleteCart(s,cart));
-            this.foods.forEach(f=>f.GoodsCount=0);
+            // this.foods.forEach(f=>f.GoodsCount=0);
             let body = JSON.stringify(this.cart);
             localStorage.setItem('base_cart', body);
           } 
@@ -156,7 +157,7 @@ export class WorkspaceComponent implements OnInit {
   getGoods(wk:Workspace):void{
     this.heroService.getGoods(wk)
         .then(goods => {
-          // console.log(goods);
+          // //console.log(goods);
           this.goods = goods;
           
           let goodlsit= new Set();
@@ -174,7 +175,7 @@ export class WorkspaceComponent implements OnInit {
           }
       
           this.foods = goods.filter(g=>g.DisplayOrder===this.curtypeid);
-          console.log(this.goodtypes);
+          //console.log(this.goodtypes);
         })
         .catch(error => this.error = error); 
   }
@@ -182,14 +183,16 @@ export class WorkspaceComponent implements OnInit {
   getCart(wk:Workspace): void {
     this.heroService.getCart(wk)
         .then(c => { this.cart = c ;
-          console.log(c);})
+          //console.log(c);
+        })
         .catch(error => this.error = error); 
   }
 
   getGiftCart(wk:Workspace): void {
     this.heroService.getGiftCart(wk)
         .then(c => { this.giftcart = c ;
-          console.log(c);})
+          //console.log(c);
+        })
         .catch(error => this.error = error); 
   }
 
@@ -220,8 +223,8 @@ export class WorkspaceComponent implements OnInit {
     }else{
       rtn= true;
     }
-    console.log(cartin);
-    console.log(rtn);
+    //console.log(cartin);
+    //console.log(rtn);
     return rtn;
   }
 
@@ -294,8 +297,11 @@ export class WorkspaceComponent implements OnInit {
   }
 
   clearCart(cartin:Cart): void {
-    cartin.SubmitOrders=[];
+    // cartin.SubmitOrders=[];
+    
+    cartin.SubmitOrders.forEach(s=>this.deleteCart(s,cartin));
     cartin.Sum = 0;
+    // foodin.forEach(f=>f.GoodsCount=0);
     let body = JSON.stringify(cartin);
     localStorage.setItem(cartin.storename, body);
   }
@@ -312,13 +318,13 @@ export class WorkspaceComponent implements OnInit {
 
   // goBack(): void {
   //   // this.close.emit(savedHero);
-  //   console.log("go back");
+  //   //console.log("go back");
   //   if (this.navigated) { window.history.back(); }
   // }
 
   listGoods(select:boolean,event:any):void{
     
-    console.log(event.tab.textLabel);
+    //console.log(event.tab.textLabel);
     select=true;
     if (event.tab.textLabel==="赠送"){
       select=false;
@@ -329,13 +335,13 @@ export class WorkspaceComponent implements OnInit {
   }
 
   // listGifts(select:boolean):void{
-  //   console.log(select);
+  //   //console.log(select);
   //   select=false;
   // }
     setPackage(select:Good,cartin:Cart): void {
     // let flag = false;
     // let sum = 0;
-    console.log(select);
+    //console.log(select);
     let dialogRef = this.dialog.open(PackageDialog);
     let instance = dialogRef.componentInstance;
     

@@ -63,7 +63,7 @@ export class WorkareaComponent implements OnInit {
         //    } (w.RoomTypeName === "小桌" )
 
          })
-        console.log(uniarea);
+        //console.log(uniarea);
         uniarea.forEach(u=>this.areas.push(JSON.parse(u)));
         // this.areas.sort();
         this.workspaces = workspaces;})
@@ -97,10 +97,10 @@ export class WorkareaComponent implements OnInit {
     this.gridcol=Math.floor(this.innerWidth/90);
     this.getWorkspacees();
     this.nightmode=this.missionService.share;
-    if(localStorage.getItem('rapper_language') ){
-      let languageid=localStorage.getItem('rapper_language');
-      this.page=WORKAREAPAGE.find(page=>page.id == languageid);
-    }
+    // if(localStorage.getItem('rapper_language') ){
+    //   let languageid=localStorage.getItem('rapper_language');
+    //   this.page=WORKAREAPAGE.find(page=>page.id == languageid);
+    // }
   }
 
   onSelect(workspace: Workspace): void {
@@ -110,7 +110,7 @@ export class WorkareaComponent implements OnInit {
 
   // gotoArea(selected: string): void {
   //   this.workspaces=this.workspaces.filter(s=>s.area===selected);
-  //   console.log(this.workspaces);
+  //   //console.log(this.workspaces);
   // }
 
   gotoWorkspace(selected: Workspace): void {
@@ -122,7 +122,7 @@ export class WorkareaComponent implements OnInit {
     }
 
 
-    // console.log(selectedWorkspace.ID);
+    // //console.log(selectedWorkspace.ID);
     
   }
 

@@ -32,7 +32,7 @@ export class OrderList implements OnInit,OnChanges {
   ngOnInit(): void {
     this.heroService.getOrders(this.workspace)
       .then(orders => this.orders = orders);
-    console.log('getOrders');
+    //console.log('getOrders');
     // if(localStorage.getItem('wic_language') ){
     //   let languageid=localStorage.getItem('wic_language');
     //   this.page=DASHPAGE.find(page=>page.id == languageid);
@@ -42,7 +42,7 @@ export class OrderList implements OnInit,OnChanges {
   ngOnChanges(changes:{[propkey:string]:SimpleChange}){
     this.heroService.getOrders(this.workspace)
       .then(orders => this.orders = orders);
-    console.log('updateOrders');
+    //console.log('updateOrders');
   }
   // gotoDetail(engineer: Engineer): void {
   //   let link = ['/engineer', engineer.id];

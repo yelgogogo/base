@@ -20,10 +20,10 @@ export class SignupComponent implements OnInit{
 
 
   ngOnInit(): void {
-    if(localStorage.getItem('rapper_language') ){
-      let languageid=localStorage.getItem('rapper_language');
-      this.page=SIGNUPPAGE.find(page=>page.id == languageid);
-    }
+    // if(localStorage.getItem('rapper_language') ){
+    //   let languageid=localStorage.getItem('rapper_language');
+    //   this.page=SIGNUPPAGE.find(page=>page.id == languageid);
+    // }
     this.user= new User();
   }
 
@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit{
       .then(useri => 
         {
           this.user = useri;
-          console.log(useri);
+          //console.log(useri);
           // let name=this.user.name;
           // let email=this.user.email;
           // let body = JSON.stringify({name,email });
