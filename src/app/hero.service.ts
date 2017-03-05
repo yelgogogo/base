@@ -25,6 +25,7 @@ export class HeroService {
   private cartUrl = HOST+'WebServiceEx.asmx/JSON_Add_Orders';
   private managerUrl = HOST+'WebServiceEx.asmx/JSON_GetManagerOverView';
   private giftUrl = HOST+'WebServiceEx.asmx/JSON_Get_PresentGoods';
+  private saveUrl = HOST+'WebServiceEx.asmx/JSON_Get_KeepGoods';
   
   constructor(private http: Http) { }
 
@@ -273,6 +274,39 @@ export class HeroService {
     let postdata = {roomID:roomID,PresentUserNO:user.username};
     return this.http
       .post(this.giftUrl, JSON.stringify(postdata), { headers: headers })
+      .toPromise()
+      .then(response => {
+      // //console.log(response);
+        let tmp:Good[] = JSON.parse(response.json().d);
+        tmp.forEach(t=>{
+          if(t.GoodsDetails){
+            t.GoodsDetails.forEach(g=>{if(!g.GroupLimit){g.GroupLimit=g.GroupCount}});
+            t.GoodsDetailsDone=false;
+          }else{
+            t.GoodsDetailsDone=true;
+          }
+        })
+        
+        return tmp as Good[];})
+      .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.goodsUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // //console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Good[];})
+    //   .catch(this.handleError);
+  }
+
+  getSave(roomID:string,user:User): Promise<Good[]> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    let postdata = {roomID:roomID};
+    return this.http
+      .post(this.saveUrl, JSON.stringify(postdata), { headers: headers })
       .toPromise()
       .then(response => {
       // //console.log(response);

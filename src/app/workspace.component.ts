@@ -29,16 +29,22 @@ export class WorkspaceComponent implements OnInit {
   workspace: Workspace;
   goods: Good[];
   giftgoods: Good[];
+  savegoods: Good[];
   goodtypes:GoodType[]=[];
   gifttypes:GoodType[]=[];
+  savetypes:GoodType[]=[];
   curtypeid:number;
   curgiftid:number;
+  cursaveid:number;
   foods:Good[];
   giftfoods:Good[];
+  savefoods:Good[];
   cart:Cart;
   giftcart:Cart;
+  savecart:Cart;
   orderSub:boolean=false;
-  goodshow:boolean=true;
+  goodshow:number=1;
+  // saveshow:boolean=false;
   fooddetail:GoodsDetails[];
   gridcol:number;
 
@@ -76,6 +82,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   initWorkspace():void{
+    this.savecart=new Cart();
     this.route.params.forEach((params: Params) => {
       // if (params['id'] !== undefined) {return};
       let id = params['id'];
@@ -87,23 +94,70 @@ export class WorkspaceComponent implements OnInit {
           if (this.token.rights.indexOf("赠送")>0){
             this.getGiftCart(workspace);
           }
+          if (this.token.rights.indexOf("存酒")>0){
+            this.getSaveCart(workspace);
+          }
         })
         .catch(error => this.error = error); 
 
+      if (this.token.rights.indexOf("存酒")>0){
+        this.goodshow=2;
+        this.getSave(id,this.token);
+        
+      }
+
       if (this.token.rights.indexOf("赠送")>0){
-        this.goodshow=false;
+        this.goodshow=0;
         this.getGift(id,this.token);
       }
+
+      
      });
   }
 
+  changSave(select:Good,cartin:Cart,event:any):void{
+    if (event.checked){
+      this.addCart(select,cartin);
+    }else{
+      this.removeCart(select,cartin);
+    }
+    console.log(this.savecart);
+  }
+
   show(event:any):void{
-    event.stopPropagation();
-    ////console.log("click");
+    // event.stopPropagation();
+    // console.log(event);
   }
 
   goBack():void{
     this.router.navigate(['workarea']);
+  }
+
+  getSave(roomID:string,token:User):void{
+    this.heroService.getSave(roomID,token)
+        .then(goods => {
+          // //console.log(goods);
+          // //console.log(this.gifttypes);
+          this.savegoods = goods;
+          
+          let goodlsit= new Set();
+          goods.forEach(g=>{
+            let gt= new GoodType();
+            gt.id=g.DisplayOrder;
+            gt.GoodsTypeName=g.GoodsTypeName;
+            goodlsit.add(JSON.stringify(gt));
+            // this.goodtypes[g.DisplayOrder-1]=gt;
+            // //console.log(this.gifttypes);
+
+          }); 
+          goodlsit.forEach(u=>this.savetypes.push(JSON.parse(u)));
+          if(!this.cursaveid){
+            this.cursaveid=this.savetypes[0].id
+          }
+          this.savefoods = goods.filter(g=>g.DisplayOrder===this.cursaveid);
+          // //console.log(this.gifttypes);
+        })
+        .catch(error => this.error = error);  
   }
 
   getGift(roomID:string,token:User):void{
@@ -178,6 +232,25 @@ export class WorkspaceComponent implements OnInit {
           //console.log(this.goodtypes);
         })
         .catch(error => this.error = error); 
+  }
+
+getSaveCart(wk:Workspace):void {
+  let cartdata= new Cart();
+      cartdata.storename='base_savecart';
+      cartdata.roomID = wk.ID;
+      cartdata.Sum = 0; 
+      cartdata.RoomCode = wk.RoomCode; 
+      cartdata.RoomOpCode = wk.RoomOpCode;
+      cartdata.RoomName = wk.RoomName; 
+      cartdata.RoomTypeName = wk.RoomTypeName;   
+      cartdata.SubmitOrders = []; 
+      cartdata.userNo=JSON.parse(localStorage.getItem('rapper_token')).username;
+      cartdata.cardNo='';
+      cartdata.isPresent=false;
+      cartdata.orderType='落单';
+      cartdata.CartDone=true;
+      this.savecart=cartdata;
+    
   }
 
   getCart(wk:Workspace): void {
@@ -311,6 +384,11 @@ export class WorkspaceComponent implements OnInit {
     this.foods = this.goods.filter(g=>g.DisplayOrder===select.id);
   }
 
+  selectSaveType(select:GoodType): void {
+    this.cursaveid = select.id;
+    this.savefoods = this.savegoods.filter(g=>g.DisplayOrder===select.id);
+  }
+
   selectGiftType(select:GoodType): void {
     this.curgiftid = select.id;
     this.giftfoods = this.giftgoods.filter(g=>g.DisplayOrder===select.id);
@@ -322,13 +400,20 @@ export class WorkspaceComponent implements OnInit {
   //   if (this.navigated) { window.history.back(); }
   // }
 
-  listGoods(select:boolean,event:any):void{
+  listGoods(select:number,event:any):void{
     
     //console.log(event.tab.textLabel);
-    select=true;
-    if (event.tab.textLabel==="赠送"){
-      select=false;
-
+    
+    switch (event.tab.textLabel) {
+      case "赠送":
+        select=0;
+        break;
+      case "存酒":
+        select=2;
+        break;
+      default:
+        select=1;
+        break;
     }
     this.goodshow=select;
     

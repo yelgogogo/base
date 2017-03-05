@@ -94,9 +94,7 @@ md-card {
     height: 100%;
 }
 
-[md-card-image] {
-    width: 100%;
-}
+
 
 .example-container {
   width: 100%;
@@ -208,4 +206,28 @@ md-card {
     top: -10px;
     position: absolute;
     float: right;
+}
+
+.fimg{
+  position: relative;
+  width: 100%;
+}
+md-card{
+  margin: 3px;
+  width: 130px;
+  height: 130px;
+  overflow: hidden;
+  text-align: right;
+}
+
+.container{
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+[md-card-image] {
+    width: 130px;
+    top: -60%;
+    position: relative;
 }

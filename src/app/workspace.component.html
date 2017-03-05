@@ -1,46 +1,75 @@
 <div *ngIf="workspace" [class.app-dark-theme]="nightmode">
 <md-sidenav-container class="example-container" >
   <md-sidenav #sidenav  class="example-sidenav" align="end">
-    预计消费: <span class="color-price">¥{{cart.Sum}}</span><button md-icon-button (click)="clearCart(cart)" color="warn" class="clear-cart" *ngIf="cart.Sum>0"><md-icon>delete</md-icon>清空</button>
-    <md-chip-list class="md-chip-list-stacked">
+    <div *ngIf="goodshow===1">
+      预计消费: <span class="color-price">¥{{cart.Sum}}</span><button md-icon-button (click)="clearCart(cart)" color="warn" class="clear-cart" *ngIf="cart.Sum>0"><md-icon>delete</md-icon>清空</button>
+      <md-chip-list class="md-chip-list-stacked">
 
-      <div *ngFor="let good of cart.SubmitOrders">
-        <md-chip *ngIf="good.GoodsCount>0"
-            selected="true" color="accent" >
-          <span class="cartrow"><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon class="sicon">remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,cart)"><md-icon class="sicon">add</md-icon></button>
-          </span>
-          <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}<br>¥ {{good.Price}}/{{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
-          
-          
-        </md-chip>
-      </div>
-      <button *ngIf="cart.Sum>0" md-raised-button [disabled]="checkCart(cart)" (click)="addOrder(cart)" [style.float]="'right'" color="accent"><md-icon>credit_card</md-icon>提交</button>
-      
-    </md-chip-list>
-  </md-sidenav>
-  <md-sidenav #giftnav  class="example-sidenav" align="start">
-    赠送总额: <span class="color-price">¥{{giftcart.Sum}}</span><button md-icon-button (click)="clearCart(giftcart)" color="warn" class="clear-cart" *ngIf="giftcart.Sum>0"><md-icon>delete</md-icon>清空</button>
-    <md-chip-list class="md-chip-list-stacked">
-
-      <div *ngFor="let good of giftcart.SubmitOrders">
-      <md-chip *ngIf="good.GoodsCount>0"
-          selected="true" color="accent">
-        <span class="cartrow">
-        <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon class="sicon">remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,giftcart)"><md-icon class="sicon">add</md-icon></button>
-        </span>
-        <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} <br>¥ {{good.Price}}/{{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
-
+        <div *ngFor="let good of cart.SubmitOrders">
+          <md-chip *ngIf="good.GoodsCount>0"
+              selected="true" color="accent" >
+            <span class="cartrow"><button md-mini-fab (click)="removeCart(good,cart)" ><md-icon class="sicon">remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,cart)"><md-icon class="sicon">add</md-icon></button>
+            </span>
+            <!--button md-mini-fab (click)="deleteCart(good,cart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}}<br>¥ {{good.Price}}/{{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,cart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
+            
+            
+          </md-chip>
+        </div>
+        <button *ngIf="cart.Sum>0" md-raised-button [disabled]="checkCart(cart)" (click)="addOrder(cart)" [style.float]="'right'" color="accent"><md-icon>credit_card</md-icon>提交</button>
         
-      </md-chip>
+      </md-chip-list>
+    </div>
+    <div *ngIf="goodshow===0">
+      赠送总额: <span class="color-price">¥{{giftcart.Sum}}</span><button md-icon-button (click)="clearCart(giftcart)" color="warn" class="clear-cart" *ngIf="giftcart.Sum>0"><md-icon>delete</md-icon>清空</button>
+      <md-chip-list class="md-chip-list-stacked">
+
+        <div *ngFor="let good of giftcart.SubmitOrders">
+        <md-chip *ngIf="good.GoodsCount>0"
+            selected="true" color="accent">
+          <span class="cartrow">
+          <button md-mini-fab (click)="removeCart(good,giftcart)" ><md-icon class="sicon">remove</md-icon></button> {{good.GoodsCount}} <button md-mini-fab (click)="addInCart(good,giftcart)"><md-icon class="sicon">add</md-icon></button>
+          </span>
+          <!--button md-mini-fab (click)="deleteCart(good,giftcart)" ><md-icon>delete</md-icon></button--><span md-line> {{good.GoodsName}} <br>¥ {{good.Price}}/{{good.Unit}} <button *ngIf="good.GoodsDetails" md-icon-button (click)="setPackage(good,giftcart)" ><md-icon *ngIf="good.GoodsDetailsDone">check</md-icon><md-icon *ngIf="!good.GoodsDetailsDone" color="warn">pie_chart_outlined</md-icon></button></span>
+        </md-chip>
+        </div>
+        <button *ngIf="giftcart.Sum>0" md-raised-button [disabled]="checkCart(giftcart)" (click)="addOrder(giftcart)" [style.float]="'right'" color="accent"><md-icon>card_giftcard</md-icon>赠送</button>
+      </md-chip-list>
+    </div>
+    <div *ngIf="goodshow===2">
+      <md-list>
+        <div  [style.width]="'100%'"  [style.padding]="'0'" *ngFor="let good of savecart.SubmitOrders">
+          <md-list-item *ngIf="good.GoodsCount>0" [style.font-size]="'small'" [style.margin-top]="'10px'">
+          <button md-icon-button (click)="removeCart(good,savecart)" ><md-icon class="sicon">remove</md-icon></button> 
+          
+          <span md-line> {{good.GoodsName}}  </span>
+          <span   >
+          
+          <md-input-container>
+            <input [style.width]="'36px'" mdInput placeholder="数量" value="{{good.GoodsCount}}">
+          </md-input-container>
+          </span>
+        
+          </md-list-item>
+        <md-divider>
+          </md-divider>
       </div>
-      <button *ngIf="giftcart.Sum>0" md-raised-button [disabled]="checkCart(giftcart)" (click)="addOrder(giftcart)" [style.float]="'right'" color="accent"><md-icon>card_giftcard</md-icon>赠送</button>
-    </md-chip-list>
+      <md-input-container>
+        <input mdInput placeholder="电话号码">
+      </md-input-container>
+
+      <button *ngIf="savecart.Sum>0" md-raised-button (click)="addOrder(savecart)" [style.float]="'right'" color="accent"><md-icon>lock_outline</md-icon>存酒</button>
+
+    </md-list>
+    </div>
   </md-sidenav>
   <md-toolbar color="accent"><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
   <span *ngIf="cart" [style.font-size]="'small'"><md-icon class="mini-icon">credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
     <span class="mainfat">
-    <button *ngIf="goodshow" md-fab (click)="sidenav.open()"><md-icon>shopping_cart</md-icon>¥{{cart.Sum}}</button>
-    <button *ngIf="!goodshow" md-fab (click)="giftnav.open()"><md-icon>shopping_basket</md-icon>¥{{giftcart.Sum}}</button>
+      <button  md-fab (click)="sidenav.open()">
+        <span *ngIf="goodshow===1"><md-icon>shopping_cart</md-icon>¥{{cart.Sum}}</span>
+        <span *ngIf="goodshow===0"><md-icon>shopping_basket</md-icon>¥{{giftcart.Sum}}</span>
+        <span *ngIf="goodshow===2"><md-icon>lock_open</md-icon></span>
+      </button>
     </span>
   </md-toolbar>
   <div >
@@ -60,7 +89,7 @@
         <md-grid-list cols="{{gridcol}}" gutterSize="3">
           <md-grid-tile *ngFor="let food of giftfoods" [rowspan]="1">
               <div class="food-img">
-                <img md-card-image src="assets/img/wine.jpg">
+                <img class="fimg" src="assets/img/wine.jpg">
               </div>
               <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
                 
@@ -112,7 +141,7 @@
           <md-grid-tile *ngFor="let food of foods" [rowspan]="1">
      
               <div class="food-img">
-              <img md-card-image src="assets/img/wine.jpg">
+              <img class="fimg" src="assets/img/wine.jpg">
               </div>
               <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
                 
@@ -135,10 +164,10 @@
         </md-grid-list>
       </div>
     </md-tab>
-    <md-tab label="菜单" >
+    <md-tab label="存酒" *ngIf="savegoods" >
       <div class="col-xs-3" [style.height]="listHeight+'px'">
-        <md-button-toggle-group *ngIf="goodtypes" name="pies" vertical="true">
-          <md-button-toggle *ngFor="let goodtype of goodtypes" [value]="goodtype" (click)="selectType(goodtype)">
+        <md-button-toggle-group *ngIf="savetypes" name="pies" vertical="true">
+          <md-button-toggle *ngFor="let goodtype of savetypes" [value]="goodtype" (click)="selectSaveType(goodtype)">
             {{goodtype.GoodsTypeName}}
           </md-button-toggle>
         </md-button-toggle-group>
@@ -146,32 +175,24 @@
             <md-list-item *ngFor="let goodtype of goodtypes" (click)="selectType(goodtype)">{{goodtype.GoodsTypeName}} </md-list-item>
          </md-list-->
       </div>
-      <div class="col-xs-9" [style.height]="listHeight+'px'">
-        <md-grid-list cols="{{gridcol}}" >
-          <md-grid-tile *ngFor="let food of foods" [rowspan]="1">
-     
-              <div class="food-img">
-              <img md-card-image src="assets/img/wine.jpg">
-              </div>
-              <md-grid-tile-footer [style.padding]="'6px 6px'" [style.background]= "'inherit'" [style.color]= "'inherit'" [style.align-items]= "'baseline'" [style.height]= "'initial'">
-                
-                <span md-line>
-                  <span class="color-price"><b>¥{{food.Price}}</b></span>
-                 <!--  <span *ngIf="food.GoodsDetails"></span> -->
-                  
-             
-                </span>
-              <!--   <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6> -->
-                <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
-                <button md-mini-fab (click)="setPackage(food,cart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
-                <button md-mini-fab (click)="addCart(food,cart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon class="sicon">add</md-icon></button>
-                <span md-line><md-icon color="accent"  *ngFor="let rate of [0,1,2,3,4]" [style.height]="'12px'" [style.width]="'12px'" [style.font-size]="'medium'">star</md-icon></span>
-              </md-grid-tile-footer>
-              <md-grid-tile-header>
-              <h5 [style.font-size]="'medium'">{{food.GoodsName}}</h5>
-              </md-grid-tile-header>
-          </md-grid-tile>
-        </md-grid-list>
+      <div class="col-xs-9" >
+      <div class="container">
+        <md-card class="example-card" *ngFor="let food of savefoods" [style.width]="'130px'">
+<!--           <md-card-header>
+            <md-card-title>{{food.GoodsName}}</md-card-title>
+          </md-card-header> -->
+          <img md-card-image src="assets/img/wine.jpg">
+          <md-card-footer>
+            <span md-line>{{food.GoodsName}}</span>
+            <br>
+            <md-checkbox (change)="changSave(food,savecart,$event)"></md-checkbox>
+          </md-card-footer>
+<!--           <md-card-actions>
+            {{food.GoodsName}}
+            <button md-button>LIKE</button>
+          </md-card-actions> -->
+        </md-card>
+      </div>
       </div>
     </md-tab>
    
