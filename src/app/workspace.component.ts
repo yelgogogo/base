@@ -9,6 +9,7 @@ import {MdDialog, MdDialogRef} from '@angular/material';
 import { MissionService } from './mission.service';
 import { Subscription }   from 'rxjs/Subscription';
 // import { OrderList } from './orderlist';
+import { validateMobile } from './mobile.validator';
 
 @Component({
   moduleId: module.id,
@@ -115,11 +116,11 @@ export class WorkspaceComponent implements OnInit {
      });
   }
 
-  changSave(select:Good,cartin:Cart,event:any):void{
+  changeSave(select:Good,cartin:Cart,event:any):void{
     if (event.checked){
-      this.addCart(select,cartin);
+      this.addSave(select,cartin);
     }else{
-      this.removeCart(select,cartin);
+      this.deleteCart(select,cartin);
     }
     console.log(this.savecart);
   }
@@ -133,6 +134,18 @@ export class WorkspaceComponent implements OnInit {
     this.router.navigate(['workarea']);
   }
 
+  keeBeer(cartin:Cart):void{
+    cartin.SubmitOrders.forEach(s=>{
+      this.heroService.saveBear(s,cartin)
+        .then(r=>{
+          if(!r){
+            this.deleteCart(s,cartin);
+          }
+        })
+        .catch(error => this.error = error);  
+      }
+    )
+  }
   getSave(roomID:string,token:User):void{
     this.heroService.getSave(roomID,token)
         .then(goods => {
@@ -249,6 +262,7 @@ getSaveCart(wk:Workspace):void {
       cartdata.isPresent=false;
       cartdata.orderType='落单';
       cartdata.CartDone=true;
+      cartdata.tel="";
       this.savecart=cartdata;
     
   }
@@ -300,6 +314,41 @@ getSaveCart(wk:Workspace):void {
     //console.log(rtn);
     return rtn;
   }
+
+  addSave(select:Good,cartin:Cart): void {
+    select.GoodsCount=1;
+    cartin.SubmitOrders.push(select);
+    // let flag = false;
+    // let sum = 0;
+    // cartin.SubmitOrders.forEach(function (gd, i) {
+    //   if(gd.ID === select.ID) {
+    //     gd.GoodsCount = (gd.GoodsCount || 0) + 1 ;
+    //     select.GoodsCount=gd.GoodsCount;
+    //     // gd.chili = true;
+    //     flag = true;
+    //   }
+    //   sum+=  (gd.GoodsCount || 0) * gd.Price      
+    // });
+    
+    // if(!flag) {
+    //   select.GoodsCount += 1;
+    //   sum += select.GoodsCount  * select.Price;
+    //   cartin.SubmitOrders.push(select);
+    // }else{
+    //   cartin.SubmitOrders=cartin.SubmitOrders.filter(f=>f.ID!==select.ID);
+    //   cartin.SubmitOrders.push(select);
+    // }
+    // cartin.Sum = sum;
+ 
+    // let body = JSON.stringify(cartin);
+    // localStorage.setItem(cartin.storename, body);
+  }
+
+  // deleteSave(select:Good,cartin:Cart): void {
+  //   let delgood=cartin.SubmitOrders.find(f=>f.ID===select.ID);
+  //   delgood.GoodsCount=0;
+  //   cartin.SubmitOrders=cartin.SubmitOrders.filter(f=>f.ID!==select.ID);
+  // }
 
   addCart(select:Good,cartin:Cart): void {
     let flag = false;

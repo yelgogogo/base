@@ -124,7 +124,8 @@ export class Manager{
 export class Cart {
   // add for gourp control
   CartDone:boolean;
-  //
+  // tel for saveBeer
+  tel:string;
   storename:string;
   RoomCode:string;
   RoomName:string;

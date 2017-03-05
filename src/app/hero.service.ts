@@ -26,6 +26,7 @@ export class HeroService {
   private managerUrl = HOST+'WebServiceEx.asmx/JSON_GetManagerOverView';
   private giftUrl = HOST+'WebServiceEx.asmx/JSON_Get_PresentGoods';
   private saveUrl = HOST+'WebServiceEx.asmx/JSON_Get_KeepGoods';
+  private saveBeerUrl = HOST+'WebServiceEx.asmx/JSON_KeepBeer';
   
   constructor(private http: Http) { }
 
@@ -147,6 +148,43 @@ export class HeroService {
     //    .then(response => {
     //      // //console.log(JSON.parse(response.json().data.d));
     //     return JSON.parse(response.json().data.d) as Manager[];})
+    //   .catch(this.handleError);
+  }
+
+saveBear(good:Good,cart:Cart): Promise<String> {
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    let postdata = {
+      roomID: cart.roomID,
+      goodsID:good.ID,
+      goodsCount:good.GoodsCount,
+      tel:cart.tel,
+      userNo: cart.userNo
+    };
+
+    return this.http
+      .post(this.saveBeerUrl, JSON.stringify(postdata), { headers: headers })
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        
+        let json=response.json().d;
+        // json=json.replace(/Room\:/,'"Room":');
+        // json=json.replace(/Orders\:/,'"Orders":');
+        //  //console.log(JSON.parse(json));
+        return json;
+      })
+      .catch(this.handleError);
+
+    // return this.http
+    //   .get(this.ordersUrl)
+    //   .toPromise()
+    //   // .then(response => response.json() as Workspace[])
+    //    .then(response => {
+    //      // //console.log(JSON.parse(response.json().data.d));
+    //     return JSON.parse(response.json().data.d) as Order[];})
     //   .catch(this.handleError);
   }
 

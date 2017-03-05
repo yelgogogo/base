@@ -36,16 +36,16 @@
       </md-chip-list>
     </div>
     <div *ngIf="goodshow===2">
+      <h5><button md-icon-button (click)="clearCart(savecart)" color="warn" class="clear-cart" *ngIf="giftcart.SubmitOrders"><md-icon>delete</md-icon>清空</button></h5>
       <md-list>
-        <div  [style.width]="'100%'"  [style.padding]="'0'" *ngFor="let good of savecart.SubmitOrders">
-          <md-list-item *ngIf="good.GoodsCount>0" [style.font-size]="'small'" [style.margin-top]="'10px'">
-          <button md-icon-button (click)="removeCart(good,savecart)" ><md-icon class="sicon">remove</md-icon></button> 
+        <div  [style.width]="'100%'"  *ngFor="let good of savecart.SubmitOrders">
+          <md-list-item  [style.margin-top]="'10px'">
           
-          <span md-line> {{good.GoodsName}}  </span>
-          <span   >
-          
-          <md-input-container>
-            <input [style.width]="'36px'" mdInput placeholder="数量" value="{{good.GoodsCount}}">
+          <span [style.font-size]="'medium'"> {{good.GoodsName}} </span>
+          <span [style.right]="'0'" [style.position]="'absolute'">
+           X 
+          <md-input-container >
+            <input type="number" [style.height]="'16px'" [style.width]="'36px'" mdInput placeholder="数量" [(ngModel)]="good.GoodsCount">
           </md-input-container>
           </span>
         
@@ -53,11 +53,22 @@
         <md-divider>
           </md-divider>
       </div>
-      <md-input-container>
-        <input mdInput placeholder="电话号码">
-      </md-input-container>
 
-      <button *ngIf="savecart.Sum>0" md-raised-button (click)="addOrder(savecart)" [style.float]="'right'" color="accent"><md-icon>lock_outline</md-icon>存酒</button>
+      
+    
+
+      <md-input-container >
+        <input type="text" mdInput placeholder="电话号码" name="mobile" [(ngModel)]="savecart.tel" #mobile="ngModel" required minlength="11" maxlength="11" validateMobile>
+
+      </md-input-container>
+      <span *ngIf="mobile.valid" [style.background-color]="'green'" [style.color]="'white'">有效</span>
+      <div [hidden]="mobile.valid || mobile.pristine">
+      <p *ngIf="mobile.errors?.minlength || mobile.errors?.maxlength">电话长度必须为11</p>
+      <p *ngIf="mobile.errors?.validateMobile">电话号码格式不正确</p>
+      </div>
+      
+
+      <button *ngIf="savecart.tel && savecart.SubmitOrders && !mobile.errors" md-raised-button (click)="keeBeer(savecart)" [style.float]="'right'" color="accent"><md-icon>lock_outline</md-icon>存酒</button>
 
     </md-list>
     </div>
@@ -185,7 +196,7 @@
           <md-card-footer>
             <span md-line>{{food.GoodsName}}</span>
             <br>
-            <md-checkbox (change)="changSave(food,savecart,$event)"></md-checkbox>
+            <md-checkbox [checked]="food.GoodsCount" (change)="changeSave(food,savecart,$event)"></md-checkbox>
           </md-card-footer>
 <!--           <md-card-actions>
             {{food.GoodsName}}

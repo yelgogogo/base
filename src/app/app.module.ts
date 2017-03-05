@@ -22,6 +22,7 @@ import {OrderByPipe} from './orderby';
 // import { ChartsModule } from 'ng2-charts';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 // import { BarChartDemoComponent } from './components/charts/bar-chart-demo';
+import { MobileValidator } from './mobile.validator';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     AreaPipe,OrderList,OrderByPipe,RoomInfo,
     // BarChartDemoComponent,
     PackageDialog,
+    MobileValidator,
     routedComponents
   ],
   entryComponents:[
