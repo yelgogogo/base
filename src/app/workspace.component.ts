@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output,OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output,OnDestroy,ViewEncapsulation,trigger,transition,style,state,animate } from '@angular/core';
 import { ActivatedRoute, Params,Router } from '@angular/router';
 // import { Location } from '@angular/common';
 import { Workspace,Regarray,File,Good,GoodType,Cart,User,GoodsDetails } from './hero';
@@ -16,6 +16,17 @@ import { validateMobile } from './mobile.validator';
   selector: 'my-workspace',
   templateUrl: 'workspace.component.html',
   styleUrls: ['workspace.component.css']
+  ,
+  // encapsulation:ViewEncapsulation .None,
+  animations:[
+    trigger('fadeIn',[
+      state('in',style({opacity:1, transform: 'translateX(0)'})),
+      transition('void => *',[
+        style({opacity:0,transform: 'translateX(-100%)'}),
+        animate(1000)
+      ])
+    ])
+  ]
 })
 export class WorkspaceComponent implements OnInit {
   page=WORKSPACEPAGE.find(page=>page.id == 1);
@@ -54,6 +65,7 @@ export class WorkspaceComponent implements OnInit {
   innerHeight: number;
   innerWidth: number;
   listHeight: number;
+  history: string[] = [];
 
   constructor(
     public dialog: MdDialog,
@@ -134,12 +146,15 @@ export class WorkspaceComponent implements OnInit {
     this.router.navigate(['workarea']);
   }
 
-  keeBeer(cartin:Cart):void{
+  keepBeer(cartin:Cart):void{
     cartin.SubmitOrders.forEach(s=>{
       this.heroService.saveBear(s,cartin)
         .then(r=>{
           if(!r){
             this.deleteCart(s,cartin);
+            this.history.push("存酒成功!");
+          }else{
+            this.history.push(s.GoodsName+' '+r);
           }
         })
         .catch(error => this.error = error);  
@@ -452,7 +467,7 @@ getSaveCart(wk:Workspace):void {
   listGoods(select:number,event:any):void{
     
     //console.log(event.tab.textLabel);
-    
+    this.history=[];
     switch (event.tab.textLabel) {
       case "赠送":
         select=0;

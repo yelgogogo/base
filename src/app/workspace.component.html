@@ -57,20 +57,29 @@
       
     
 
-      <md-input-container >
+      <md-input-container [style.width]="'60%'">
         <input type="text" mdInput placeholder="电话号码" name="mobile" [(ngModel)]="savecart.tel" #mobile="ngModel" required minlength="11" maxlength="11" validateMobile>
 
       </md-input-container>
-      <span *ngIf="mobile.valid" [style.background-color]="'green'" [style.color]="'white'">有效</span>
+      <span *ngIf="mobile.valid" class="confirmmsg">有效</span>
       <div [hidden]="mobile.valid || mobile.pristine">
       <p *ngIf="mobile.errors?.minlength || mobile.errors?.maxlength">电话长度必须为11</p>
       <p *ngIf="mobile.errors?.validateMobile">电话号码格式不正确</p>
       </div>
       
 
-      <button *ngIf="savecart.tel && savecart.SubmitOrders && !mobile.errors" md-raised-button (click)="keeBeer(savecart)" [style.float]="'right'" color="accent"><md-icon>lock_outline</md-icon>存酒</button>
+      <div [style.height]="'50px'">
+
+        <button *ngIf="savecart.tel && savecart.SubmitOrders && !mobile.errors" md-raised-button (click)="keepBeer(savecart)" [style.float]="'right'" color="accent"><md-icon>lock_outline</md-icon>存酒
+        </button>
+      </div>
 
     </md-list>
+    </div>
+    <div [style.width]="'100%'">
+      <ul>
+        <li *ngFor="let event of history">{{event}}</li>
+      </ul>
     </div>
   </md-sidenav>
   <md-toolbar color="accent"><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
@@ -188,13 +197,13 @@
       </div>
       <div class="col-xs-9" >
       <div class="container">
-        <md-card class="example-card" *ngFor="let food of savefoods" [style.width]="'130px'">
+        <md-card class="example-card" *ngFor="let food of savefoods" [@fadeIn]="'in'">
 <!--           <md-card-header>
             <md-card-title>{{food.GoodsName}}</md-card-title>
           </md-card-header> -->
           <img md-card-image src="assets/img/wine.jpg">
           <md-card-footer>
-            <span md-line>{{food.GoodsName}}</span>
+            <span md-line [style.font-size]="'small'">{{food.GoodsName}}</span>
             <br>
             <md-checkbox [checked]="food.GoodsCount" (change)="changeSave(food,savecart,$event)"></md-checkbox>
           </md-card-footer>

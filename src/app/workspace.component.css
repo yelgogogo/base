@@ -90,9 +90,6 @@ md-chip{
   width: 100%;
   overflow: auto;
 }
-md-card {
-    height: 100%;
-}
 
 
 
@@ -214,7 +211,7 @@ md-card {
 }
 md-card{
   margin: 3px;
-  width: 130px;
+  width: 126px;
   height: 130px;
   overflow: hidden;
   text-align: right;
@@ -230,4 +227,16 @@ md-card{
     width: 130px;
     top: -60%;
     position: relative;
+}
+
+.confirmmsg{
+    background-color: green;
+    color: white;
+    border-radius: 15%;
+    margin: 10px;
+    padding: 5px;
+}
+
+md-tab{
+  padding: 0;
 }

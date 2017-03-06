@@ -151,7 +151,7 @@ export class HeroService {
     //   .catch(this.handleError);
   }
 
-saveBear(good:Good,cart:Cart): Promise<String> {
+saveBear(good:Good,cart:Cart): Promise<string> {
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
