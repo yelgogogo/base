@@ -19,12 +19,36 @@ import { validateMobile } from './mobile.validator';
   ,
   // encapsulation:ViewEncapsulation .None,
   animations:[
+    trigger('typeactive', [
+      state('inactive', style({
+        transform: 'scale(1)'
+      })),
+      state('active',   style({
+        // backgroundColor: 'accent',
+        transform: 'scale(1.2)'
+      })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ]),
     trigger('fadeIn',[
       state('in',style({opacity:1, transform: 'translateX(0)'})),
       transition('void => *',[
-        style({opacity:0,transform: 'translateX(-100%)'}),
-        animate(1000)
+        style({height: 0}),
+        animate(350, style({height: '*'}))
       ])
+    ]),
+    trigger('shrinkOut', [
+    state('in', style({height: '*'})),
+    transition('* => void', [
+      animate('200ms 100ms ease-out', style({
+        opacity: 0,
+        transform: 'translateX(100%)'
+      }))
+    ]),
+    transition('void => *', [
+      style({height: 0}),
+      animate(350, style({height: '*'}))
+    ])
     ])
   ]
 })
@@ -134,7 +158,7 @@ export class WorkspaceComponent implements OnInit {
     }else{
       this.deleteCart(select,cartin);
     }
-    console.log(this.savecart);
+    // console.log(this.savecart);
   }
 
   show(event:any):void{
@@ -444,16 +468,23 @@ getSaveCart(wk:Workspace):void {
   }
 
   selectType(select:GoodType): void {
+    this.goodtypes.forEach(t=>t.status='inactive');
+    select.status='active';
     this.curtypeid = select.id;
     this.foods = this.goods.filter(g=>g.DisplayOrder===select.id);
   }
 
   selectSaveType(select:GoodType): void {
+    this.savetypes.forEach(t=>t.status='inactive');
+    select.status='active';
     this.cursaveid = select.id;
     this.savefoods = this.savegoods.filter(g=>g.DisplayOrder===select.id);
   }
 
   selectGiftType(select:GoodType): void {
+    this.gifttypes.forEach(t=>t.status='inactive');
+    select.status='active';
+
     this.curgiftid = select.id;
     this.giftfoods = this.giftgoods.filter(g=>g.DisplayOrder===select.id);
   }

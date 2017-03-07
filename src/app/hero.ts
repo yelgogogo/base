@@ -62,6 +62,7 @@ export class File {
 export class GoodType {
   id:number;
   GoodsTypeName:string;
+  status:string='inactive';
 }
 
 export class Good {
