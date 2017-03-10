@@ -23,6 +23,8 @@ gulp.task('task:service-worker',()=>gulp
 		'dist/**/*.js',
 		'dist/**/*.ico',
 		'dist/**/*.woff2',
+		'dist/**/*.woff',
+		'dist/**/*.ttf',
 		'dist/**/*.svg',
 		'dist/**/*.json',
 		'dist/**/*.webapp',

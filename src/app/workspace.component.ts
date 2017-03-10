@@ -90,6 +90,7 @@ export class WorkspaceComponent implements OnInit {
   innerWidth: number;
   listHeight: number;
   history: string[] = [];
+  addanimation='inactive'
 
   constructor(
     public dialog: MdDialog,
@@ -153,6 +154,8 @@ export class WorkspaceComponent implements OnInit {
   }
 
   changeSave(select:Good,cartin:Cart,event:any):void{
+    this.addanimation='active';
+    setTimeout(()=>{this.addanimation="inactive";},100);
     if (event.checked){
       this.addSave(select,cartin);
     }else{
@@ -390,6 +393,8 @@ getSaveCart(wk:Workspace):void {
   // }
 
   addCart(select:Good,cartin:Cart): void {
+    this.addanimation='active';
+    setTimeout(()=>{this.addanimation="inactive";},100);
     let flag = false;
     let sum = 0;
     cartin.SubmitOrders.forEach(function (gd, i) {

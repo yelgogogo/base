@@ -85,7 +85,7 @@
   <md-toolbar color="accent"><button md-icon-button (click)="goBack()"><md-icon>keyboard_arrow_left</md-icon></button>{{workspace.RoomName}} 
   <span *ngIf="cart" [style.font-size]="'small'"><md-icon class="mini-icon">credit_card</md-icon>已消费: ¥{{workspace.ConsumeAmount}}</span>
     <span class="mainfat">
-      <button  md-fab (click)="sidenav.open()">
+      <button  md-fab (click)="sidenav.open()" [@typeactive]="addanimation">
         <span *ngIf="goodshow===1"><md-icon [ngClass]="{'cartadd':cart.Sum}">shopping_cart</md-icon>¥{{cart.Sum}}</span>
         <span *ngIf="goodshow===0"><md-icon [ngClass]="{'cartadd':giftcart.Sum}">shopping_basket</md-icon>¥{{giftcart.Sum}}</span>
         <span *ngIf="goodshow===2"><md-icon>lock_open</md-icon></span>
@@ -121,7 +121,7 @@
                 </span>
               <!--   <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6> -->
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
-                <button md-mini-fab (click)="setPackage(food,giftcart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
+                <button md-mini-fab (click)="setPackage(food,giftcart)" *ngIf="!food.GoodsDetailsDone"><md-icon class="sicon">pie_chart_outlined</md-icon></button>
                 <button md-mini-fab (click)="addCart(food,giftcart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon class="sicon">add</md-icon></button>
                 <span md-line><md-icon color="accent"  *ngFor="let rate of [0,1,2,3,4]" [style.height]="'12px'" [style.width]="'12px'" [style.font-size]="'medium'">star</md-icon></span>
               </md-grid-tile-footer>
@@ -173,7 +173,7 @@
                 </span>
               <!--   <h6 md-line [style.font-size]="'small'">{{food.GoodsName}}</h6> -->
                 <span *ngIf="food.GoodsCount>0">{{food.GoodsCount}}</span>
-                <button md-mini-fab (click)="setPackage(food,cart)" *ngIf="!food.GoodsDetailsDone"><md-icon  color="warn">pie_chart_outlined</md-icon></button>
+                <button md-mini-fab [style.top]="'-6px'" (click)="setPackage(food,cart)" *ngIf="!food.GoodsDetailsDone"><md-icon class="sicon">pie_chart_outlined</md-icon></button>
                 <button md-mini-fab (click)="addCart(food,cart)" [style.top]="'-6px'" *ngIf="food.GoodsDetailsDone"><md-icon class="sicon">add</md-icon></button>
                 <span md-line><md-icon color="accent"  *ngFor="let rate of [0,1,2,3,4]" [style.height]="'12px'" [style.width]="'12px'" [style.font-size]="'medium'">star</md-icon></span>
               </md-grid-tile-footer>
